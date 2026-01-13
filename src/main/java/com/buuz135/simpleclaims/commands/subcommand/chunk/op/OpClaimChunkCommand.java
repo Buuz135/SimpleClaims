@@ -31,11 +31,12 @@ public class OpClaimChunkCommand extends AbstractAsyncCommand {
         CommandSender sender = commandContext.sender();
         if (sender instanceof Player player) {
             Ref<EntityStore> ref = player.getReference();
-            PlayerRef playerRef = ref.getStore().getComponent(ref, PlayerRef.getComponentType());
-            if (ref != null && ref.isValid() && playerRef != null) {
+            if (ref != null && ref.isValid()) {
                 Store<EntityStore> store = ref.getStore();
                 World world = store.getExternalData().getWorld();
                 return CompletableFuture.runAsync(() -> {
+                    PlayerRef playerRef = ref.getStore().getComponent(ref, PlayerRef.getComponentType());
+                    if (playerRef == null) return;
                     var selectedPartyID = ClaimManager.getInstance().getAdminUsageParty().getOrDefault(playerRef.getUuid().toString(), null);
                     if (selectedPartyID == null) {
                         player.sendMessage(CommandMessages.ADMIN_PARTY_NOT_SELECTED);
