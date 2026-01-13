@@ -54,7 +54,7 @@ public class Main extends JavaPlugin {
         this.getEntityStoreRegistry().registerSystem(new PlaceBlockEventSystem());
         this.getEntityStoreRegistry().registerSystem(new InteractEventSystem());
         this.getEntityStoreRegistry().registerSystem(new TitleTickingSystem());
-        this.getChunkStoreRegistry().registerSystem(new WorldMapUpdateTickingSystem());
+        //this.getChunkStoreRegistry().registerSystem(new WorldMapUpdateTickingSystem());
         this.getCommandRegistry().registerCommand(new SimpleClaimProtectCommand());
         this.getCommandRegistry().registerCommand(new SimpleClaimsPartyCommand());
 
