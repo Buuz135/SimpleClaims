@@ -14,6 +14,7 @@ public class CommandMessages {
     public static final Message NOT_CLAIMED = Message.translation("commands.errors.simpleclaims.notClaimed").color(Color.RED).bold(true);
     public static final Message NOT_YOUR_CLAIM = Message.translation("commands.errors.simpleclaims.notYourClaim").color(Color.RED).bold(true);
     public static final Message CANT_CLAIM_IN_THIS_DIMENSION = Message.translation("commands.errors.simpleclaims.cantClaimInThisDimension").color(Color.RED).bold(true);
+    public static final Message PROTECTED_BY_ORBISGUARD = Message.translation("commands.errors.simpleclaims.protectedByOrbisGuard").color(Color.RED).bold(true);
 
     public static final Message NOT_ENOUGH_CHUNKS = Message.translation("commands.errors.simpleclaims.notEnoughChunks").color(Color.RED).bold(true);
     public static final Message PLAYER_NOT_FOUND = Message.translation("commands.errors.simpleclaims.playerNotFound").color(Color.RED).bold(true);

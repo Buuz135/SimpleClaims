@@ -3,6 +3,7 @@ package com.buuz135.simpleclaims.gui;
 import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.buuz135.simpleclaims.claim.tracking.ModifiedTracking;
 import com.buuz135.simpleclaims.commands.CommandMessages;
+import com.buuz135.simpleclaims.compat.OrbisGuardCompat;
 import com.buuz135.simpleclaims.util.MessageHelper;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
@@ -64,6 +65,11 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
                         this.sendUpdate();
                         return;
                     }
+                    if (OrbisGuardCompat.isChunkProtected(dimension, x, z)) {
+                        playerInstance.sendMessage(CommandMessages.PROTECTED_BY_ORBISGUARD);
+                        this.sendUpdate();
+                        return;
+                    }
                     var chunk = ClaimManager.getInstance().getChunk(dimension, x, z);
                     var selectedParty = ClaimManager.getInstance().getPartyById(selectedPartyID);
                     if (chunk == null && selectedParty != null && ClaimManager.getInstance().hasEnoughClaimsLeft(selectedParty)) {
@@ -73,6 +79,11 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
                 } else {
                     if (!ClaimManager.getInstance().canClaimInDimension(playerInstance.getWorld())) {
                         playerRef.sendMessage(CommandMessages.CANT_CLAIM_IN_THIS_DIMENSION);
+                        this.sendUpdate();
+                        return;
+                    }
+                    if (OrbisGuardCompat.isChunkProtected(dimension, x, z)) {
+                        playerInstance.sendMessage(CommandMessages.PROTECTED_BY_ORBISGUARD);
                         this.sendUpdate();
                         return;
                     }
@@ -160,14 +171,25 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
                         uiEventBuilder.addEventBinding(CustomUIEventBindingType.RightClicking, "#ChunkCards[" + z + "][" + x + "]", EventData.of("Action", "RightClicking:" + (chunkX + x - 8) + ":" + (chunkZ + z - 8)));
                     }
                 } else {
-                    var tooltip = MessageHelper.multiLine().append(Message.raw("Wilderness" ).bold(true).color(Color.GREEN.darker()));
-                    if (playerParty != null) {
-                        tooltip = tooltip.nl().nl().append(Message.raw("*Left Click to claim*").bold(true).color(Color.GRAY));
-                        uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#ChunkCards[" + z + "][" + x + "]", EventData.of("Action", "LeftClicking:" + (chunkX + x - 8) + ":" + (chunkZ + z - 8)));
+                    boolean isRegionProtected = OrbisGuardCompat.isChunkProtected(dimension, chunkX + x - 8, chunkZ + z - 8);
+                    if (isRegionProtected) {
+                        var purple = new Color(128, 0, 128, 128);
+                        uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].Background.Color", ColorParseUtil.colorToHexAlpha(purple));
+                        uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].OutlineColor", ColorParseUtil.colorToHexAlpha(purple));
+                        uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].OutlineSize", 1);
+                        var tooltip = MessageHelper.multiLine().append(Message.raw("Protected Region").bold(true).color(new Color(128, 0, 128)));
+                        tooltip = tooltip.nl().nl().append(Message.raw("*Cannot be claimed*").bold(true).color(Color.GRAY));
+                        uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].TooltipTextSpans", tooltip.build());
                     } else {
-                        tooltip = tooltip.nl().nl().append(Message.raw("*Create a party to claim*").bold(true).color(Color.GRAY));
+                        var tooltip = MessageHelper.multiLine().append(Message.raw("Wilderness" ).bold(true).color(Color.GREEN.darker()));
+                        if (playerParty != null) {
+                            tooltip = tooltip.nl().nl().append(Message.raw("*Left Click to claim*").bold(true).color(Color.GRAY));
+                            uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#ChunkCards[" + z + "][" + x + "]", EventData.of("Action", "LeftClicking:" + (chunkX + x - 8) + ":" + (chunkZ + z - 8)));
+                        } else {
+                            tooltip = tooltip.nl().nl().append(Message.raw("*Create a party to claim*").bold(true).color(Color.GRAY));
+                        }
+                        uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].TooltipTextSpans", tooltip.build());
                     }
-                    uiCommandBuilder.set("#ChunkCards[" + z + "][" + x + "].TooltipTextSpans", tooltip.build());
                 }
             }
         }

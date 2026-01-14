@@ -3,8 +3,10 @@ package com.buuz135.simpleclaims.commands.subcommand.chunk;
 import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.buuz135.simpleclaims.claim.tracking.ModifiedTracking;
 import com.buuz135.simpleclaims.commands.CommandMessages;
+import com.buuz135.simpleclaims.compat.OrbisGuardCompat;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.CommandSender;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
@@ -49,6 +51,13 @@ public class ClaimChunkCommand extends AbstractAsyncCommand {
                     var chunk = ClaimManager.getInstance().getChunkRawCoords(player.getWorld().getName(), (int) playerRef.getTransform().getPosition().getX(), (int) playerRef.getTransform().getPosition().getZ());
                         if (chunk != null) {
                             player.sendMessage(chunk.getPartyOwner().equals(party.getId()) ? CommandMessages.ALREADY_CLAIMED_BY_YOU : CommandMessages.ALREADY_CLAIMED_BY_ANOTHER_PLAYER);
+                            return;
+                        }
+                        // Check if OrbisGuard protects this chunk
+                        int chunkX = ChunkUtil.chunkCoordinate(playerRef.getTransform().getPosition().getX());
+                        int chunkZ = ChunkUtil.chunkCoordinate(playerRef.getTransform().getPosition().getZ());
+                        if (OrbisGuardCompat.isChunkProtected(player.getWorld().getName(), chunkX, chunkZ)) {
+                            player.sendMessage(CommandMessages.PROTECTED_BY_ORBISGUARD);
                             return;
                         }
                         if (!ClaimManager.getInstance().hasEnoughClaimsLeft(party)) {

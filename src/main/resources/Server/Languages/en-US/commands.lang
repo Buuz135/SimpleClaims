@@ -8,6 +8,7 @@ errors.simpleclaims.notYourClaim = This chunk doesn't belong to your party
 errors.simpleclaims.notEnoughChunks = Your party doesn't have enough chunks to claim this
 errors.simpleclaims.playerNotFound = Player not found
 errors.simpleclaims.cantClaimInThisDimension = You can't claim chunks in this dimension
+errors.simpleclaims.protectedByOrbisGuard = This area is protected by a region
 
 simpleclaims.partyCreated = Party Created
 info.simpleclaims.unclaimed = Chunk unclaimed
