@@ -22,6 +22,9 @@ public class SimpleClaimsConfig {
             .append(new KeyedCodec<Boolean>("ForceSimpleClaimsChunkWorldMap", Codec.BOOLEAN),
                     (simpleClaimsConfig, aDouble, extraInfo) -> simpleClaimsConfig.ForceSimpleClaimsChunkWorldMap = aDouble,
                     (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.ForceSimpleClaimsChunkWorldMap).add()
+            .append(new KeyedCodec<Boolean>("CreativeModeBypassProtection", Codec.BOOLEAN),
+                    (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.CreativeModeBypassProtection = value,
+                    (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.CreativeModeBypassProtection).add()
             .build();
 
     private int DefaultPartyClaimsAmount = 25;
@@ -30,6 +33,7 @@ public class SimpleClaimsConfig {
     private boolean DefaultPartyBlockInteractEnabled = false;
 
     private boolean ForceSimpleClaimsChunkWorldMap = true;
+    private boolean CreativeModeBypassProtection = false;
 
     public SimpleClaimsConfig() {
 
@@ -53,5 +57,9 @@ public class SimpleClaimsConfig {
 
     public boolean isForceSimpleClaimsChunkWorldMap() {
         return ForceSimpleClaimsChunkWorldMap;
+    }
+
+    public boolean isCreativeModeBypassProtection() {
+        return CreativeModeBypassProtection;
     }
 }

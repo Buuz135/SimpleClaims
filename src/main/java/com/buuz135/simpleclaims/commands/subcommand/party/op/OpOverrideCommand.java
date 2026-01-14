@@ -47,6 +47,7 @@ public class OpOverrideCommand extends AbstractAsyncCommand {
                             overridesList.add(playerRef.getUuid().toString());
                             player.sendMessage(CommandMessages.ENABLED_OVERRIDE);
                         }
+                        ClaimManager.getInstance().markDirty();
                     }
                 }, world);
             } else {

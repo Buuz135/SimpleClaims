@@ -94,6 +94,15 @@ public class ClaimManager {
             // TODO Create the file again
         }
 
+        try {
+            var adminOverridesFile = FileUtils.ensureFile(FileUtils.ADMIN_OVERRIDES_PATH, "{}");
+            var loadedOverrides = RawJsonReader.readSync(adminOverridesFile.toPath(), AdminOverridesStorage.CODEC, HytaleLogger.getLogger());
+            this.adminClaimOverrides = new ArrayList<>(loadedOverrides.getAdminOverrides());
+        } catch (IOException e) {
+            logger.at(Level.SEVERE).log("LOADING ADMIN OVERRIDES FILE ERROR");
+            logger.at(Level.SEVERE).log(e.getMessage());
+        }
+
         this.savingThread = new Thread(() -> {
             while (true) {
                 if (isDirty) {
@@ -119,6 +128,13 @@ public class ClaimManager {
                         var namesCacheFile = FileUtils.ensureFile(FileUtils.NAMES_CACHE_PATH, "{}");
                         this.playerNameTrackerBlockingFile.syncSave();
                     } catch (Exception e) {
+                        logger.at(Level.SEVERE).log(e.getMessage());
+                    }
+
+                    try {
+                        var adminOverridesFile = FileUtils.ensureFile(FileUtils.ADMIN_OVERRIDES_PATH, "{}");
+                        BsonUtil.writeSync(adminOverridesFile.toPath(), AdminOverridesStorage.CODEC, new AdminOverridesStorage(this.adminClaimOverrides), HytaleLogger.getLogger());
+                    } catch (IOException e) {
                         logger.at(Level.SEVERE).log(e.getMessage());
                     }
 
