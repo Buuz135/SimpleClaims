@@ -2,6 +2,7 @@ package com.buuz135.simpleclaims.claim;
 
 import com.buuz135.simpleclaims.claim.party.PartyInvite;
 import com.buuz135.simpleclaims.commands.CommandMessages;
+import com.buuz135.simpleclaims.files.AdminOverridesBlockingFile;
 import com.buuz135.simpleclaims.files.ClaimedChunkBlockingFile;
 import com.buuz135.simpleclaims.files.PartyBlockingFile;
 import com.buuz135.simpleclaims.files.PlayerNameTrackerBlockingFile;
@@ -10,20 +11,16 @@ import com.buuz135.simpleclaims.claim.chunk.ChunkInfo;
 import com.buuz135.simpleclaims.claim.party.PartyInfo;
 import com.buuz135.simpleclaims.claim.player_name.PlayerNameTracker;
 import com.buuz135.simpleclaims.claim.tracking.ModifiedTracking;
-import com.hypixel.hytale.codec.util.RawJsonReader;
 import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
-import com.hypixel.hytale.server.core.util.BsonUtil;
 
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -34,7 +31,6 @@ public class ClaimManager {
 
     private final Map<UUID, UUID> adminUsageParty;
     private final Map<UUID, PartyInvite> partyInvites;
-    private final Set<UUID> adminClaimOverrides;
     private final Map<UUID, UUID> playerToParty;
     private final Map<UUID, Integer> partyClaimCounts;
     private boolean needsMapUpdate;
@@ -44,6 +40,7 @@ public class ClaimManager {
     private PlayerNameTrackerBlockingFile playerNameTrackerBlockingFile;
     private PartyBlockingFile partyBlockingFile;
     private ClaimedChunkBlockingFile claimedChunkBlockingFile;
+    private AdminOverridesBlockingFile adminOverridesBlockingFile;
 
     public static ClaimManager getInstance() {
         return INSTANCE;
@@ -54,12 +51,12 @@ public class ClaimManager {
         this.needsMapUpdate = false;
         this.isDirty = false;
         this.partyInvites = new ConcurrentHashMap<>();
-        this.adminClaimOverrides = ConcurrentHashMap.newKeySet();
         this.playerToParty = new ConcurrentHashMap<>();
         this.partyClaimCounts = new ConcurrentHashMap<>();
         this.partyBlockingFile = new PartyBlockingFile();
         this.claimedChunkBlockingFile = new ClaimedChunkBlockingFile();
         this.playerNameTrackerBlockingFile = new PlayerNameTrackerBlockingFile();
+        this.adminOverridesBlockingFile = new AdminOverridesBlockingFile();
 
         FileUtils.ensureMainDirectory();
 
@@ -108,9 +105,8 @@ public class ClaimManager {
 
         try {
             var adminOverridesFile = FileUtils.ensureFile(FileUtils.ADMIN_OVERRIDES_PATH, "{}");
-            var loadedOverrides = RawJsonReader.readSync(adminOverridesFile.toPath(), AdminOverridesStorage.CODEC, HytaleLogger.getLogger());
-            this.adminClaimOverrides.addAll(loadedOverrides.getAdminOverrides());
-        } catch (IOException e) {
+            this.adminOverridesBlockingFile.syncLoad();
+        } catch (Exception e) {
             logger.at(Level.SEVERE).log("LOADING ADMIN OVERRIDES FILE ERROR");
             logger.at(Level.SEVERE).log(e.getMessage());
         }
@@ -145,8 +141,8 @@ public class ClaimManager {
 
                     try {
                         var adminOverridesFile = FileUtils.ensureFile(FileUtils.ADMIN_OVERRIDES_PATH, "{}");
-                        BsonUtil.writeSync(adminOverridesFile.toPath(), AdminOverridesStorage.CODEC, new AdminOverridesStorage(this.adminClaimOverrides), HytaleLogger.getLogger());
-                    } catch (IOException e) {
+                        this.adminOverridesBlockingFile.syncSave();
+                    } catch (Exception e) {
                         logger.at(Level.SEVERE).log(e.getMessage());
                     }
 
@@ -175,7 +171,7 @@ public class ClaimManager {
     }
 
     public boolean isAllowedToInteract(UUID playerUUID, String dimension, int chunkX, int chunkZ, Predicate<PartyInfo> interactMethod) {
-        if (adminClaimOverrides.contains(playerUUID)) return true;
+        if (adminOverridesBlockingFile.getAdminOverrides().contains(playerUUID)) return true;
 
         var chunkInfo = getChunkRawCoords(dimension, chunkX, chunkZ);
         if (chunkInfo == null) return true;
@@ -340,6 +336,6 @@ public class ClaimManager {
     }
 
     public Set<UUID> getAdminClaimOverrides() {
-        return adminClaimOverrides;
+        return adminOverridesBlockingFile.getAdminOverrides();
     }
 }
