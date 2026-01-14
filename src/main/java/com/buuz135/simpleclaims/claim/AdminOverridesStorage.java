@@ -5,33 +5,42 @@ import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class AdminOverridesStorage {
 
     public static final BuilderCodec<AdminOverridesStorage> CODEC = BuilderCodec.builder(AdminOverridesStorage.class, AdminOverridesStorage::new)
             .append(new KeyedCodec<>("AdminOverrides", new ArrayCodec<>(Codec.STRING, String[]::new)),
-                    (storage, overrides, extraInfo) -> storage.setAdminOverrides(Arrays.asList(overrides)),
-                    (storage, extraInfo) -> storage.getAdminOverrides().toArray(new String[0])).add()
+                    (storage, overrides, extraInfo) -> storage.setAdminOverridesFromStrings(Arrays.asList(overrides)),
+                    (storage, extraInfo) -> storage.getAdminOverridesAsStrings()).add()
             .build();
 
-    private List<String> adminOverrides;
+    private Set<UUID> adminOverrides;
 
     public AdminOverridesStorage() {
-        this.adminOverrides = new ArrayList<>();
+        this.adminOverrides = new HashSet<>();
     }
 
-    public AdminOverridesStorage(List<String> adminOverrides) {
-        this.adminOverrides = new ArrayList<>(adminOverrides);
+    public AdminOverridesStorage(Set<UUID> adminOverrides) {
+        this.adminOverrides = new HashSet<>(adminOverrides);
     }
 
-    public List<String> getAdminOverrides() {
+    public Set<UUID> getAdminOverrides() {
         return adminOverrides;
     }
 
-    public void setAdminOverrides(List<String> adminOverrides) {
-        this.adminOverrides = new ArrayList<>(adminOverrides);
+    public void setAdminOverrides(Set<UUID> adminOverrides) {
+        this.adminOverrides = new HashSet<>(adminOverrides);
+    }
+
+    private void setAdminOverridesFromStrings(List<String> strings) {
+        this.adminOverrides = new HashSet<>();
+        for (String s : strings) {
+            this.adminOverrides.add(UUID.fromString(s));
+        }
+    }
+
+    private String[] getAdminOverridesAsStrings() {
+        return adminOverrides.stream().map(UUID::toString).toArray(String[]::new);
     }
 }

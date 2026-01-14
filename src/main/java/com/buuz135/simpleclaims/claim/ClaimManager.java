@@ -109,7 +109,7 @@ public class ClaimManager {
         try {
             var adminOverridesFile = FileUtils.ensureFile(FileUtils.ADMIN_OVERRIDES_PATH, "{}");
             var loadedOverrides = RawJsonReader.readSync(adminOverridesFile.toPath(), AdminOverridesStorage.CODEC, HytaleLogger.getLogger());
-            this.adminClaimOverrides = new ArrayList<>(loadedOverrides.getAdminOverrides());
+            this.adminClaimOverrides.addAll(loadedOverrides.getAdminOverrides());
         } catch (IOException e) {
             logger.at(Level.SEVERE).log("LOADING ADMIN OVERRIDES FILE ERROR");
             logger.at(Level.SEVERE).log(e.getMessage());
