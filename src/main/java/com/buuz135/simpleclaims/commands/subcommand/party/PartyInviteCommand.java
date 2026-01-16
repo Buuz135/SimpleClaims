@@ -27,8 +27,8 @@ public class PartyInviteCommand extends AbstractAsyncCommand {
 
     public PartyInviteCommand() {
         super("invite", "Invites a player to your party");
-        this.setPermissionGroup(GameMode.Adventure);
         this.name = this.withRequiredArg("player", "The player name", ArgTypes.PLAYER_REF);
+        this.requirePermission(CommandMessages.BASE_PERM + "create-invite");
     }
 
     @NonNullDecl

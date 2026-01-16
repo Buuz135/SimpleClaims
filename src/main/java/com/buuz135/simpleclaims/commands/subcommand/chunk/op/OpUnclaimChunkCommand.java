@@ -22,7 +22,7 @@ public class OpUnclaimChunkCommand extends AbstractAsyncCommand {
 
     public OpUnclaimChunkCommand() {
         super("admin-unclaim", "Unclaims the chunk where you are");
-        this.setPermissionGroup(GameMode.Creative);
+        this.requirePermission(CommandMessages.ADMIN_PERM + "admin-unclaim");
     }
 
     @NonNullDecl

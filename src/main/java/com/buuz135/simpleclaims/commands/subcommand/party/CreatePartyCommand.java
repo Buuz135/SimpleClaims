@@ -23,7 +23,7 @@ public class CreatePartyCommand extends AbstractAsyncCommand {
 
     public CreatePartyCommand() {
         super("create", "Creates a new party");
-        this.setPermissionGroup(GameMode.Adventure);
+        this.requirePermission(CommandMessages.BASE_PERM + "create-party");
     }
 
     @NonNullDecl

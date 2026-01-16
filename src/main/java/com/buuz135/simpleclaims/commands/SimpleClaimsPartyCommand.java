@@ -10,6 +10,7 @@ import com.buuz135.simpleclaims.gui.PartyInfoEditGui;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.GameMode;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.CommandSender;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
@@ -28,7 +29,7 @@ public class SimpleClaimsPartyCommand extends AbstractAsyncCommand {
     public SimpleClaimsPartyCommand() {
         super("simpleclaimsparty", "Simple Claims Party Commands" );
         this.addAliases("scp", "sc-party");
-        this.setPermissionGroup(GameMode.Adventure);
+        this.requirePermission(CommandMessages.BASE_PERM + "edit-party");
 
         this.addSubCommand(new CreatePartyCommand());
         this.addSubCommand(new PartyInviteCommand());

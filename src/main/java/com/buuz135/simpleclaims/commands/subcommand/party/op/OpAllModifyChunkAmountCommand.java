@@ -28,8 +28,8 @@ public class OpAllModifyChunkAmountCommand extends AbstractAsyncCommand {
 
     public OpAllModifyChunkAmountCommand() {
         super("admin-modify-chunk-all", "Changes the chunk amount limit of all parties");
-        this.setPermissionGroup(GameMode.Creative);
         this.amount = this.withRequiredArg("amount", "The amount of chunks the party can claim", ArgTypes.INTEGER);
+        this.requirePermission(CommandMessages.ADMIN_PERM + "admin-modify-chunk-all");
     }
 
     @NonNullDecl

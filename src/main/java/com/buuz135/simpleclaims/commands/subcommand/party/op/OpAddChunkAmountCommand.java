@@ -21,9 +21,9 @@ public class OpAddChunkAmountCommand extends AbstractAsyncCommand {
 
     public OpAddChunkAmountCommand() {
         super("add-chunk-amount", "Add the specified amount of chunks to the party of the specified player name");
-        this.setPermissionGroup(GameMode.Creative);
         this.name = this.withRequiredArg("player-name", "The player name", ArgTypes.STRING);
         this.amount = this.withRequiredArg("amount", "The amount of chunks the party can claim", ArgTypes.INTEGER);
+        this.requirePermission(CommandMessages.ADMIN_PERM + "add-chunk-amount");
     }
 
     @NonNullDecl

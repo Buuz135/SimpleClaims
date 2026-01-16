@@ -14,6 +14,8 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
+import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.entities.player.pages.InteractiveCustomUIPage;
 import com.hypixel.hytale.server.core.ui.DropdownEntryInfo;
 import com.hypixel.hytale.server.core.ui.LocalizableString;
@@ -52,8 +54,8 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
     @Override
     public void handleDataEvent(@NonNullDecl Ref<EntityStore> ref, @NonNullDecl Store<EntityStore> store, @NonNullDecl PartyInfoData data) {
         super.handleDataEvent(ref, store, data);
-        var player = store.getComponent(ref, PlayerRef.getComponentType());
-        var playerCanModify = this.info.isOwner(player.getUuid()) || this.isOpEdit;
+        var player = store.getComponent(ref, Player.getComponentType());
+        var playerCanModify = this.info.isOwner(playerRef.getUuid()) || this.isOpEdit;
         if (!playerCanModify) {
             UICommandBuilder commandBuilder = new UICommandBuilder();
             UIEventBuilder eventBuilder = new UIEventBuilder();
@@ -147,18 +149,22 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
         }
         if (data.button != null) {
             if (data.button.equals("Invite") && this.inviteDropdown != null) {
-                if (!this.info.isMember(UUID.fromString(this.inviteDropdown))) {
-                    var invited = Universe.get().getPlayer(UUID.fromString(this.inviteDropdown));
-                    if (invited != null) {
-                        ClaimManager.getInstance().invitePlayerToParty(this.playerRef, this.info, invited);
-                        ClaimManager.getInstance().markDirty();
-                        invited.sendMessage(CommandMessages.PARTY_INVITE_RECEIVED.param("party_name", this.info.getName()).param("username", this.playerRef.getUsername()));
-                        UICommandBuilder commandBuilder = new UICommandBuilder();
-                        UIEventBuilder eventBuilder = new UIEventBuilder();
-                        this.build(ref, commandBuilder, eventBuilder, store);
-                        this.sendUpdate(commandBuilder, eventBuilder, true);
-                        return;
+                if (player.hasPermission(CommandMessages.BASE_PERM + "create-invite")) {
+                    if (!this.info.isMember(UUID.fromString(this.inviteDropdown))) {
+                        var invited = Universe.get().getPlayer(UUID.fromString(this.inviteDropdown));
+                        if (invited != null) {
+                            ClaimManager.getInstance().invitePlayerToParty(this.playerRef, this.info, invited);
+                            ClaimManager.getInstance().markDirty();
+                            invited.sendMessage(CommandMessages.PARTY_INVITE_RECEIVED.param("party_name", this.info.getName()).param("username", this.playerRef.getUsername()));
+                            UICommandBuilder commandBuilder = new UICommandBuilder();
+                            UIEventBuilder eventBuilder = new UIEventBuilder();
+                            this.build(ref, commandBuilder, eventBuilder, store);
+                            this.sendUpdate(commandBuilder, eventBuilder, true);
+                            return;
+                        }
                     }
+                } else {
+                    playerRef.sendMessage(Message.translation("commands.parsing.error.noPermissionForCommand"));
                 }
             }
             if (data.button.equals("Allies") && this.alliesDropdown != null) {

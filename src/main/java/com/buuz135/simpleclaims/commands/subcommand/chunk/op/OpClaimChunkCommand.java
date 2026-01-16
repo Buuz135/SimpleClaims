@@ -22,7 +22,7 @@ public class OpClaimChunkCommand extends AbstractAsyncCommand {
 
     public OpClaimChunkCommand() {
         super("admin-claim", "Claims the chunk where you are, must have selected a party first using the /scp admin-party-list command");
-        this.setPermissionGroup(GameMode.Creative);
+        this.requirePermission(CommandMessages.ADMIN_PERM + "admin-claim");
     }
 
     @NonNullDecl

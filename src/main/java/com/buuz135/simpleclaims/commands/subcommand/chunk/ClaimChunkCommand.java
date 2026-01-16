@@ -21,6 +21,7 @@ public class ClaimChunkCommand extends AbstractAsyncCommand {
 
     public ClaimChunkCommand() {
         super("claim", "Claims the chunk where you are");
+        this.requirePermission(CommandMessages.BASE_PERM + "claim");
     }
 
     @NonNullDecl

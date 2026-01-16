@@ -27,7 +27,7 @@ public class OpChunkGuiCommand extends AbstractAsyncCommand {
 
     public OpChunkGuiCommand() {
         super("admin-chunk", "Opens the chunk claim gui in op mode to claim chunks using the selected admin party");
-        this.setPermissionGroup(GameMode.Creative);
+        this.requirePermission(CommandMessages.ADMIN_PERM + "admin-chunk");
     }
 
     @NonNullDecl

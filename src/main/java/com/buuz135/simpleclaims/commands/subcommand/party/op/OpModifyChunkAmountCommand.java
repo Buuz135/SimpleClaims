@@ -28,8 +28,8 @@ public class OpModifyChunkAmountCommand extends AbstractAsyncCommand {
 
     public OpModifyChunkAmountCommand() {
         super("admin-modify-chunk", "Changes the chunk amount limit of a party, must have selected a party first using the /scp admin-party-list command");
-        this.setPermissionGroup(GameMode.Creative);
         this.amount = this.withRequiredArg("amount", "The amount of chunks the party can claim", ArgTypes.INTEGER);
+        this.requirePermission(CommandMessages.ADMIN_PERM + "admin-modify-chunk");
     }
 
     @NonNullDecl
