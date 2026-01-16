@@ -28,9 +28,18 @@ public class SimpleClaimsConfig {
             .append(new KeyedCodec<Boolean>("DefaultPartyPVPEnabled", Codec.BOOLEAN),
                     (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.DefaultPartyPVPEnabled = value,
                     (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.DefaultPartyPVPEnabled).add()
-            .append(new KeyedCodec<Boolean>("AllowPartyPVPSetting", Codec.BOOLEAN),
+            .append(new KeyedCodec<Boolean>("AllowPartyPVPSettingChanges", Codec.BOOLEAN),
                     (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.AllowPartyPVPSetting = value,
                     (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.AllowPartyPVPSetting).add()
+            .append(new KeyedCodec<Boolean>("AllowPartyPlaceBlockSettingChanges", Codec.BOOLEAN),
+                    (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.AllowPartyPlaceBlockSetting = value,
+                    (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.AllowPartyPlaceBlockSetting).add()
+            .append(new KeyedCodec<Boolean>("AllowPartyBreakBlockSettingChanges", Codec.BOOLEAN),
+                    (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.AllowPartyBreakBlockSetting = value,
+                    (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.AllowPartyBreakBlockSetting).add()
+            .append(new KeyedCodec<Boolean>("AllowPartyInteractBlockSettingChanges", Codec.BOOLEAN),
+                    (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.AllowPartyInteractBlockSetting = value,
+                    (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.AllowPartyInteractBlockSetting).add()
             .append(new KeyedCodec<String[]>("WorldClaimBlacklist", Codec.STRING_ARRAY),
                     (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.WorldNameBlacklistForClaiming = value,
                     (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.WorldNameBlacklistForClaiming).add()
@@ -42,6 +51,9 @@ public class SimpleClaimsConfig {
     private boolean DefaultPartyBlockInteractEnabled = false;
     private boolean DefaultPartyPVPEnabled = false;
     private boolean AllowPartyPVPSetting = true;
+    private boolean AllowPartyPlaceBlockSetting = true;
+    private boolean AllowPartyBreakBlockSetting = true;
+    private boolean AllowPartyInteractBlockSetting = true;
     private String[] WorldNameBlacklistForClaiming = new String[0];
 
     private boolean ForceSimpleClaimsChunkWorldMap = true;
@@ -85,5 +97,17 @@ public class SimpleClaimsConfig {
 
     public String[] getWorldNameBlacklistForClaiming() {
         return WorldNameBlacklistForClaiming;
+    }
+
+    public boolean isAllowPartyPlaceBlockSetting() {
+        return AllowPartyPlaceBlockSetting;
+    }
+
+    public boolean isAllowPartyBreakBlockSetting() {
+        return AllowPartyBreakBlockSetting;
+    }
+
+    public boolean isAllowPartyInteractBlockSetting() {
+        return AllowPartyInteractBlockSetting;
     }
 }

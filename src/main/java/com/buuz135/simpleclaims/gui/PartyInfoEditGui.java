@@ -308,13 +308,17 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#CancelButton", EventData.of("Cancel", "true"), false);
 
         uiCommandBuilder.set("#PlaceBlocksSetting #CheckBox.Value", this.info.isBlockPlaceEnabled());
-        uiCommandBuilder.set("#PlaceBlocksSetting #CheckBox.Disabled", !playerCanModify);
+        if (!isOpEdit)
+            uiCommandBuilder.set("#PlaceBlocksSetting #CheckBox.Disabled", !playerCanModify || !Main.CONFIG.get().isAllowPartyBreakBlockSetting());
         uiCommandBuilder.set("#BreakBlocksSetting #CheckBox.Value", this.info.isBlockBreakEnabled());
-        uiCommandBuilder.set("#BreakBlocksSetting #CheckBox.Disabled", !playerCanModify);
+        if (!isOpEdit)
+            uiCommandBuilder.set("#BreakBlocksSetting #CheckBox.Disabled", !playerCanModify || !Main.CONFIG.get().isAllowPartyPlaceBlockSetting());
         uiCommandBuilder.set("#InteractBlocksSetting #CheckBox.Value",this.info.isBlockInteractEnabled());
-        uiCommandBuilder.set("#InteractBlocksSetting #CheckBox.Disabled", !playerCanModify);
+        if (!isOpEdit)
+            uiCommandBuilder.set("#InteractBlocksSetting #CheckBox.Disabled", !playerCanModify || !Main.CONFIG.get().isAllowPartyInteractBlockSetting());
         uiCommandBuilder.set("#PVPSetting #CheckBox.Value", this.info.isPVPEnabled());
-        uiCommandBuilder.set("#PVPSetting #CheckBox.Disabled", !playerCanModify || !Main.CONFIG.get().isAllowPartyPVPSetting());
+        if (!isOpEdit)
+            uiCommandBuilder.set("#PVPSetting #CheckBox.Disabled", !playerCanModify || !Main.CONFIG.get().isAllowPartyPVPSetting());
 
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.ValueChanged, "#PlaceBlocksSetting #CheckBox", EventData.of("RemoveButtonAction", "PlaceBlocksSetting:0"), false);
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.ValueChanged, "#BreakBlocksSetting #CheckBox", EventData.of("RemoveButtonAction", "BreakBlocksSetting:0"), false);

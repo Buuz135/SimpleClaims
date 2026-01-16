@@ -7,6 +7,8 @@
 * Added a command to add chunk to a party based on a player name /scp add-chunk-amount <player> <amount>
 * Added a dimension blacklist config option, to blacklist which dimension players can claim chunks in
 * Added custom permissions for everything, closes #53
+* Added config option to disable toggling the party settings, like place block, break block, interact block, AND THE
+  OPTION FOR PVP HAS BEEN RENAMED, closes #42 and allow admins to modify those settings even if disabled closes #43
 
 # 1.0.12
 
