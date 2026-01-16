@@ -325,8 +325,10 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.ValueChanged, "#ClaimColorPicker", EventData.of("@ClaimColor", "#ClaimColorPicker.Value"), false);
 
         //Invite Dropdowns
-        var players = new ArrayList<>(Universe.get().getPlayers().stream().map(playerRef1 -> new DropdownEntryInfo(LocalizableString.fromString(playerRef1.getUsername()), playerRef1.getUuid().toString())).toList());
+        var players = new ArrayList<>(Universe.get().getPlayers().stream().filter(playerRef1 -> ClaimManager.getInstance().getPartyFromPlayer(playerRef1.getUuid()) == null)
+                .map(playerRef1 -> new DropdownEntryInfo(LocalizableString.fromString(playerRef1.getUsername()), playerRef1.getUuid().toString())).toList());
         uiCommandBuilder.set("#InviteDropdown.Entries", players);
+        players = new ArrayList<>(Universe.get().getPlayers().stream().map(playerRef1 -> new DropdownEntryInfo(LocalizableString.fromString(playerRef1.getUsername()), playerRef1.getUuid().toString())).toList());
         var parties = ClaimManager.getInstance().getParties().values().stream().map(party -> new DropdownEntryInfo(LocalizableString.fromString("[PAR] " + party.getName()), party.getId().toString())).toList();
         players.addAll(parties);
         uiCommandBuilder.set("#AlliesDropdown.Entries", players);

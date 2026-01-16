@@ -1,3 +1,7 @@
+# 1.0.13
+
+* Filter out players that have a party from the invite dropdown
+
 # 1.0.12
 
 * Changed custom map to use the default map settings, closes #37
