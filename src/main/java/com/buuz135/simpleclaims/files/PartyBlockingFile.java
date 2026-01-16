@@ -62,6 +62,12 @@ public class PartyBlockingFile extends BlockingDiskFile {
                     modifiedTracker.get("UserName").getAsString(),
                     modifiedTracker.get("Date").getAsString()
             ));
+            if (party.has("PartyAllies")) {
+                party.get("PartyAllies").getAsJsonArray().forEach(jsonElement1 -> partyInfo.addPartyAllies(UUID.fromString(jsonElement1.getAsString())));
+            }
+            if (party.has("PlayerAllies")) {
+                party.get("PlayerAllies").getAsJsonArray().forEach(jsonElement1 -> partyInfo.addPlayerAllies(UUID.fromString(jsonElement1.getAsString())));
+            }
             parties.put(partyInfo.getId().toString(), partyInfo);
         });
     }
@@ -103,6 +109,12 @@ public class PartyBlockingFile extends BlockingDiskFile {
             modifiedTracker.addProperty("UserName", partyInfo.getModifiedTracked().getUserName());
             modifiedTracker.addProperty("Date", partyInfo.getModifiedTracked().getDate());
             party.add("ModifiedTracker", modifiedTracker);
+            JsonArray partyAllies = new JsonArray();
+            partyInfo.getPartyAllies().forEach(uuid -> partyAllies.add(uuid.toString()));
+            party.add("PartyAllies", partyAllies);
+            JsonArray playerAllies = new JsonArray();
+            partyInfo.getPlayerAllies().forEach(uuid -> playerAllies.add(uuid.toString()));
+            party.add("PlayerAllies", playerAllies);
             partiesArray.add(party);
         });
         root.add("Parties", partiesArray);

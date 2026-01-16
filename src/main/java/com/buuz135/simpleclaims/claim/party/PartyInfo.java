@@ -1,6 +1,7 @@
 package com.buuz135.simpleclaims.claim.party;
 
 import com.buuz135.simpleclaims.Main;
+import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.buuz135.simpleclaims.claim.tracking.ModifiedTracking;
 
 import javax.annotation.Nullable;
@@ -12,25 +13,31 @@ public class PartyInfo {
     private UUID owner;
     private String name;
     private String description;
-    private final Set<UUID> memberSet = new HashSet<>();
+    private final Set<UUID> memberSet;
     private int color;
-    private final Map<String, PartyOverride> overrideMap = new HashMap<>();
+    private final Map<String, PartyOverride> overrideMap;
     private ModifiedTracking createdTracked;
     private ModifiedTracking modifiedTracked;
+    private final Set<UUID> partyAllies;
+    private final Set<UUID> playerAllies;
 
     public PartyInfo(UUID id, UUID owner, String name, String description, UUID[] members, int color) {
         this.id = id;
         this.owner = owner;
         this.name = name;
         this.description = description;
+        this.memberSet = new HashSet<>();
         this.memberSet.addAll(Arrays.asList(members));
         this.color = color;
+        this.overrideMap = new HashMap<>();
         setOverride(new PartyOverride(PartyOverrides.CLAIM_CHUNK_AMOUNT, new PartyOverride.PartyOverrideValue("integer", Main.CONFIG.get().getDefaultPartyClaimsAmount())));
         setOverride(new PartyOverride(PartyOverrides.PARTY_PROTECTION_PLACE_BLOCKS, new PartyOverride.PartyOverrideValue("bool", Main.CONFIG.get().isDefaultPartyBlockPlaceEnabled())));
         setOverride(new PartyOverride(PartyOverrides.PARTY_PROTECTION_BREAK_BLOCKS, new PartyOverride.PartyOverrideValue("bool", Main.CONFIG.get().isDefaultPartyBlockBreakEnabled())));
         setOverride(new PartyOverride(PartyOverrides.PARTY_PROTECTION_INTERACT, new PartyOverride.PartyOverrideValue("bool", Main.CONFIG.get().isDefaultPartyBlockInteractEnabled())));
         this.createdTracked = new ModifiedTracking();
         this.modifiedTracked = new ModifiedTracking();
+        this.partyAllies = new HashSet<>();
+        this.playerAllies = new HashSet<>();
     }
 
     public PartyInfo() {
@@ -102,26 +109,13 @@ public class PartyInfo {
         return new ArrayList<>(overrideMap.values());
     }
 
-    public void setOverrides(List<PartyOverride> overrides) {
-        this.overrideMap.clear();
-        for (PartyOverride override : overrides) {
-            this.overrideMap.put(override.getType(), override);
-        }
-    }
-
-    public void setOverrides(PartyOverride[] overrides) {
-        this.overrideMap.clear();
-        for (PartyOverride override : overrides) {
-            this.overrideMap.put(override.getType(), override);
-        }
-    }
-
     public void addMember(UUID uuid){
         memberSet.add(uuid);
     }
 
     public void removeMember(UUID uuid){
         memberSet.remove(uuid);
+        ClaimManager.getInstance().getPlayerToParty().remove(uuid);
     }
 
     public int getMaxClaimAmount(){
@@ -156,7 +150,18 @@ public class PartyInfo {
         return Main.CONFIG.get().isDefaultPartyBlockInteractEnabled();
     }
 
+    public boolean isPVPEnabled() {
+        var override = this.getOverride(PartyOverrides.PARTY_PROTECTION_PVP);
+        if (override != null) {
+            return (Boolean) override.getValue().getTypedValue();
+        }
+        return Main.CONFIG.get().isDefaultPartyPVPEnabled();
+    }
+
     public void setOverride(PartyOverride override){
+        if (override.getType().equals(PartyOverrides.CLAIM_CHUNK_AMOUNT)
+                && (int) override.getValue().tryGetTypedValue().orElse(0) == Main.CONFIG.get().getDefaultPartyClaimsAmount())
+            return;
         overrideMap.put(override.getType(), override);
     }
 
@@ -178,6 +183,30 @@ public class PartyInfo {
 
     public void setModifiedTracked(ModifiedTracking modifiedTracked) {
         this.modifiedTracked = modifiedTracked;
+    }
+
+    public Set<UUID> getPartyAllies() {
+        return partyAllies;
+    }
+
+    public Set<UUID> getPlayerAllies() {
+        return playerAllies;
+    }
+
+    public void addPartyAllies(UUID uuid) {
+        partyAllies.add(uuid);
+    }
+
+    public void removePartyAllies(UUID uuid) {
+        partyAllies.remove(uuid);
+    }
+
+    public void addPlayerAllies(UUID uuid) {
+        playerAllies.add(uuid);
+    }
+
+    public void removePlayerAllies(UUID uuid) {
+        playerAllies.remove(uuid);
     }
 
     @Override

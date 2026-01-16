@@ -24,7 +24,7 @@ public class OpOverrideCommand extends AbstractAsyncCommand {
 
     public OpOverrideCommand() {
         super("admin-override", "Toggles ignoring all the chunk restrictions for all parties");
-        this.setPermissionGroup(GameMode.Creative);
+        this.requirePermission(CommandMessages.ADMIN_PERM + "admin-override");
     }
 
     @NonNullDecl

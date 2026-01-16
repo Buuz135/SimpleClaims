@@ -24,7 +24,7 @@ public class PartyAcceptCommand extends AbstractAsyncCommand {
 
     public PartyAcceptCommand() {
         super("invite-accept", "Accepts your most recent party invite");
-        this.setPermissionGroup(GameMode.Adventure);
+        this.requirePermission(CommandMessages.BASE_PERM + "accept-invite");
     }
 
     @NonNullDecl

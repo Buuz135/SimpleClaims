@@ -39,7 +39,7 @@ public class PickupInteractEventSystem extends EntityEventSystem<EntityStore, In
                 (int) playerRef.getTransform().getPosition().getX(),
                 (int) playerRef.getTransform().getPosition().getZ(),
                 PartyInfo::isBlockInteractEnabled)) {
-            event.setCancelled(true);
+            event.setCancelled(true); // Doesnt currently work, it gets ignored
         }
     }
 

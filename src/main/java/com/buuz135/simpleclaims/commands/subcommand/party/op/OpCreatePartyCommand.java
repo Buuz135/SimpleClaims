@@ -30,8 +30,8 @@ public class OpCreatePartyCommand extends AbstractAsyncCommand {
 
     public OpCreatePartyCommand() {
         super("admin-create", "Creates a new party");
-        this.setPermissionGroup(GameMode.Creative);
         this.name = this.withRequiredArg("party-name", "The name of the party to create (Can be changed later)", ArgTypes.STRING);
+        this.requirePermission(CommandMessages.ADMIN_PERM + "admin-create-party");
     }
 
     @NonNullDecl
@@ -49,7 +49,7 @@ public class OpCreatePartyCommand extends AbstractAsyncCommand {
                     if (playerRef != null) {
                         var party = ClaimManager.getInstance().getPartyFromPlayer(playerRef.getUuid());
 
-                        party = ClaimManager.getInstance().createParty(player, playerRef);
+                        party = ClaimManager.getInstance().createParty(player, playerRef, true);
                         party.setName(commandName);
                         party.setOwner(UUID.randomUUID());
                         party.setMembers(new UUID[]{});

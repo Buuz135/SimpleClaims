@@ -26,7 +26,7 @@ public class OpPartyListCommand extends AbstractAsyncCommand {
 
     public OpPartyListCommand() {
         super("admin-party-list", "Shows all the parties and allows you to edit them");
-        this.setPermissionGroup(GameMode.Creative);
+        this.requirePermission(CommandMessages.ADMIN_PERM + "admin-party-list");
     }
 
     @NonNullDecl

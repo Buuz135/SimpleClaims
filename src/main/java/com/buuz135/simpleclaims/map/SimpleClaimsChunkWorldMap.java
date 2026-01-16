@@ -6,6 +6,7 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.map.WorldMap;
 import com.hypixel.hytale.server.core.universe.world.worldmap.IWorldMap;
 import com.hypixel.hytale.server.core.universe.world.worldmap.WorldMapSettings;
+import com.hypixel.hytale.server.core.universe.world.worldmap.provider.chunk.ChunkWorldMap;
 import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongSet;
 
@@ -19,11 +20,7 @@ public class SimpleClaimsChunkWorldMap implements IWorldMap {
 
     @Override
     public WorldMapSettings getWorldMapSettings() {
-        UpdateWorldMapSettings settingsPacket = new UpdateWorldMapSettings();
-        settingsPacket.defaultScale = 128.0F;
-        settingsPacket.minScale = 64.0F;
-        settingsPacket.maxScale = 128.0F;
-        return new WorldMapSettings(null, 3.0F, 1.0F, 16, 32, settingsPacket);
+        return ChunkWorldMap.INSTANCE.getWorldMapSettings();
     }
 
     @Override

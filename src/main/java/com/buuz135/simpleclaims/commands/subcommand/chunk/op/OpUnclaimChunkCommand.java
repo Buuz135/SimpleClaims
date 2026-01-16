@@ -22,7 +22,7 @@ public class OpUnclaimChunkCommand extends AbstractAsyncCommand {
 
     public OpUnclaimChunkCommand() {
         super("admin-unclaim", "Unclaims the chunk where you are");
-        this.setPermissionGroup(GameMode.Creative);
+        this.requirePermission(CommandMessages.ADMIN_PERM + "admin-unclaim");
     }
 
     @NonNullDecl
@@ -43,6 +43,7 @@ public class OpUnclaimChunkCommand extends AbstractAsyncCommand {
                             return;
                         }
                         ClaimManager.getInstance().unclaimRawCoords(player.getWorld().getName(), (int) playerRef.getTransform().getPosition().getX(), (int) playerRef.getTransform().getPosition().getZ());
+                        ClaimManager.getInstance().queueMapUpdate(player.getWorld(), chunk.getChunkX(), chunk.getChunkZ());
                         player.sendMessage(CommandMessages.UNCLAIMED);
                     }
                 }, world);

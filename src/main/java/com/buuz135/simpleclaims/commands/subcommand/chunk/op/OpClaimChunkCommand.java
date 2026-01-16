@@ -22,7 +22,7 @@ public class OpClaimChunkCommand extends AbstractAsyncCommand {
 
     public OpClaimChunkCommand() {
         super("admin-claim", "Claims the chunk where you are, must have selected a party first using the /scp admin-party-list command");
-        this.setPermissionGroup(GameMode.Creative);
+        this.requirePermission(CommandMessages.ADMIN_PERM + "admin-claim");
     }
 
     @NonNullDecl
@@ -57,6 +57,7 @@ public class OpClaimChunkCommand extends AbstractAsyncCommand {
                         return;
                     }
                     var chunkInfo = ClaimManager.getInstance().claimChunkByRawCoords(player.getWorld().getName(), (int) playerRef.getTransform().getPosition().getX(), (int) playerRef.getTransform().getPosition().getZ(), party, player, playerRef);
+                    ClaimManager.getInstance().queueMapUpdate(player.getWorld(), chunkInfo.getChunkX(), chunkInfo.getChunkZ());
                     player.sendMessage(CommandMessages.CLAIMED);
                 }, world);
             } else {

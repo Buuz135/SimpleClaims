@@ -10,6 +10,7 @@ import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.protocol.packets.interface_.CustomPageLifetime;
 import com.hypixel.hytale.protocol.packets.interface_.CustomUIEventBindingType;
 import com.hypixel.hytale.server.core.Message;
@@ -21,6 +22,7 @@ import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import java.awt.*;
@@ -74,6 +76,7 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
                     var selectedParty = ClaimManager.getInstance().getPartyById(selectedPartyID);
                     if (chunk == null && selectedParty != null && ClaimManager.getInstance().hasEnoughClaimsLeft(selectedParty)) {
                         var chunkInfo = ClaimManager.getInstance().claimChunkBy(dimension, x, z, selectedParty, playerInstance, playerRef);
+                        ClaimManager.getInstance().queueMapUpdate(playerInstance.getWorld(), x, z);
                         ClaimManager.getInstance().markDirty();
                     }
                 } else {
@@ -90,6 +93,7 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
                     var chunk = ClaimManager.getInstance().getChunk(dimension, x, z);
                     if (chunk == null && ClaimManager.getInstance().hasEnoughClaimsLeft(playerParty)) {
                         var chunkInfo = ClaimManager.getInstance().claimChunkBy(dimension, x, z, playerParty, playerInstance, playerRef);
+                        ClaimManager.getInstance().queueMapUpdate(playerInstance.getWorld(), x, z);
                         ClaimManager.getInstance().markDirty();
                     }
                 }
@@ -105,12 +109,14 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
                     }
                     if (chunk != null && selectedPartyID.equals(chunk.getPartyOwner())) {
                         ClaimManager.getInstance().unclaim(dimension, x, z);
+                        ClaimManager.getInstance().queueMapUpdate(playerInstance.getWorld(), x, z);
                         ClaimManager.getInstance().markDirty();
                     }
                 } else {
                     var chunk = ClaimManager.getInstance().getChunk(dimension, x, z);
                     if (chunk != null && chunk.getPartyOwner().equals(playerParty.getId())) {
                         ClaimManager.getInstance().unclaim(dimension, x, z);
+                        ClaimManager.getInstance().queueMapUpdate(playerInstance.getWorld(), x, z);
                         ClaimManager.getInstance().markDirty();
                     }
                 }

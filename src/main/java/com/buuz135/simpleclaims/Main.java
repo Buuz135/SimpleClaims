@@ -6,10 +6,7 @@ import com.buuz135.simpleclaims.commands.SimpleClaimsPartyCommand;
 import com.buuz135.simpleclaims.config.SimpleClaimsConfig;
 import com.buuz135.simpleclaims.map.SimpleClaimsChunkWorldMap;
 import com.buuz135.simpleclaims.map.SimpleClaimsWorldMapProvider;
-import com.buuz135.simpleclaims.systems.events.BreakBlockEventSystem;
-import com.buuz135.simpleclaims.systems.events.InteractEventSystem;
-import com.buuz135.simpleclaims.systems.events.PickupInteractEventSystem;
-import com.buuz135.simpleclaims.systems.events.PlaceBlockEventSystem;
+import com.buuz135.simpleclaims.systems.events.*;
 import com.buuz135.simpleclaims.systems.tick.TitleTickingSystem;
 
 import com.buuz135.simpleclaims.systems.tick.WorldMapUpdateTickingSystem;
@@ -27,6 +24,7 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.events.AddWorldEvent;
 import com.hypixel.hytale.server.core.universe.world.events.RemoveWorldEvent;
 import com.hypixel.hytale.server.core.universe.world.worldmap.provider.IWorldMapProvider;
+import com.hypixel.hytale.server.core.universe.world.worldmap.provider.chunk.WorldGenWorldMapProvider;
 import com.hypixel.hytale.server.core.util.Config;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
@@ -49,12 +47,14 @@ public class Main extends JavaPlugin {
     @Override
     protected void setup() {
         super.setup();
+        CONFIG.save();
         this.getEntityStoreRegistry().registerSystem(new BreakBlockEventSystem());
         this.getEntityStoreRegistry().registerSystem(new PlaceBlockEventSystem());
         this.getEntityStoreRegistry().registerSystem(new InteractEventSystem());
         this.getEntityStoreRegistry().registerSystem(new PickupInteractEventSystem());
         this.getEntityStoreRegistry().registerSystem(new TitleTickingSystem());
-        //this.getChunkStoreRegistry().registerSystem(new WorldMapUpdateTickingSystem());
+        this.getEntityStoreRegistry().registerSystem(new CustomDamageEventSystem());
+        this.getChunkStoreRegistry().registerSystem(new WorldMapUpdateTickingSystem());
         this.getCommandRegistry().registerCommand(new SimpleClaimProtectCommand());
         this.getCommandRegistry().registerCommand(new SimpleClaimsPartyCommand());
 
@@ -66,8 +66,12 @@ public class Main extends JavaPlugin {
             WORLDS.put(event.getWorld().getName(), event.getWorld());
             this.getLogger().at(Level.INFO).log("Registered world: " + event.getWorld().getName());
 
-            if (CONFIG.get().isForceSimpleClaimsChunkWorldMap() && !event.getWorld().getWorldConfig().isDeleteOnRemove() && ClaimManager.getInstance().canClaimInDimension(event.getWorld()))
+            if (CONFIG.get().isForceSimpleClaimsChunkWorldMap() && !event.getWorld().getWorldConfig().isDeleteOnRemove()) {
+                this.getLogger().at(Level.INFO).log("Registered map for world: " + event.getWorld().getName());
                 event.getWorld().getWorldConfig().setWorldMapProvider(new SimpleClaimsWorldMapProvider());
+            } else {
+                event.getWorld().getWorldConfig().setWorldMapProvider(new WorldGenWorldMapProvider());
+            }
         });
 
         this.getEventRegistry().registerGlobal(RemoveWorldEvent.class, (event) -> {

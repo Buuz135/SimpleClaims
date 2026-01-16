@@ -1,5 +1,22 @@
 $C = "../Common.ui";
 
+@CustomLabelStyle = LabelStyle(
+  FontSize: 14,
+  TextColor: #bfcdd5,
+  RenderBold: true,
+  RenderUppercase: true,
+  HorizontalAlignment: Center,
+  VerticalAlignment: Center
+);
+
+@CustomStyle = TextButtonStyle(
+  Default: (Background: $C.@DefaultSquareButtonDefaultBackground, LabelStyle: @CustomLabelStyle),
+  Hovered: (Background: $C.@DefaultSquareButtonHoveredBackground, LabelStyle: @CustomLabelStyle),
+  Pressed: (Background: $C.@DefaultSquareButtonPressedBackground, LabelStyle: @CustomLabelStyle),
+  Disabled: (Background: $C.@DefaultSquareButtonDisabledBackground, LabelStyle: @CustomLabelStyle),
+  Sounds: $C.@ButtonSounds,
+);
+
 $C.@PageOverlay {
 
   $C.@Container {
@@ -103,7 +120,7 @@ $C.@PageOverlay {
 
         // Party Settings
         Label #MemberList {
-          Text: "Chunk Protection Settings";
+          Text: "Non-Members Protection Settings";
           Style: (
             RenderUppercase: true,
             RenderBold: true,
@@ -128,6 +145,10 @@ $C.@PageOverlay {
 
           $C.@CheckBoxWithLabel #InteractBlocksSetting {
             @Text = "Allow Block Interact";
+            Padding: (Bottom: 4);
+          }
+          $C.@CheckBoxWithLabel #PVPSetting {
+            @Text = "PVP";
             Padding: (Bottom: 4);
           }
         }
@@ -156,10 +177,77 @@ $C.@PageOverlay {
               );
             Anchor: (Bottom: 5);
           }
+          Group {
+            LayoutMode: Left;
+            Anchor: (Bottom: 10);
+            Padding: (Bottom: 2);
+            Label {
+              Text: "Invite:";
+              Style: (
+                FontSize: 15,
+                TextColor: #93844c,
+                RenderBold: true
+              );
+              Anchor: (Left: 0, Top: 4, Bottom: 0, Right: 6);
+            }
 
+            $C.@DropdownBox #InviteDropdown {
+              Anchor: (Width: 200, Height: 28);
+              Style: (
+                ...@DefaultDropdownBoxStyle,
+                SearchInputStyle: DropdownBoxSearchInputStyle(
+                  Anchor: (Height: 20),
+                  Padding: (Left: 28, Right: 24),
+                  PlaceholderText: %server.customUI.searchPlaceholder,
+                  PlaceholderStyle: (TextColor: #3d5a85, RenderUppercase: true, FontSize: 14),
+                  Icon: (Texture: "Common/SearchIcon.png", Width: 16, Height: 16, Offset: 9),
+                  ClearButtonStyle: $C.@ClearButtonStyle
+                )
+              );
+              ShowSearchInput: true;
+            }
+            $C.@TextButton #ConfirmInviteButton {
+              Anchor: (Height: 28, Left: 4);
+              Padding: ();
+              Text: "   +   ";
+              Style: @CustomStyle;
+            }
+            
+            Label {
+              Text: "Add Allies:";
+              Style: (
+                FontSize: 15,
+                TextColor: #93844c,
+                RenderBold: true
+              );
+              Anchor: (Left: 10, Top: 4, Bottom: 0, Right: 6);
+            }
+
+            $C.@DropdownBox #AlliesDropdown {
+              Anchor: (Width: 200, Height: 28);
+              Style: (
+                ...@DefaultDropdownBoxStyle,
+                SearchInputStyle: DropdownBoxSearchInputStyle(
+                  Anchor: (Height: 20),
+                  Padding: (Left: 28, Right: 24),
+                  PlaceholderText: %server.customUI.searchPlaceholder,
+                  PlaceholderStyle: (TextColor: #3d5a85, RenderUppercase: true, FontSize: 14),
+                  Icon: (Texture: "Common/SearchIcon.png", Width: 16, Height: 16, Offset: 9),
+                  ClearButtonStyle: $C.@ClearButtonStyle
+                )
+              );
+              ShowSearchInput: true;
+            }
+            $C.@TextButton #ConfirmAlliesButton {
+              Anchor: (Height: 28, Left: 4);
+              Padding: ();
+              Text: "   +   ";
+              Style: @CustomStyle;
+            }
+          }
           Group #Members {
             LayoutMode: TopScrolling;
-            Anchor: (Bottom: 10, Height: 330);
+            Anchor: (Bottom: 10, Height: 285);
             ScrollbarStyle: $C.@DefaultScrollbarStyle;
 
             Group #MemberEntries {

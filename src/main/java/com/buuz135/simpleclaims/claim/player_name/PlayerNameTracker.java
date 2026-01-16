@@ -7,6 +7,7 @@ import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -32,6 +33,14 @@ public class PlayerNameTracker {
     public String getPlayerName(UUID uuid){
         if (names.containsKey(uuid)) return names.get(uuid).name;
         return "Unknown";
+    }
+
+    @Nullable
+    public UUID getPlayerUUID(String name) {
+        for (UUID uuid : names.keySet()) {
+            if (names.get(uuid).name.equalsIgnoreCase(name)) return uuid;
+        }
+        return null;
     }
 
     public void setPlayerName(UUID uuid, String name){

@@ -1,42 +1,37 @@
 package com.buuz135.simpleclaims.systems.tick;
 
-import com.buuz135.simpleclaims.Main;
+
 import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.component.system.tick.TickingSystem;
+import com.hypixel.hytale.component.system.DelayedSystem;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.ChunkStore;
-import com.hypixel.hytale.server.core.universe.world.worldmap.IWorldMap;
-import com.hypixel.hytale.server.core.universe.world.worldmap.WorldMapLoadException;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
-public class WorldMapUpdateTickingSystem extends TickingSystem<ChunkStore> {
+public class WorldMapUpdateTickingSystem extends DelayedSystem<ChunkStore> {
 
-    private int tick = 0;
 
     public WorldMapUpdateTickingSystem() {
-
+        super(3);
     }
 
     @Override
-    public void tick(float v, int i, @NonNullDecl Store<ChunkStore> store) {
-        ++tick;
-        if (tick > 20 * 5) { //every 5 seconds
-            if (ClaimManager.getInstance().needsMapUpdate()) {
-                for (World world : Main.WORLDS.values()) {
-                    try {
-                        var worldMap = world.getWorldConfig().getWorldMapProvider().getGenerator(world);
-                        world.getWorldMapManager().setGenerator(worldMap);
-                    } catch (WorldMapLoadException e) {
-                        throw new RuntimeException(e);
-                    }
+    public void delayedTick(float v, int i, @NonNullDecl Store<ChunkStore> store) {
+        World world = store.getExternalData().getWorld();
+        if (ClaimManager.getInstance().getMapUpdateQueue().containsKey(world.getName())) {
+            final var chunks = ClaimManager.getInstance().getMapUpdateQueue().get(world.getName());
+            world.execute(() -> {
+                world.getWorldMapManager().clearImagesInChunks(chunks);
+                for (PlayerRef playerRef : world.getPlayerRefs()) {
+                    var player = world.getEntityStore().getStore().getComponent(playerRef.getReference(), Player.getComponentType());
+                    player.getWorldMapTracker().clearChunks(chunks);
                 }
-                ClaimManager.getInstance().setNeedsMapUpdate(false);
-            }
-            tick = 0;
+            });
+            ClaimManager.getInstance().getMapUpdateQueue().remove(world.getName());
+            ClaimManager.getInstance().getWorldsNeedingUpdates().remove(world.getName());
         }
     }
-
-
 
 }

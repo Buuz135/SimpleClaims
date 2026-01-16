@@ -2,7 +2,7 @@ $C = "../Common.ui";
 
 $C.@PageOverlay {
   $C.@Container {
-    Anchor: (Width: 600, Height: 669);
+    Anchor: (Width: 700, Height: 669);
 
     #Title {
       Group {
@@ -21,7 +21,7 @@ $C.@PageOverlay {
         LayoutMode: Top;
 
         Group #PartyList {
-          Anchor: (Width: 580);
+          Anchor: (Width: 680);
           FlexWeight: 1;
           LayoutMode: TopScrolling;
           Padding: (Left: 10);

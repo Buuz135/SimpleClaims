@@ -30,7 +30,7 @@ public class SimpleClaimProtectCommand extends AbstractAsyncCommand {
     public SimpleClaimProtectCommand() {
         super("simpleclaims", "Opens the chunk claim gui");
         this.addAliases("sc", "sc-chunks", "scc");
-        this.setPermissionGroup(GameMode.Adventure);
+        this.requirePermission(CommandMessages.BASE_PERM + "claim-gui");
 
         this.addSubCommand(new ClaimChunkCommand());
         this.addSubCommand(new UnclaimChunkCommand());
@@ -58,7 +58,7 @@ public class SimpleClaimProtectCommand extends AbstractAsyncCommand {
                     }
                     var party = ClaimManager.getInstance().getPartyFromPlayer(playerRef.getUuid());
                     if (party == null) {
-                        party = ClaimManager.getInstance().createParty(player, playerRef);
+                        party = ClaimManager.getInstance().createParty(player, playerRef, false);
                         player.sendMessage(CommandMessages.PARTY_CREATED);
                     }
                     var position = store.getComponent(ref, TransformComponent.getComponentType());

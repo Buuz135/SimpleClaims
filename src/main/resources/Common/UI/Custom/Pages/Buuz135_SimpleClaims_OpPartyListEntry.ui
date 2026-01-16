@@ -21,6 +21,13 @@ Group {
     FlexWeight: 1;
   }
 
+  $C.@SecondaryTextButton #ClaimButton {
+    Anchor: (Right: 10, Vertical: 0);
+    Padding: (Left: 8, Right: 8, Top: 4, Bottom: 4);
+    Text: "Claim";
+    Overscroll: false;
+  }
+
   $C.@SecondaryTextButton #UsePartyButton {
     Anchor: (Right: 10, Vertical: 0);
     Padding: (Left: 8, Right: 8, Top: 4, Bottom: 4);
@@ -34,4 +41,10 @@ Group {
     Text: "Edit";
     Overscroll: false;
   }
+  $C.@CancelTextButton #RemovePartyButton {
+      Anchor: (Right: 10, Vertical: 0);
+      Padding: (Left: 8, Right: 8, Top: 4, Bottom: 4);
+      Text: "Delete";
+      Overscroll: false;
+    }
 }

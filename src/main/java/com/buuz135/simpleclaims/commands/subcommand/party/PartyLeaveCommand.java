@@ -25,8 +25,7 @@ public class PartyLeaveCommand extends AbstractAsyncCommand {
 
     public PartyLeaveCommand() {
         super("leave", "Leaves the party you are in, if you are the owner the ownership will be transferred to the first member, \nif there aren't any members the party will be disbanded");
-        this.setPermissionGroup(GameMode.Adventure);
-
+        this.requirePermission(CommandMessages.BASE_PERM + "party-leave");
     }
 
     @NonNullDecl
