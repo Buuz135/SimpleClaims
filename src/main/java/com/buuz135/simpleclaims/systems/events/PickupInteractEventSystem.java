@@ -33,13 +33,20 @@ public class PickupInteractEventSystem extends EntityEventSystem<EntityStore, In
         Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
         Player player = store.getComponent(ref, Player.getComponentType());
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
-        if (playerRef != null && !ClaimManager.getInstance().isAllowedToInteract(
-                playerRef.getUuid(),
-                player.getWorld().getName(),
-                (int) playerRef.getTransform().getPosition().getX(),
-                (int) playerRef.getTransform().getPosition().getZ(),
-                PartyInfo::isBlockInteractEnabled)) {
-            event.setCancelled(true); // Doesnt currently work, it gets ignored
+        if (playerRef != null) {
+            var result = ClaimManager.getInstance().checkInteraction(
+                    playerRef.getUuid(),
+                    player.getWorld().getName(),
+                    (int) playerRef.getTransform().getPosition().getX(),
+                    (int) playerRef.getTransform().getPosition().getZ(),
+                    (int) playerRef.getTransform().getPosition().getY(),
+                    PartyInfo::isBlockInteractEnabled);
+            if (!result.isAllowed()) {
+                event.setCancelled(true); // Doesnt currently work, it gets ignored
+                if (result.isBlockedByHeight()) {
+                    player.sendMessage(com.buuz135.simpleclaims.commands.CommandMessages.BLOCKED_BY_HEIGHT.param("blockY", result.getBlockY()).param("minHeight", result.getMinHeight()));
+                }
+            }
         }
     }
 

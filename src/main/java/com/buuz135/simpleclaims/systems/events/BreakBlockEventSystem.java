@@ -35,8 +35,14 @@ public class BreakBlockEventSystem extends EntityEventSystem<EntityStore, Damage
        Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
        Player player = store.getComponent(ref, Player.getComponentType());
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
-        if (playerRef != null && !ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), event.getTargetBlock().getX(), event.getTargetBlock().getZ(), PartyInfo::isBlockBreakEnabled)) {
-           event.setCancelled(true);
+        if (playerRef != null) {
+            var result = ClaimManager.getInstance().checkInteraction(playerRef.getUuid(), player.getWorld().getName(), event.getTargetBlock().getX(), event.getTargetBlock().getZ(), event.getTargetBlock().getY(), PartyInfo::isBlockBreakEnabled);
+            if (!result.isAllowed()) {
+                event.setCancelled(true);
+                if (result.isBlockedByHeight()) {
+                    player.sendMessage(com.buuz135.simpleclaims.commands.CommandMessages.BLOCKED_BY_HEIGHT.param("blockY", result.getBlockY()).param("minHeight", result.getMinHeight()));
+                }
+            }
        }
     }
 

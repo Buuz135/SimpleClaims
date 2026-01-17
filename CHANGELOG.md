@@ -1,3 +1,9 @@
+# 1.0.15
+* Added height-based protection control - blocks below a configurable minimum Y coordinate are not protected (default: 0, can be any integer value)
+* Added admin command `/scp admin-set-min-height <height>` to configure minimum protection height
+* Added Portuguese (Brazil) language support (pt-BR)
+
+
 # 1.0.14
 
 * Fixed inviting players to a party using the GUI not working properly

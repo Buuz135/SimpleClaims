@@ -1,0 +1,31 @@
+errors.simpleclaims.playerNotInParty = Você precisa estar em um grupo para fazer isso
+errors.simpleclaims.playerInParty = Você já está em um grupo
+
+errors.simpleclaims.alreadyClaimedByYou = Este chunk já foi reivindicado pelo seu grupo
+errors.simpleclaims.alreadyClaimedByAnotherPlayer = Este chunk já foi reivindicado por outro grupo
+errors.simpleclaims.notClaimed = Este chunk não foi reivindicado
+errors.simpleclaims.notYourClaim = Este chunk não pertence ao seu grupo
+errors.simpleclaims.notEnoughChunks = Seu grupo não tem chunks suficientes para reivindicar isso
+errors.simpleclaims.playerNotFound = Jogador não encontrado
+errors.simpleclaims.cantClaimInThisDimension = Você não pode reivindicar chunks nesta dimensão
+
+simpleclaims.partyCreated = Grupo Criado
+info.simpleclaims.unclaimed = Chunk não reivindicado
+info.simpleclaims.claimed = Chunk reivindicado
+simpleclaims.nowUsingParty = Agora usando grupo: 
+
+errors.simpleclaims.admin.partyNotSelected = Grupo não selecionado como admin
+errors.simpleclaims.admin.partyNotFound = Grupo não encontrado
+
+simpleclaims.partyInviteSent = Convite de grupo enviado para {username}
+simpleclaims.partyInviteReceived = Convite de grupo recebido de {username} para entrar no grupo {party_name}, use o comando '/scp invite-accept' para entrar no grupo.
+simpleclaims.partyInviteJoined = {username} entrou no grupo {party_name}
+simpleclaims.partyInviteSelf = Este jogador já é membro do grupo
+simpleclaims.partyLeft = Você saiu do seu grupo
+simpleclaims.partyDisbanded = Você saiu do seu grupo, como não há mais membros, o grupo foi desfeito
+simpleclaims.partyOwnerTransferred = Você saiu do seu grupo, e a propriedade foi transferida para {username}
+simpleclaims.modifiedMaxChunkAmount = Você alterou a quantidade máxima de chunks reivindicados para {party_name} para {amount} chunks
+simpleclaims.enabledOverride = Override de interação de admin ativado
+simpleclaims.disabledOverride = Override de interação de admin desativado
+simpleclaims.modifiedMinProtectionHeight = Altura mínima de proteção definida para {height}. Blocos abaixo desta coordenada Y não serão protegidos.
+errors.simpleclaims.blockedByHeight = Este bloco em Y={blockY} está protegido. Apenas blocos em Y<{minHeight} podem ser interagidos por qualquer jogador.

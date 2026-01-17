@@ -40,12 +40,15 @@ public class CustomDamageEventSystem extends DamageEventSystem {
             if (attackerRef.isValid()) {
                 Player attackerPlayerComponent = (Player) commandBuffer.getComponent(attackerRef, Player.getComponentType());
                 if (attackerPlayerComponent != null) { //The source is a player
-                    // && !ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), (int) transform.getX(), (int) transform.getZ(), PartyInfo::isPVPEnabled)) {
-                    var chunk = ClaimManager.getInstance().getChunkRawCoords(player.getWorld().getName(), (int) transform.getX(), (int) transform.getZ());
-                    if (chunk == null) return;
-                    var partyInfo = ClaimManager.getInstance().getPartyById(chunk.getPartyOwner());
-                    if (partyInfo != null && !partyInfo.isPVPEnabled()) {
-                        damage.setCancelled(true);
+                    int blockY = (int) transform.getY();
+                    int minHeight = com.buuz135.simpleclaims.Main.CONFIG.get().getMinProtectionHeight();
+                    if (blockY >= minHeight) {
+                        var chunk = ClaimManager.getInstance().getChunkRawCoords(player.getWorld().getName(), (int) transform.getX(), (int) transform.getZ());
+                        if (chunk == null) return;
+                        var partyInfo = ClaimManager.getInstance().getPartyById(chunk.getPartyOwner());
+                        if (partyInfo != null && !partyInfo.isPVPEnabled()) {
+                            damage.setCancelled(true);
+                        }
                     }
                 }
             }

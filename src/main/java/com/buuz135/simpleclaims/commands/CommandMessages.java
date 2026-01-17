@@ -46,4 +46,8 @@ public class CommandMessages {
 
     public static final Message ENABLED_OVERRIDE = Message.translation("commands.simpleclaims.enabledOverride").color(Color.GREEN).bold(true);
     public static final Message DISABLED_OVERRIDE = Message.translation("commands.simpleclaims.disabledOverride").color(Color.GREEN).bold(true);
+
+    public static final Message MODIFIED_MIN_PROTECTION_HEIGHT = Message.translation("commands.simpleclaims.modifiedMinProtectionHeight").color(Color.GREEN).bold(true);
+
+    public static final Message BLOCKED_BY_HEIGHT = Message.translation("commands.errors.simpleclaims.blockedByHeight").color(Color.RED).bold(true);
 }

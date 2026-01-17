@@ -27,3 +27,5 @@ simpleclaims.partyOwnerTransferred = You have left your party, and the ownership
 simpleclaims.modifiedMaxChunkAmount = You have changed the max claimed chunk amount for {party_name} to {amount} chunks
 simpleclaims.enabledOverride = Enabled admin interaction override
 simpleclaims.disabledOverride = Disabled admin interaction override
+simpleclaims.modifiedMinProtectionHeight = Minimum protection height set to {height}. Blocks below this Y coordinate will not be protected.
+errors.simpleclaims.blockedByHeight = This block at Y={blockY} is protected. Only blocks at Y<{minHeight} can be interacted with by anyone.
