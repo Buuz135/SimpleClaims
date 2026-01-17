@@ -27,3 +27,54 @@ descriptions.
 
 - `/simpleclaims`: `/sc`, `/sc-chunks`, `/scc`
 - `/simpleclaimsparty`: `/scp`, `/sc-party`
+
+### Configuring Permissions with Hyales base permissions
+
+You just need to exectue these commands in the Hytale console:
+
+- `/perm group add Adventure simpleclaims.claim`
+- `/perm group add Adventure simpleclaims.unclaim`
+- `/perm group add Adventure simpleclaims.claim-gui`
+- `/perm group add Adventure simpleclaims.edit-party`
+- `/perm group add Adventure simpleclaims.create-party`
+- `/perm group add Adventure simpleclaims.create-invite`
+- `/perm group add Adventure simpleclaims.accept-invite`
+- `/perm group add Adventure simpleclaims.party-leave`
+- `/perm group add OP simpleclaims.admin.*`
+
+### Configuring Permissions with LuckPerms
+
+To manage permissions for Simple Claims using LuckPerms in Hytale, follow these steps:
+
+1. **Open the LuckPerms Editor:**
+   Run the command `/lp editor` in-game. This will provide you with a URL to the web-based editor.
+
+2. **Select a Group or User:**
+   In the LuckPerms editor, navigate to the **Groups** or **Users** section on the left sidebar. Choose the group (e.g.,
+   `default`, `admin`) or player you want to modify.
+
+3. **Add Permissions:**
+   In the "Add Permission" box, type the desired permission from the table above (e.g., `simpleclaims.claim`).
+    - Set the value to `true` to grant the permission.
+    - Set the value to `false` to explicitly deny it.
+
+4. **Example Configuration:**
+    - For regular players, you might want to add:
+        - `simpleclaims.claim-gui`
+        - `simpleclaims.claim`
+        - `simpleclaims.unclaim`
+        - `simpleclaims.edit-party`
+        - `simpleclaims.create-party`
+        - `simpleclaims.create-invite`
+        - `simpleclaims.accept-invite`
+        - `simpleclaims.party-leave`
+    - For admins, you would add `simpleclaims.admin.*` to grant all administrative permissions.
+
+5. **Save Changes:**
+   Click the **Save** button in the top right corner of the editor. Copy the command provided and paste it into the
+   Hytale console or in-game chat to apply the changes.
+
+Alternatively, you can add permissions directly via commands:
+
+- `/lp group default permission set simpleclaims.claim true`
+- `/lp user <playername> permission set simpleclaims.admin.admin-override true`

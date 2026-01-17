@@ -153,7 +153,7 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
                     if (!this.info.isMember(UUID.fromString(this.inviteDropdown))) {
                         var invited = Universe.get().getPlayer(UUID.fromString(this.inviteDropdown));
                         if (invited != null) {
-                            ClaimManager.getInstance().invitePlayerToParty(this.playerRef, this.info, invited);
+                            ClaimManager.getInstance().invitePlayerToParty(invited, this.info, this.playerRef);
                             ClaimManager.getInstance().markDirty();
                             invited.sendMessage(CommandMessages.PARTY_INVITE_RECEIVED.param("party_name", this.info.getName()).param("username", this.playerRef.getUsername()));
                             UICommandBuilder commandBuilder = new UICommandBuilder();
