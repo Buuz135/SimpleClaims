@@ -20,10 +20,30 @@ repositories {
     mavenCentral()
 }
 
+
+def os = org.gradle.internal.os.OperatingSystem.current()
+def userHome = System.getProperty("user.home")
+
+def hytaleHome
+def hytaleServerJar
+if (os.isWindows()) {
+    hytaleHome = "$userHome/AppData/Roaming/Hytale"
+} else if (os.isMacOsX()) {
+    hytaleHome = "$userHome/Library/Application Support/Hytale"
+} else if (os.isLinux()) {
+    hytaleHome = "$userHome/.local/share/Hytale"
+} else {
+    throw new GradleException("Unsupported OS for Hytale")
+}
+
+hytaleServerJar = "$hytaleHome/install/$patchline/package/game/$game_build/Server/HytaleServer.jar"
+
+
+
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation(files(System.getProperty("user.home") + "/AppData/Roaming/Hytale/install/release/package/game/$game_build/Server/HytaleServer.jar"))
+    implementation files(hytaleServerJar)
 }
 
 test {
@@ -53,7 +73,7 @@ idea.project.settings.runConfigurations {
     'HytaleServer'(org.jetbrains.gradle.ext.Application) {
         mainClass = 'com.hypixel.hytale.Main'
         moduleName = project.idea.module.name + '.main'
-        programParameters = "--allow-op --disable-sentry --assets=$hytaleHome/$patchline/package/game/latest/Assets.zip --mods=${file("src/main/").absolutePath}  --auth-mode=authenticated"
+        programParameters = "--allow-op --disable-sentry --assets=$hytaleHome/install/$patchline/package/game/latest/Assets.zip --mods=${file("src/main/").absolutePath}  --auth-mode=authenticated"
         workingDirectory = serverRunDir.absolutePath
     }
 }
