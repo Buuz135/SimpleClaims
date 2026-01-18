@@ -46,15 +46,20 @@ public class PartyAcceptCommand extends AbstractAsyncCommand {
                             player.sendMessage(CommandMessages.IN_A_PARTY);
                             return;
                         }
-                        var invite = ClaimManager.getInstance().acceptInvite(playerRef);
-                        if (invite != null) {
-                            var partyInvite = ClaimManager.getInstance().getPartyById(invite.party());
-                            if (partyInvite != null) {
-                                player.sendMessage(CommandMessages.PARTY_INVITE_JOIN.param("party_name", partyInvite.getName()).param("username", player.getDisplayName()));
-                                var playerSender = player.getWorld().getEntity(invite.sender());
-                                if (playerSender instanceof Player playerSenderPlayer) {
-                                    playerSenderPlayer.sendMessage(CommandMessages.PARTY_INVITE_JOIN.param("party_name", partyInvite.getName()).param("username", player.getDisplayName()));
+
+                        if (ClaimManager.getInstance().getPartyInvites().containsKey(playerRef.getUuid())) {
+                            var invite = ClaimManager.getInstance().acceptInvite(playerRef);
+                            if (invite != null) {
+                                var partyInvite = ClaimManager.getInstance().getPartyById(invite.party());
+                                if (partyInvite != null) {
+                                    player.sendMessage(CommandMessages.PARTY_INVITE_JOIN.param("party_name", partyInvite.getName()).param("username", player.getDisplayName()));
+                                    var playerSender = player.getWorld().getEntity(invite.sender());
+                                    if (playerSender instanceof Player playerSenderPlayer) {
+                                        playerSenderPlayer.sendMessage(CommandMessages.PARTY_INVITE_JOIN.param("party_name", partyInvite.getName()).param("username", player.getDisplayName()));
+                                    }
                                 }
+                            } else {
+                                player.sendMessage(CommandMessages.PARTY_MEMBER_LIMIT_REACHED);
                             }
                         } else {
                             player.sendMessage(Message.raw("You don't have any pending invites").bold(true).color(Color.RED));

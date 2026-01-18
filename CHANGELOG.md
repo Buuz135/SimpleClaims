@@ -11,6 +11,7 @@
 * Added a chunk border system that will show particles when close to an edge of a claimed chunk, closes #79
 * Added a config option to configure blocks that will ignore all the restrictions
 * Added an option to remove pvp between party members (Friendly Fire), closes #23
+* Added a config option to limit how many party member and allies can a party have closes #20
 
 # 1.0.14
 

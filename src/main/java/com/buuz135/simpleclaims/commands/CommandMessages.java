@@ -46,4 +46,6 @@ public class CommandMessages {
 
     public static final Message ENABLED_OVERRIDE = Message.translation("commands.simpleclaims.enabledOverride").color(Color.GREEN).bold(true);
     public static final Message DISABLED_OVERRIDE = Message.translation("commands.simpleclaims.disabledOverride").color(Color.GREEN).bold(true);
+    public static final Message PARTY_MEMBER_LIMIT_REACHED = Message.translation("commands.errors.simpleclaims.partyMemberLimitReached").color(Color.RED).bold(true);
+    public static final Message PARTY_ALLY_LIMIT_REACHED = Message.translation("commands.errors.simpleclaims.partyAllyLimitReached").color(Color.RED).bold(true);
 }

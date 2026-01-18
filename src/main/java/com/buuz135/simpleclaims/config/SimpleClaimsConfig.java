@@ -104,9 +104,17 @@ public class SimpleClaimsConfig {
                     (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.BlocksThatIgnoreInteractRestrictions = value,
                     (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.BlocksThatIgnoreInteractRestrictions).add()
 
+            .append(new KeyedCodec<Integer>("MaxPartyMembers", Codec.INTEGER),
+                    (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.MaxPartyMembers = value,
+                    (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.MaxPartyMembers).add()
+            .append(new KeyedCodec<Integer>("MaxPartyAllies", Codec.INTEGER),
+                    (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.MaxPartyAllies = value,
+                    (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.MaxPartyAllies).add()
             .build();
 
     private int DefaultPartyClaimsAmount = 25;
+    private int MaxPartyMembers = -1;
+    private int MaxPartyAllies = -1;
     private boolean DefaultPartyBlockPlaceEnabled = false;
     private boolean DefaultPartyBlockBreakEnabled = false;
     private boolean DefaultPartyBlockInteractEnabled = false;
@@ -268,5 +276,13 @@ public class SimpleClaimsConfig {
 
     public String[] getBlocksThatIgnoreInteractRestrictions() {
         return BlocksThatIgnoreInteractRestrictions;
+    }
+
+    public int getMaxPartyMembers() {
+        return MaxPartyMembers;
+    }
+
+    public int getMaxPartyAllies() {
+        return MaxPartyAllies;
     }
 }

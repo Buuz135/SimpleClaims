@@ -7,6 +7,9 @@ This document explains all the configuration options available in the `SimpleCla
 These settings define the initial permissions and limits for newly created parties.
 
 - **DefaultPartyClaimsAmount** (Integer, Default: `25`): The maximum number of chunks a party can claim by default.
+- **MaxPartyMembers** (Integer, Default: `-1`): The maximum number of members a party can have. Use `-1` for no limit.
+- **MaxPartyAllies** (Integer, Default: `-1`): The maximum number of allies (both players and other parties) a party can
+  have. Use `-1` for no limit.
 - **DefaultPartyBlockPlaceEnabled** (Boolean, Default: `false`): Whether block placement is allowed for non-members in
   claimed chunks by default.
 - **DefaultPartyBlockBreakEnabled** (Boolean, Default: `false`): Whether block breaking is allowed for non-members in

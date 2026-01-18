@@ -112,6 +112,9 @@ public class PartyInfo {
     }
 
     public void addMember(UUID uuid){
+        if (Main.CONFIG.get().getMaxPartyMembers() != -1 && memberSet.size() >= Main.CONFIG.get().getMaxPartyMembers()) {
+            return;
+        }
         memberSet.add(uuid);
     }
 
@@ -254,6 +257,9 @@ public class PartyInfo {
     }
 
     public void addPartyAllies(UUID uuid) {
+        if (Main.CONFIG.get().getMaxPartyAllies() != -1 && (partyAllies.size() + playerAllies.size()) >= Main.CONFIG.get().getMaxPartyAllies()) {
+            return;
+        }
         partyAllies.add(uuid);
     }
 
@@ -262,6 +268,9 @@ public class PartyInfo {
     }
 
     public void addPlayerAllies(UUID uuid) {
+        if (Main.CONFIG.get().getMaxPartyAllies() != -1 && (partyAllies.size() + playerAllies.size()) >= Main.CONFIG.get().getMaxPartyAllies()) {
+            return;
+        }
         playerAllies.add(uuid);
     }
 

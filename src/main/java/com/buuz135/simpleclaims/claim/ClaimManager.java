@@ -284,6 +284,10 @@ public class ClaimManager {
         if (invite == null) return null;
         var party = this.getPartyById(invite.party());
         if (party == null) return null;
+        if (Main.CONFIG.get().getMaxPartyMembers() != -1 && party.getMembers().length >= Main.CONFIG.get().getMaxPartyMembers()) {
+            this.partyInvites.remove(player.getUuid());
+            return null;
+        }
         party.addMember(player.getUuid());
         this.playerToParty.put(player.getUuid(), party.getId());
         this.partyInvites.remove(player.getUuid());
