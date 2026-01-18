@@ -24,6 +24,8 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation(files(System.getProperty("user.home") + "/AppData/Roaming/Hytale/install/release/package/game/$game_build/Server/HytaleServer.jar"))
+    // OrbisGuard - optional dependency for region protection integration
+    compileOnly(files(System.getProperty("user.home") + "/Documents/OrbisGuard/build/libs/OrbisGuard-0.1.0.jar"))
 }
 
 test {
