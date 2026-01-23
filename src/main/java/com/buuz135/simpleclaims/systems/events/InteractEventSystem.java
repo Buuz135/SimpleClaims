@@ -38,9 +38,10 @@ public class InteractEventSystem extends EntityEventSystem<EntityStore, UseBlock
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
         Predicate<PartyInfo> defaultInteract = PartyInfo::isBlockInteractEnabled;
         var blockName = event.getBlockType().getId().toLowerCase(Locale.ROOT);
+        var ignored = false;
 
         for (String blocksThatIgnoreInteractRestriction : Main.CONFIG.get().getBlocksThatIgnoreInteractRestrictions()) {
-            if (blockName.contains(blocksThatIgnoreInteractRestriction.toLowerCase(Locale.ROOT))) return;
+            if (blockName.contains(blocksThatIgnoreInteractRestriction.toLowerCase(Locale.ROOT))) ignored = true;
         }
 
         if (blockName.contains("chest")) defaultInteract = PartyInfo::isChestInteractEnabled;
@@ -51,7 +52,7 @@ public class InteractEventSystem extends EntityEventSystem<EntityStore, UseBlock
             defaultInteract = PartyInfo::isChairInteractEnabled;
         else if (blockName.contains("portal") || blockName.contains("teleporter"))
             defaultInteract = PartyInfo::isPortalInteractEnabled;
-        if (playerRef != null && !ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), event.getTargetBlock().getX(), event.getTargetBlock().getZ(), defaultInteract)) {
+        if (ignored || (playerRef != null && !ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), event.getTargetBlock().getX(), event.getTargetBlock().getZ(), defaultInteract))) {
             event.setCancelled(true);
         }
     }

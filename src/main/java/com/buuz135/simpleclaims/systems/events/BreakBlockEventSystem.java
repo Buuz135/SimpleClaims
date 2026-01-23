@@ -1,5 +1,6 @@
 package com.buuz135.simpleclaims.systems.events;
 
+import com.buuz135.simpleclaims.Main;
 import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.buuz135.simpleclaims.claim.party.PartyInfo;
 import com.hypixel.hytale.component.ArchetypeChunk;
@@ -20,6 +21,7 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Set;
 
 
@@ -33,6 +35,11 @@ public class BreakBlockEventSystem extends EntityEventSystem<EntityStore, BreakB
     public void handle(final int index, @Nonnull final ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull final Store<EntityStore> store, @Nonnull final CommandBuffer<EntityStore> commandBuffer, @Nonnull final BreakBlockEvent event) {
         // TODO: This class will be used later to implement https://github.com/Buuz135/SimpleClaims/issues/52
         // For now, this fixes the issue of SimpleClaims not blocking breaks at all in Creative Mode.
+        var blockName = event.getBlockType().getId().toLowerCase(Locale.ROOT);
+
+        for (String blocksThatIgnoreInteractRestriction : Main.CONFIG.get().getBlocksThatIgnoreInteractRestrictions()) {
+            if (blockName.contains(blocksThatIgnoreInteractRestriction.toLowerCase(Locale.ROOT))) return;
+        }
 
         Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
         Player player = store.getComponent(ref, Player.getComponentType());

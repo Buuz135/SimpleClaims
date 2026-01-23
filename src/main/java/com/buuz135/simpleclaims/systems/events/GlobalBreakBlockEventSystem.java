@@ -1,5 +1,6 @@
 package com.buuz135.simpleclaims.systems.events;
 
+import com.buuz135.simpleclaims.Main;
 import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.buuz135.simpleclaims.claim.party.PartyInfo;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -13,6 +14,7 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -33,6 +35,12 @@ public class GlobalBreakBlockEventSystem extends WorldEventSystem<EntityStore, B
 
         String worldName = world.getName();
         if (worldName == null) return;
+
+        var blockName = event.getBlockType().getId().toLowerCase(Locale.ROOT);
+
+        for (String blocksThatIgnoreInteractRestriction : Main.CONFIG.get().getBlocksThatIgnoreInteractRestrictions()) {
+            if (blockName.contains(blocksThatIgnoreInteractRestriction.toLowerCase(Locale.ROOT))) return;
+        }
 
         int x = event.getTargetBlock().getX();
         int z = event.getTargetBlock().getZ();

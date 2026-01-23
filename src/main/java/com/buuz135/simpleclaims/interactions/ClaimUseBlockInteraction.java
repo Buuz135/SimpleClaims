@@ -33,15 +33,21 @@ public class ClaimUseBlockInteraction extends UseBlockInteraction {
 
     @Override
     protected void interactWithBlock(@NonNullDecl World world, @NonNullDecl CommandBuffer<EntityStore> commandBuffer, @NonNullDecl InteractionType type, @NonNullDecl InteractionContext context, @NullableDecl ItemStack itemInHand, @NonNullDecl Vector3i targetBlock, @NonNullDecl CooldownHandler cooldownHandler) {
+        if (type == InteractionType.Primary || type == InteractionType.Secondary) {
+            super.interactWithBlock(world, commandBuffer, type, context, itemInHand, targetBlock, cooldownHandler);
+            return;
+        }
+
         Ref<EntityStore> ref = context.getEntity();
         Store<EntityStore> store = ref.getStore();
         Player player = store.getComponent(ref, Player.getComponentType());
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
         Predicate<PartyInfo> defaultInteract = PartyInfo::isBlockInteractEnabled;
         var blockName = world.getBlockType(targetBlock).getId().toLowerCase(Locale.ROOT);
+        var ignored = false;
 
         for (String blocksThatIgnoreInteractRestriction : Main.CONFIG.get().getBlocksThatIgnoreInteractRestrictions()) {
-            if (blockName.contains(blocksThatIgnoreInteractRestriction.toLowerCase(Locale.ROOT))) return;
+            if (blockName.contains(blocksThatIgnoreInteractRestriction.toLowerCase(Locale.ROOT))) ignored = true;
         }
 
         if (blockName.contains("chest")) defaultInteract = PartyInfo::isChestInteractEnabled;
@@ -52,7 +58,7 @@ public class ClaimUseBlockInteraction extends UseBlockInteraction {
             defaultInteract = PartyInfo::isChairInteractEnabled;
         else if (blockName.contains("portal") || blockName.contains("teleporter"))
             defaultInteract = PartyInfo::isPortalInteractEnabled;
-        if (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.getX(), targetBlock.getZ(), defaultInteract)) {
+        if (ignored || (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.getX(), targetBlock.getZ(), defaultInteract))) {
             super.interactWithBlock(world, commandBuffer, type, context, itemInHand, targetBlock, cooldownHandler);
         }
     }
@@ -65,9 +71,10 @@ public class ClaimUseBlockInteraction extends UseBlockInteraction {
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
         Predicate<PartyInfo> defaultInteract = PartyInfo::isBlockInteractEnabled;
         var blockName = world.getBlockType(targetBlock).getId().toLowerCase(Locale.ROOT);
+        var ignored = false;
 
         for (String blocksThatIgnoreInteractRestriction : Main.CONFIG.get().getBlocksThatIgnoreInteractRestrictions()) {
-            if (blockName.contains(blocksThatIgnoreInteractRestriction.toLowerCase(Locale.ROOT))) return;
+            if (blockName.contains(blocksThatIgnoreInteractRestriction.toLowerCase(Locale.ROOT))) ignored = true;
         }
 
         if (blockName.contains("chest")) defaultInteract = PartyInfo::isChestInteractEnabled;
@@ -78,7 +85,7 @@ public class ClaimUseBlockInteraction extends UseBlockInteraction {
             defaultInteract = PartyInfo::isChairInteractEnabled;
         else if (blockName.contains("portal") || blockName.contains("teleporter"))
             defaultInteract = PartyInfo::isPortalInteractEnabled;
-        if (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.getX(), targetBlock.getZ(), defaultInteract)) {
+        if (ignored || (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.getX(), targetBlock.getZ(), defaultInteract))) {
             super.simulateInteractWithBlock(type, context, itemInHand, world, targetBlock);
         }
     }

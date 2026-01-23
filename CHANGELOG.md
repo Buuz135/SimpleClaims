@@ -8,6 +8,8 @@
 * Fixed Admin Claiming Gui not working properly, closes #125
 * Removing saving thread to avoid sometimes not saving data in big environments, closes #119 closes #97
 * Added a claiming bypass for chunks that dont have valid parties, closes #108
+* Fixed `BlocksThatIgnoreInteractRestrictions` config not working properly, closes #112
+* Fixed interaction setting overriding block placing and breaking settings
 
 # 1.0.19
 
