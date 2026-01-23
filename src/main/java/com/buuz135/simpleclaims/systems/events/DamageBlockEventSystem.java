@@ -11,9 +11,9 @@ import com.hypixel.hytale.component.dependency.RootDependency;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.component.system.EntityEventSystem;
 import com.hypixel.hytale.server.core.entity.entities.Player;
-
 import com.hypixel.hytale.server.core.event.events.ecs.BreakBlockEvent;
 import com.hypixel.hytale.server.core.event.events.ecs.DamageBlockEvent;
+import com.hypixel.hytale.server.core.modules.entity.damage.Damage;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
@@ -26,15 +26,15 @@ import java.util.Set;
 import static java.lang.IO.println;
 
 
-public class BreakBlockEventSystem extends EntityEventSystem<EntityStore, BreakBlockEvent> {
+public class DamageBlockEventSystem extends EntityEventSystem<EntityStore, DamageBlockEvent> {
 
-    public BreakBlockEventSystem() {
-        super(BreakBlockEvent.class);
+    public DamageBlockEventSystem() {
+        super(DamageBlockEvent.class);
     }
 
     @Override
-    public void handle(final int index, @Nonnull final ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull final Store<EntityStore> store, @Nonnull final CommandBuffer<EntityStore> commandBuffer, @Nonnull final BreakBlockEvent event) {
-        println("here BreakBlock");
+    public void handle(final int index, @Nonnull final ArchetypeChunk<EntityStore> archetypeChunk, @Nonnull final Store<EntityStore> store, @Nonnull final CommandBuffer<EntityStore> commandBuffer, @Nonnull final DamageBlockEvent event) {
+        println("here DamageBlock");
         Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
         Player player = store.getComponent(ref, Player.getComponentType());
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
