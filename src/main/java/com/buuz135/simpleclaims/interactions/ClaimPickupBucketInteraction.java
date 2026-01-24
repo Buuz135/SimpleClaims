@@ -6,6 +6,7 @@ import com.hypixel.hytale.codec.builder.BuilderCodec;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.math.vector.Vector3d;
 import com.hypixel.hytale.math.vector.Vector3i;
 import com.hypixel.hytale.protocol.InteractionType;
 import com.hypixel.hytale.server.core.entity.InteractionContext;
@@ -27,27 +28,20 @@ public class ClaimPickupBucketInteraction extends RefillContainerInteraction {
     public static final BuilderCodec<ClaimPickupBucketInteraction> CUSTOM_CODEC = BuilderCodec.builder(ClaimPickupBucketInteraction.class, ClaimPickupBucketInteraction::new, RefillContainerInteraction.CODEC).build();
 
     @Override
-    protected void interactWithBlock(@NonNullDecl World world, @NonNullDecl CommandBuffer<EntityStore> commandBuffer, @NonNullDecl InteractionType type, @NonNullDecl InteractionContext context, @NullableDecl ItemStack heldItemStack, @NonNullDecl Vector3i targetBlock, @NonNullDecl CooldownHandler cooldownHandler) {
+    protected void firstRun(@NonNullDecl InteractionType type, @NonNullDecl InteractionContext context, @NonNullDecl CooldownHandler cooldownHandler) {
         Ref<EntityStore> ref = context.getEntity();
         Store<EntityStore> store = ref.getStore();
         Player player = store.getComponent(ref, Player.getComponentType());
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
         Predicate<PartyInfo> defaultInteract = PartyInfo::isBlockInteractEnabled;
-        if (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.getX(), targetBlock.getZ(), defaultInteract)) {
-            super.interactWithBlock(world, commandBuffer, type, context, heldItemStack, targetBlock, cooldownHandler);
-        }
-
-    }
-
-    @Override
-    protected void simulateInteractWithBlock(@NonNullDecl InteractionType type, @NonNullDecl InteractionContext context, @NullableDecl ItemStack itemInHand, @NonNullDecl World world, @NonNullDecl Vector3i targetBlock) {
-        Ref<EntityStore> ref = context.getEntity();
-        Store<EntityStore> store = ref.getStore();
-        Player player = store.getComponent(ref, Player.getComponentType());
-        PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
-        Predicate<PartyInfo> defaultInteract = PartyInfo::isBlockInteractEnabled;
-        if (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.getX(), targetBlock.getZ(), defaultInteract)) {
-            super.simulateInteractWithBlock(type, context, itemInHand, world, targetBlock);
+        var targetBlock = context.getTargetBlock();
+        if (playerRef != null && targetBlock == null) {
+            Vector3d playerPos = playerRef.getTransform().getPosition();
+            if (ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), (int) playerPos.x, (int) playerPos.z, defaultInteract)) {
+                super.firstRun(type, context, cooldownHandler);
+            }
+        } else if (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.x, targetBlock.z, defaultInteract)) {
+            super.firstRun(type, context, cooldownHandler);
         }
     }
 

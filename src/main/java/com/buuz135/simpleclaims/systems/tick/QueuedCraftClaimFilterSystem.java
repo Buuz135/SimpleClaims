@@ -34,6 +34,8 @@ public class QueuedCraftClaimFilterSystem extends EntityTickingSystem<EntityStor
 
     private static final Class<?> JOB_CLASS;
     private static final Field JOB_INPUT_CONTAINER;
+    private static final Field JOB_WINDOW;
+    private static final Field JOB_INPUT_REMOVAL_TYPE;
 
     static {
         try {
@@ -50,7 +52,11 @@ public class QueuedCraftClaimFilterSystem extends EntityTickingSystem<EntityStor
 
             JOB_CLASS = Class.forName("com.hypixel.hytale.builtin.crafting.component.CraftingManager$CraftingJob");
             JOB_INPUT_CONTAINER = JOB_CLASS.getDeclaredField("inputItemContainer");
+            JOB_WINDOW = JOB_CLASS.getDeclaredField("window");
+            JOB_INPUT_REMOVAL_TYPE = JOB_CLASS.getDeclaredField("inputRemovalType");
             JOB_INPUT_CONTAINER.setAccessible(true);
+            JOB_WINDOW.setAccessible(true);
+            JOB_INPUT_REMOVAL_TYPE.setAccessible(true);
         } catch (Exception e) {
             throw new RuntimeException("Failed to init reflection for crafting job filtering", e);
         }
@@ -102,9 +108,17 @@ public class QueuedCraftClaimFilterSystem extends EntityTickingSystem<EntityStor
         for (Object job : q) {
             if (!JOB_CLASS.isInstance(job)) continue;
             try {
+                Object windowObj = JOB_WINDOW.get(job);
+                if (!(windowObj instanceof com.hypixel.hytale.builtin.crafting.window.SimpleCraftingWindow)) {
+                    continue;
+                }
+                Object removalType = JOB_INPUT_REMOVAL_TYPE.get(job);
+                if (removalType != null && !removalType.toString().equals("NORMAL")) {
+                    continue;
+                }
                 JOB_INPUT_CONTAINER.set(job, allowedInput);
             } catch (IllegalAccessException e) {
-                throw new RuntimeException("Failed to replace CraftingJob.inputItemContainer (final field write blocked?)", e);
+                throw new RuntimeException("Failed to read/replace CraftingJob fields", e);
             }
         }
     }
