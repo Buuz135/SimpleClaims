@@ -52,7 +52,7 @@ public class InteractEventSystem extends EntityEventSystem<EntityStore, UseBlock
             defaultInteract = PartyInfo::isChairInteractEnabled;
         else if (blockName.contains("portal") || blockName.contains("teleporter"))
             defaultInteract = PartyInfo::isPortalInteractEnabled;
-        if (ignored || (playerRef != null && !ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), event.getTargetBlock().getX(), event.getTargetBlock().getZ(), defaultInteract))) {
+        if (!ignored && (playerRef != null && !ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), event.getTargetBlock().getX(), event.getTargetBlock().getZ(), defaultInteract))) {
             event.setCancelled(true);
         }
     }
