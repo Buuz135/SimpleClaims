@@ -1,0 +1,34 @@
+errors.simpleclaims.playerNotinParty = Bunu yapmak icin bir partide olmalisin
+errors.simpleclaims.playerinParty = Zaten bir partidesin
+
+errors.simpleclaims.alreadyClaimedByYou = Bu chunk zaten partin tarafinden sahiplenilmis
+errors.simpleclaims.alreadyClaimedByAnotherPlayer = Bu chunk baska bir parti tarafindan sahiplenilmis
+errors.simpleclaims.notClaimed = Bu chunk sahiplenilmemis
+errors.simpleclaims.notYourClaim = Bu chunk partine ait degil
+errors.simpleclaims.notEnoughChunks = Partinin chunk hakki yetersiz
+errors.simpleclaims.playerNotFound = Oyuncu bulunamadi
+errors.simpleclaims.cantClaiminThisDimension = Bu boyutta chunk sahiplenemezsin
+
+simpleclaims.partyCreated = Parti olusturuldu
+info.simpleclaims.unclaimed = Chunk sahipligi kaldirildi
+info.simpleclaims.claimed = Chunk sahiplenildi
+simpleclaims.nowUsingParty = Su an kullanilan parti:
+
+errors.simpleclaims.admin.partyNotSelected = Admin olarak parti secilmedi
+errors.simpleclaims.admin.partyNotFound = Parti bulunamadi
+
+simpleclaims.partyinviteSent = {username} adli oyuncuya davet gonderildi
+simpleclaims.partyinviteReceived = {username} seni {party_name} partisine davet etti, katilmak icin '/scp invite-accept' kullan.
+simpleclaims.partyinviteJoined = {username}, {party_name} partisine katildi
+simpleclaims.partyinviteSelf = Bu oyuncu zaten partinin uyesi
+simpleclaims.partyLeft = Partinden ayrildin
+simpleclaims.partyDisbanded = Partinden ayrildin, uye kalmadigi icin parti dagitildi
+simpleclaims.partyOwnerTransferred = Partinden ayrildin, liderlik {username} adli oyuncuya devredildi
+simpleclaims.modifiedMaxChunkAmount = {party_name} icin maksimum chunk miktarini {amount} olarak degistirdin
+simpleclaims.enabledOverride = Admin duzenleme yetkisi acildi
+simpleclaims.disabledOverride = Admin duzenleme yetkisi kapatildi
+
+simpleclaims.activatedPartyChat = Parti sohbeti acildi
+simpleclaims.deactivatedPartyChat = Parti sohbeti kapatildi
+simpleclaims.playerActivatedPartyChat = {player} parti sohbetini acti
+simpleclaims.playerDeactivatedPartyChat = {player} parti sohbetini kapatti

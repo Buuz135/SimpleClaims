@@ -32,6 +32,13 @@ public class DatabaseManager {
         }
         FileUtils.ensureMainDirectory();
         try {
+            var sqliteFile = new File(FileUtils.DATABASE_PATH);
+
+            if (!sqliteFile.exists()) {
+                sqliteFile.mkdirs();
+                sqliteFile.createNewFile();
+            }
+
             this.connection = DriverManager.getConnection("jdbc:sqlite:" + FileUtils.DATABASE_PATH);
             try (Statement statement = connection.createStatement()) {
                 statement.execute("PRAGMA foreign_keys = ON;");

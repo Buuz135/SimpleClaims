@@ -6,6 +6,7 @@ import com.buuz135.simpleclaims.commands.subcommand.party.CreatePartyCommand;
 import com.buuz135.simpleclaims.commands.subcommand.party.PartyAcceptCommand;
 import com.buuz135.simpleclaims.commands.subcommand.party.PartyInviteCommand;
 import com.buuz135.simpleclaims.commands.subcommand.party.PartyLeaveCommand;
+import com.buuz135.simpleclaims.commands.subcommand.party.ChatToggleCommand;
 import com.buuz135.simpleclaims.commands.subcommand.party.op.*;
 import com.buuz135.simpleclaims.gui.PartyInfoEditGui;
 import com.hypixel.hytale.component.Ref;
@@ -41,6 +42,7 @@ public class SimpleClaimsPartyCommand extends AbstractAsyncCommand {
         this.addSubCommand(new OpAllModifyChunkAmountCommand());
         this.addSubCommand(new OpOverrideCommand());
         this.addSubCommand(new OpAddChunkAmountCommand());
+        this.addSubCommand(new ChatToggleCommand());
     }
 
     @NonNullDecl

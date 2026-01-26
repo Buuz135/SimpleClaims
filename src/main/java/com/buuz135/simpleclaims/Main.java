@@ -1,5 +1,6 @@
 package com.buuz135.simpleclaims;
 
+import com.buuz135.simpleclaims.chat.PlayerChatListener;
 import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.buuz135.simpleclaims.commands.SimpleClaimProtectCommand;
 import com.buuz135.simpleclaims.commands.SimpleClaimsPartyCommand;
@@ -16,6 +17,7 @@ import com.buuz135.simpleclaims.util.WindowExtraResourcesState;
 import com.buuz135.simpleclaims.util.WindowPacketAdapters;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.event.events.player.AddPlayerToWorldEvent;
+import com.hypixel.hytale.server.core.event.events.player.PlayerChatEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
@@ -99,6 +101,8 @@ public class Main extends JavaPlugin {
             var m = ch.attr(WindowExtraResourcesState.EXTRA_BY_WINDOW_ID).get();
             if (m != null) m.clear();
         });
+
+        this.getEventRegistry().registerAsyncGlobal(PlayerChatEvent.class, new PlayerChatListener());
 
         var interaction = getCodecRegistry(Interaction.CODEC);
         interaction.register("UseBlock", ClaimUseBlockInteraction.class, ClaimUseBlockInteraction.CUSTOM_CODEC);

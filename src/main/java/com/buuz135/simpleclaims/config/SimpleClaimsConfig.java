@@ -125,6 +125,9 @@ public class SimpleClaimsConfig {
             .append(new KeyedCodec<Boolean>("EXPERIMENTAL-RenderMapInClaimUI", Codec.BOOLEAN),
                     (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.RenderMapInClaimUI = value,
                     (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.RenderMapInClaimUI).add()
+            .append(new KeyedCodec<Boolean>("NotifyPartyChatToggling", Codec.BOOLEAN),
+                    (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.NotifyPartyChatToggling = value,
+                    (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.NotifyPartyChatToggling).add()
             .build();
 
     private String[] PartyCommandAliases = new String[]{"scp", "sc-party", "party"};
@@ -132,6 +135,7 @@ public class SimpleClaimsConfig {
     private int MaxPartyMembers = -1;
     private int MaxPartyAllies = -1;
     private int PartyInactivityHours = -1;
+    private boolean NotifyPartyChatToggling = true;
     private boolean DefaultPartyBlockPlaceEnabled = false;
     private boolean DefaultPartyBlockBreakEnabled = false;
     private boolean DefaultPartyBlockInteractEnabled = false;
@@ -325,4 +329,9 @@ public class SimpleClaimsConfig {
     public boolean isRenderMapInClaimUI() {
         return RenderMapInClaimUI;
     }
+
+    public boolean isNotifyPartyChatToggling() {
+        return NotifyPartyChatToggling;
+    }
+
 }

@@ -48,4 +48,9 @@ public class CommandMessages {
     public static final Message DISABLED_OVERRIDE = Message.translation("commands.simpleclaims.disabledOverride").color(Color.GREEN).bold(true);
     public static final Message PARTY_MEMBER_LIMIT_REACHED = Message.translation("commands.errors.simpleclaims.partyMemberLimitReached").color(Color.RED).bold(true);
     public static final Message PARTY_ALLY_LIMIT_REACHED = Message.translation("commands.errors.simpleclaims.partyAllyLimitReached").color(Color.RED).bold(true);
+
+    public static final Message PARTY_CHAT_ACTIVATED = Message.translation("commands.simpleclaims.activatedPartyChat").color(Color.GREEN).bold(true);
+    public static final Message PARTY_CHAT_DEACTIVATED = Message.translation("commands.simpleclaims.deactivatedPartyChat").color(Color.GREEN).bold(true);
+    public static final Message PLAYER_PARTY_CHAT_ACTIVATED = Message.translation("commands.simpleclaims.playerActivatedPartyChat").color(Color.GREEN).bold(true);
+    public static final Message PLAYER_PARTY_CHAT_DEACTIVATED = Message.translation("commands.simpleclaims.playerDeactivatedPartyChat").color(Color.GREEN).bold(true);
 }

@@ -27,3 +27,8 @@ simpleclaims.partyOwnerTransferred = Elhagytad a partyt, a vezetés átkerült h
 simpleclaims.modifiedMaxChunkAmount = Megváltoztattad a(z) {party_name} party maximális területlimitjét ennyire: {amount}
 simpleclaims.enabledOverride = Adminisztrátori felülbirálás bekapcsolva
 simpleclaims.disabledOverride = Adminisztrátori felülbirálás kikapcsolva
+
+simpleclaims.activatedPartyChat = Party chat activated
+simpleclaims.deactivatedPartyChat = Party chat deactivated
+simpleclaims.playerActivatedPartyChat = {player} has activated the party chat
+simpleclaims.playerDeactivatedPartyChat = {player} has deactivated the party chat

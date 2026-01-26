@@ -27,3 +27,9 @@ simpleclaims.partyOwnerTransferred = You have left your party, and the ownership
 simpleclaims.modifiedMaxChunkAmount = You have changed the max claimed chunk amount for {party_name} to {amount} chunks
 simpleclaims.enabledOverride = Enabled admin interaction override
 simpleclaims.disabledOverride = Disabled admin interaction override
+
+simpleclaims.activatedPartyChat = Party chat is activated
+simpleclaims.deactivatedPartyChat = Party chat is deactivated
+simpleclaims.playerActivatedPartyChat = {player} has activated the party chat
+simpleclaims.playerDeactivatedPartyChat = {player} has deactivated the party chat
+simpleclaims.partyTag = [PARTY]
