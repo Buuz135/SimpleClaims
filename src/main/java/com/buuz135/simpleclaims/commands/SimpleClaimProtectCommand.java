@@ -1,5 +1,6 @@
 package com.buuz135.simpleclaims.commands;
 
+import com.buuz135.simpleclaims.Main;
 import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.buuz135.simpleclaims.commands.subcommand.chunk.ClaimChunkCommand;
 import com.buuz135.simpleclaims.commands.subcommand.chunk.UnclaimChunkCommand;
@@ -10,7 +11,6 @@ import com.buuz135.simpleclaims.gui.ChunkInfoGui;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.util.ChunkUtil;
-import com.hypixel.hytale.protocol.GameMode;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.CommandSender;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
@@ -29,7 +29,7 @@ public class SimpleClaimProtectCommand extends AbstractAsyncCommand {
 
     public SimpleClaimProtectCommand() {
         super("simpleclaims", "Opens the chunk claim gui");
-        this.addAliases("sc", "sc-chunks", "scc", "chunk", "chunks", "claim", "claims");
+        this.addAliases(Main.CONFIG.get().getClaimCommandAliases());
         this.requirePermission(CommandMessages.BASE_PERM + "claim-gui");
 
         this.addSubCommand(new ClaimChunkCommand());

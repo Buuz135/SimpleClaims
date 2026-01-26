@@ -7,6 +7,9 @@ import com.hypixel.hytale.codec.builder.BuilderCodec;
 public class SimpleClaimsConfig {
 
     public static final BuilderCodec<SimpleClaimsConfig> CODEC = BuilderCodec.builder(SimpleClaimsConfig.class, SimpleClaimsConfig::new)
+            .append(new KeyedCodec<String[]>("PartyCommandAliases", Codec.STRING_ARRAY),
+                    (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.PartyCommandAliases = value,
+                    (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.PartyCommandAliases).add()
             .append(new KeyedCodec<Integer>("DefaultPartyClaimsAmount", Codec.INTEGER),
                     (simpleClaimsConfig, aDouble, extraInfo) -> simpleClaimsConfig.DefaultPartyClaimsAmount = aDouble,
                     (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.DefaultPartyClaimsAmount).add()
@@ -78,6 +81,9 @@ public class SimpleClaimsConfig {
                     (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.AllowPartyInteractPortalSetting = value,
                     (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.AllowPartyInteractPortalSetting).add()
 
+            .append(new KeyedCodec<String[]>("ClaimCommandAliases", Codec.STRING_ARRAY),
+                    (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.ClaimCommandAliases = value,
+                    (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.ClaimCommandAliases).add()
             .append(new KeyedCodec<String[]>("WorldClaimBlacklist", Codec.STRING_ARRAY),
                     (simpleClaimsConfig, value, extraInfo) -> simpleClaimsConfig.WorldNameBlacklistForClaiming = value,
                     (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.WorldNameBlacklistForClaiming).add()
@@ -121,6 +127,7 @@ public class SimpleClaimsConfig {
                     (simpleClaimsConfig, extraInfo) -> simpleClaimsConfig.RenderMapInClaimUI).add()
             .build();
 
+    private String[] PartyCommandAliases = new String[]{"scp", "sc-party", "party"};
     private int DefaultPartyClaimsAmount = 25;
     private int MaxPartyMembers = -1;
     private int MaxPartyAllies = -1;
@@ -149,6 +156,7 @@ public class SimpleClaimsConfig {
     private boolean AllowPartyInteractChairSetting = true;
     private boolean AllowPartyInteractPortalSetting = true;
 
+    private String[] ClaimCommandAliases = new String[]{"sc", "sc-chunks", "scc", "chunk", "chunks", "claim", "claims"};
     private String[] WorldNameBlacklistForClaiming = new String[0];
     private String TitleTopClaimTitleText = "Simple Claims";
     private String[] FullWorldProtection = new String[0];
@@ -164,6 +172,10 @@ public class SimpleClaimsConfig {
 
     public SimpleClaimsConfig() {
 
+    }
+
+    public String[] getPartyCommandAliases() {
+        return PartyCommandAliases;
     }
 
     public int getDefaultPartyClaimsAmount() {
@@ -204,6 +216,10 @@ public class SimpleClaimsConfig {
 
     public boolean isAllowPartyFriendlyFireSetting() {
         return AllowPartyFriendlyFireSetting;
+    }
+
+    public String[] getClaimCommandAliases() {
+        return ClaimCommandAliases;
     }
 
     public String[] getWorldNameBlacklistForClaiming() {
