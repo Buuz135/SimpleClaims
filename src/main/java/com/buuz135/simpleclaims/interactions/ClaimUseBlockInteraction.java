@@ -58,7 +58,7 @@ public class ClaimUseBlockInteraction extends UseBlockInteraction {
             defaultInteract = PartyInfo::isChairInteractEnabled;
         else if (blockName.contains("portal") || blockName.contains("teleporter"))
             defaultInteract = PartyInfo::isPortalInteractEnabled;
-        if (ignored || (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.getX(), targetBlock.getZ(), defaultInteract))) {
+        if (ignored && (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.getX(), targetBlock.getZ(), defaultInteract))) {
             super.interactWithBlock(world, commandBuffer, type, context, itemInHand, targetBlock, cooldownHandler);
         }
     }
@@ -85,7 +85,7 @@ public class ClaimUseBlockInteraction extends UseBlockInteraction {
             defaultInteract = PartyInfo::isChairInteractEnabled;
         else if (blockName.contains("portal") || blockName.contains("teleporter"))
             defaultInteract = PartyInfo::isPortalInteractEnabled;
-        if (ignored || (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.getX(), targetBlock.getZ(), defaultInteract))) {
+        if (ignored && (playerRef != null && ClaimManager.getInstance().isAllowedToInteract(playerRef.getUuid(), player.getWorld().getName(), targetBlock.getX(), targetBlock.getZ(), defaultInteract))) {
             super.simulateInteractWithBlock(type, context, itemInHand, world, targetBlock);
         }
     }
