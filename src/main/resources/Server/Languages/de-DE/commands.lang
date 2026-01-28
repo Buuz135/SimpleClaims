@@ -1,0 +1,35 @@
+errors.simpleclaims.playerNotInParty = Du musst in einer Gruppe sein, um das zu tun
+errors.simpleclaims.playerInParty = Du bist bereits in einer Gruppe
+
+errors.simpleclaims.alreadyClaimedByYou = Dieser Chunk ist bereits von deiner Gruppe beansprucht
+errors.simpleclaims.alreadyClaimedByAnotherPlayer = Dieser Chunk ist bereits von einer anderen Gruppe beansprucht
+errors.simpleclaims.notClaimed = Dieser Chunk ist nicht beansprucht
+errors.simpleclaims.notYourClaim = Dieser Chunk gehört nicht zu deiner Gruppe
+errors.simpleclaims.notEnoughChunks = Deine Gruppe hat nicht genug Chunks, um diesen zu beanspruchen
+errors.simpleclaims.playerNotFound = Spieler nicht gefunden
+errors.simpleclaims.cantClaimInThisDimension = Du kannst keine Chunks in dieser Dimension beanspruchen
+
+simpleclaims.partyCreated = Gruppe erstellt
+info.simpleclaims.unclaimed = Chunk freigegeben
+info.simpleclaims.claimed = Chunk beansprucht
+simpleclaims.nowUsingParty = Folgende Gruppe wird jetzt verwendet:
+
+errors.simpleclaims.admin.partyNotSelected = Keine Gruppe als Admin ausgewählt
+errors.simpleclaims.admin.partyNotFound = Gruppe nicht gefunden
+
+simpleclaims.partyInviteSent = Gruppeneinladung zu {username} geschickt
+simpleclaims.partyInviteReceived = Gruppeneinladung von {username} erhalten, um der Gruppe {party_name} beizutreten, nutze den Befehl '/scp invite-accept'.
+simpleclaims.partyInviteJoined = {username} ist der Gruppe {party_name} beigetreten
+simpleclaims.partyInviteSelf = Dieser Spieler ist bereits Mitglied der Gruppe
+simpleclaims.partyLeft = Du hast deine Gruppe verlassen
+simpleclaims.partyDisbanded = Du hast deine Gruppe verlassen. Da keine Mitglieder mehr übrig sind, wurde die Gruppe aufgelöst
+simpleclaims.partyOwnerTransferred = Du hast deine Gruppe verlassen, und die Gruppenleitung wurde an {username} übertragen
+simpleclaims.modifiedMaxChunkAmount = Du hast die Anzahl der maximal zu beanspruchenden Chunks von {party_name} auf {amount} Chunks geändert
+simpleclaims.enabledOverride = Admin-Rechte für Interaktionen aktiviert
+simpleclaims.disabledOverride = Admin-Rechte für Interaktionen deaktiviert
+
+simpleclaims.activatedPartyChat = Gruppenchat ist aktiviert
+simpleclaims.deactivatedPartyChat = Gruppenchat ist deaktiviert
+simpleclaims.playerActivatedPartyChat = {player} hat den Gruppenchat aktiviert
+simpleclaims.playerDeactivatedPartyChat = {player} hat den Gruppenchat deaktiviert
+simpleclaims.partyTag = [PARTY]
