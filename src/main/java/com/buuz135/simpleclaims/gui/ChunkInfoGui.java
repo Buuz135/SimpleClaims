@@ -20,6 +20,8 @@ import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import dev.unnm3d.codeclib.config.CodecFactory;
+import dev.unnm3d.codeclib.config.FieldName;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import java.awt.*;
@@ -35,7 +37,7 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
     private CompletableFuture<ChunkInfoMapAsset> mapAsset = null;
 
     public ChunkInfoGui(@NonNullDecl PlayerRef playerRef, String dimension, int chunkX, int chunkZ, boolean isOp) {
-        super(playerRef, CustomPageLifetime.CanDismiss, ChunkInfoData.CODEC);
+        super(playerRef, CustomPageLifetime.CanDismiss, CodecFactory.createClassCodec(ChunkInfoData.class));
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
         this.dimension = dimension;
@@ -194,14 +196,8 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
     }
 
     public static class ChunkInfoData {
-        static final String KEY_ACTION = "Action";
 
-
-        public static final BuilderCodec<ChunkInfoData> CODEC = BuilderCodec.<ChunkInfoData>builder(ChunkInfoData.class, ChunkInfoData::new)
-                .addField(new KeyedCodec<>(KEY_ACTION, Codec.STRING), (searchGuiData, s) -> searchGuiData.action = s, searchGuiData -> searchGuiData.action)
-
-                .build();
-
+        @FieldName("Action")
         private String action;
 
     }

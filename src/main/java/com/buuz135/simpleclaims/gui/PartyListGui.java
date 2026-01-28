@@ -23,6 +23,8 @@ import com.hypixel.hytale.server.core.ui.builder.UICommandBuilder;
 import com.hypixel.hytale.server.core.ui.builder.UIEventBuilder;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import dev.unnm3d.codeclib.config.CodecFactory;
+import dev.unnm3d.codeclib.config.FieldName;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import javax.annotation.Nonnull;
@@ -34,7 +36,7 @@ public class PartyListGui extends InteractiveCustomUIPage<PartyListGui.PartyList
     private String requestingConfirmation;
 
     public PartyListGui(@NonNullDecl PlayerRef playerRef) {
-        super(playerRef, CustomPageLifetime.CanDismiss, PartyListCodec.CODEC);
+        super(playerRef, CustomPageLifetime.CanDismiss, CodecFactory.createClassCodec(PartyListCodec.class));
         this.searchQuery = "";
         this.requestingConfirmation = "-1";
     }
@@ -134,20 +136,11 @@ public class PartyListGui extends InteractiveCustomUIPage<PartyListGui.PartyList
     }
 
     public static class PartyListCodec {
-        static final String KEY_ACTION = "Action";
-        static final String KEY_SEARCH_QUERY = "@SearchQuery";
-        static final String KEY_REMOVE_BUTTON_ACTION = "RemoveButtonAction";
-
-
-        public static final BuilderCodec<PartyListCodec> CODEC = BuilderCodec.<PartyListCodec>builder(PartyListCodec.class, PartyListCodec::new)
-                .addField(new KeyedCodec<>(KEY_SEARCH_QUERY, Codec.STRING), (searchGuiData, s) -> searchGuiData.searchQuery = s, searchGuiData -> searchGuiData.searchQuery)
-                .addField(new KeyedCodec<>(KEY_ACTION, Codec.STRING), (searchGuiData, s) -> searchGuiData.action = s, searchGuiData -> searchGuiData.action)
-                .addField(new KeyedCodec<>(KEY_REMOVE_BUTTON_ACTION, Codec.STRING), (searchGuiData, s) -> searchGuiData.removeButtonAction = s, searchGuiData -> searchGuiData.removeButtonAction)
-
-                .build();
-
+        @FieldName("Action")
         private String action;
+        @FieldName("@SearchQuery")
         private String searchQuery;
+        @FieldName("RemoveButtonAction")
         private String removeButtonAction;
 
     }

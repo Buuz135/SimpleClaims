@@ -27,6 +27,7 @@ import com.hypixel.hytale.server.core.universe.world.events.AddWorldEvent;
 import com.hypixel.hytale.server.core.universe.world.worldmap.provider.IWorldMapProvider;
 import com.hypixel.hytale.server.core.universe.world.worldmap.provider.chunk.WorldGenWorldMapProvider;
 import com.hypixel.hytale.server.core.util.Config;
+import dev.unnm3d.codeclib.config.CodecFactory;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import java.util.logging.Level;
@@ -40,7 +41,7 @@ public class Main extends JavaPlugin {
 
     public Main(@NonNullDecl JavaPluginInit init) {
         super(init);
-        CONFIG = this.withConfig("SimpleClaims", SimpleClaimsConfig.CODEC);
+        CONFIG = this.withConfig("SimpleClaims", CodecFactory.createClassCodec(SimpleClaimsConfig.class));
     }
 
     @Override

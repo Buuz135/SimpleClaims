@@ -1,40 +1,24 @@
 package com.buuz135.simpleclaims.claim.chunk;
 
 import com.buuz135.simpleclaims.claim.tracking.ModifiedTracking;
-import com.hypixel.hytale.codec.Codec;
-import com.hypixel.hytale.codec.KeyedCodec;
-import com.hypixel.hytale.codec.builder.BuilderCodec;
-import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
+import dev.unnm3d.codeclib.config.FieldName;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.UUID;
 
 public class ChunkInfo {
 
-    public static final BuilderCodec<ChunkInfo> CODEC = BuilderCodec.<ChunkInfo>builder(ChunkInfo.class, ChunkInfo::new)
-            .append(new KeyedCodec<>("UUID", Codec.UUID_STRING),
-                    (chunkInfo, uuid, extraInfo) -> chunkInfo.setPartyOwner(uuid),
-                    (chunkInfo, extraInfo) -> chunkInfo.getPartyOwner()).add()
-            .append(new KeyedCodec<>("ChunkX", Codec.INTEGER),
-                    (chunkInfo, value, extraInfo) -> chunkInfo.setChunkX(value),
-                    (chunkInfo, extraInfo) -> chunkInfo.getChunkX()).add()
-            .append(new KeyedCodec<>("ChunkY", Codec.INTEGER), // "ChunkY" key stores Z; kept for save compatibility
-                    (chunkInfo, value, extraInfo) -> chunkInfo.setChunkZ(value),
-                    (chunkInfo, extraInfo) -> chunkInfo.getChunkZ()).add()
-            .append(new KeyedCodec<>("CreatedTracker", ModifiedTracking.CODEC),
-                    (partyInfo, partyOverrides, extraInfo) -> partyInfo.setCreatedTracked(partyOverrides),
-                    (partyInfo, extraInfo) -> partyInfo.getCreatedTracked()).add()
-            .build();
-    public static ArrayCodec<ChunkInfo> CODEC_ARRAY = new ArrayCodec<>(CODEC, ChunkInfo[]::new);
-
-    public static String formatCoordinates(int chunkX, int chunkZ){
+    public static String formatCoordinates(int chunkX, int chunkZ) {
         return chunkX + ":" + chunkZ;
     }
 
+    @FieldName("UUID")
     private UUID partyOwner;
+    @FieldName("ChunkX")
     private int chunkX;
+    @FieldName("ChunkY")
     private int chunkZ;
+    @FieldName("CreatedTracker")
     private ModifiedTracking createdTracked;
 
     public ChunkInfo(UUID partyOwner, int chunkX, int chunkZ) {
@@ -86,12 +70,8 @@ public class ChunkInfo {
 
     public static final class DimensionStorage {
 
-        public static final BuilderCodec<DimensionStorage> CODEC = BuilderCodec.builder(DimensionStorage.class, DimensionStorage::new)
-                .append(new KeyedCodec<>("Dimensions", ChunkInfoStorage.CODEC_ARRAY),
-                        (dimensionStorage, infoStorages, extraInfo) -> dimensionStorage.setChunkInfoStorages(infoStorages),
-                        (dimensionStorage, extraInfo) -> dimensionStorage.getChunkInfoStorages()).add()
-                .build();
 
+        @FieldName("Dimensions")
         private ChunkInfoStorage[] chunkInfoStorages;
 
         public DimensionStorage(ChunkInfoStorage[] chunkInfoStorages) {
@@ -113,18 +93,9 @@ public class ChunkInfo {
 
     public static class ChunkInfoStorage {
 
-        public static final BuilderCodec<ChunkInfoStorage> CODEC = BuilderCodec.builder(ChunkInfoStorage.class, ChunkInfoStorage::new)
-                .append(new KeyedCodec<>("Dimension", Codec.STRING),
-                        (chunkInfoStorage, string, extraInfo) -> chunkInfoStorage.setDimension(string),
-                        (chunkInfoStorage, extraInfo) -> chunkInfoStorage.getDimension()).add()
-                .append(new KeyedCodec<>("ChunkInfo", ChunkInfo.CODEC_ARRAY),
-                        (chunkInfoStorage, chunkInfos, extraInfo) -> chunkInfoStorage.setChunkInfos(chunkInfos),
-                        (chunkInfoStorage, extraInfo) -> chunkInfoStorage.getChunkInfos()).add()
-                .build();
-        public static ArrayCodec<ChunkInfoStorage> CODEC_ARRAY = new ArrayCodec<>(CODEC, ChunkInfoStorage[]::new);
-
-
+        @FieldName("Dimension")
         public String dimension;
+        @FieldName("ChunkInfo")
         private ChunkInfo[] chunkInfos;
 
         public ChunkInfoStorage() {

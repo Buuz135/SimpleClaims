@@ -1,11 +1,6 @@
 package com.buuz135.simpleclaims.claim.player_name;
 
-import com.buuz135.simpleclaims.claim.chunk.ChunkInfo;
-import com.buuz135.simpleclaims.claim.tracking.ModifiedTracking;
-import com.hypixel.hytale.codec.Codec;
-import com.hypixel.hytale.codec.KeyedCodec;
-import com.hypixel.hytale.codec.builder.BuilderCodec;
-import com.hypixel.hytale.codec.codecs.array.ArrayCodec;
+import dev.unnm3d.codeclib.config.FieldName;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -30,7 +25,7 @@ public class PlayerNameTracker {
         }
     }
 
-    public String getPlayerName(UUID uuid){
+    public String getPlayerName(UUID uuid) {
         if (names.containsKey(uuid)) return names.get(uuid).name;
         return "Unknown";
     }
@@ -51,24 +46,13 @@ public class PlayerNameTracker {
         return names;
     }
 
-    public static class PlayerName{
+    public static class PlayerName {
 
-        public static final BuilderCodec<PlayerName> CODEC = BuilderCodec.builder(PlayerName.class, PlayerName::new)
-                .append(new KeyedCodec<>("UUID", Codec.UUID_STRING),
-                        (modifiedTracking, id, extraInfo) -> modifiedTracking.uuid = id,
-                        (modifiedTracking, extraInfo) -> modifiedTracking.uuid).add()
-                .append(new KeyedCodec<>("Name", Codec.STRING),
-                        (modifiedTracking, string, extraInfo) -> modifiedTracking.name = string,
-                        (modifiedTracking, extraInfo) -> modifiedTracking.name).add()
-                .append(new KeyedCodec<>("LastSeen", Codec.LONG),
-                        (modifiedTracking, aLong, extraInfo) -> modifiedTracking.lastSeen = aLong,
-                        (modifiedTracking, extraInfo) -> modifiedTracking.lastSeen).add()
-                .build();
-
-        public static ArrayCodec<PlayerName> CODEC_ARRAY = new ArrayCodec<>(CODEC, PlayerName[]::new);
-
+        @FieldName("UUID")
         private UUID uuid;
+        @FieldName("Name")
         private String name;
+        @FieldName("LastSeen")
         private long lastSeen;
 
         public PlayerName(UUID uuid, String name, long lastSeen) {

@@ -28,6 +28,10 @@ repositories {
         name = "hytale-release"
         url = uri("https://maven.hytale.com/release")
     }
+    maven {
+        name = "Jitpack"
+        url = uri("https://jitpack.io")
+    }
 }
 
 
@@ -59,6 +63,7 @@ dependencies {
     implementation files(hytaleServerJar)
     implementation(files(System.getProperty("user.home") + "/AppData/Roaming/Hytale/install/release/package/game/$game_build/Server/HytaleServer.jar"))
     //implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
+    shadowBundle files('libs/codeclib-1.1.0.jar')
     shadowBundle 'org.slf4j:slf4j-simple:2.0.17'
     shadowBundle 'org.xerial:sqlite-jdbc:3.45.1.0'
     compileOnly 'net.luckperms:api:5.4'
@@ -100,9 +105,8 @@ idea.project.settings.runConfigurations {
 shadowJar {
     archiveClassifier.set('')
     mergeServiceFiles()
-
     configurations = [project.configurations.shadowBundle]
-
+    relocate 'dev.unnm3d.codeclib', 'com.buuz135.simpleclaims.libs.codeclib'
     manifest {
         attributes(
                 'Main-Class': 'com.buuz135.simpleclaims.Main'
