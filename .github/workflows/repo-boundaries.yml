@@ -1,0 +1,30 @@
+name: Repo Boundaries
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  scripts-boundary:
+    name: scripts-boundary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure shared scripts are not tracked here
+        run: |
+          set -euo pipefail
+          pattern='(^|/)(build-all-mods\.sh|build-all-mods 2\.sh|verify-hytale-mod-install\.sh|verify-hytale-mod-install 2\.sh|verify-module-boundaries\.sh)$'
+          matches="$(git ls-files | grep -E "$pattern" || true)"
+
+          if [ -n "$matches" ]; then
+            echo "ERROR: shared scripts must live only in Shieldudaram/scripts."
+            echo "$matches"
+            exit 1
+          fi
+
+          echo "OK: no shared script ownership violations found."
