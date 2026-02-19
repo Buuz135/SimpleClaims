@@ -57,6 +57,7 @@ public class Main extends JavaPlugin {
         if (CONFIG.get().isEnableParticleBorders())
             this.getEntityStoreRegistry().registerSystem(new ChunkBordersTickingSystem());
         this.getEntityStoreRegistry().registerSystem(new CustomDamageEventSystem());
+        this.getEntityStoreRegistry().registerSystem(new TamedEntityDamageEventSystem());
         this.getEntityStoreRegistry().registerSystem(new QueuedCraftClaimFilterSystem());
         this.getEntityStoreRegistry().registerSystem(new CraftingUiQuantitiesSystem());
         this.getEntityStoreRegistry().registerSystem(new PlayerPlayTimeSystem());
