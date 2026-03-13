@@ -5,6 +5,7 @@ import com.buuz135.simpleclaims.claim.party.PartyInfo;
 import com.buuz135.simpleclaims.claim.party.PartyOverride;
 import com.buuz135.simpleclaims.claim.party.PartyOverrides;
 import com.buuz135.simpleclaims.commands.CommandMessages;
+import com.buuz135.simpleclaims.util.TranslationHelper;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -125,7 +126,7 @@ public class PartyListGui extends InteractiveCustomUIPage<PartyListGui.PartyList
             uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#PartyCards[" + i + "] #ClaimButton", EventData.of("Action", "Claim:" + value.getId().toString()), false);
             uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#PartyCards[" + i + "] #UsePartyButton", EventData.of("Action", "Use:" + value.getId().toString()), false);
             if (this.requestingConfirmation.equals(value.getId().toString())) {
-                uiCommandBuilder.set("#PartyCards[" + i + "] #RemovePartyButton.Text", "Are you sure?");
+                uiCommandBuilder.set("#PartyCards[" + i + "] #RemovePartyButton.Text", TranslationHelper.rawTextOrEnglish("ui.simpleclaims.common.areYouSure", this.playerRef));
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#PartyCards[" + i + "] #RemovePartyButton", EventData.of("RemoveButtonAction", "Delete:" + value.getId().toString()), false);
                 uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited, "#PartyCards[" + i + "] #RemovePartyButton", EventData.of("RemoveButtonAction", "Click:-1"), false);
             } else {

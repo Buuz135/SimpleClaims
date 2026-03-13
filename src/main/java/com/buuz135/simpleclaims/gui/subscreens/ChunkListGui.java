@@ -5,6 +5,7 @@ import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.buuz135.simpleclaims.claim.chunk.ChunkInfo;
 import com.buuz135.simpleclaims.claim.party.PartyInfo;
 import com.buuz135.simpleclaims.commands.CommandMessages;
+import com.buuz135.simpleclaims.util.TranslationHelper;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -108,7 +109,7 @@ public class ChunkListGui extends GuiWithParent<ChunkListGui.ChunkListGuiData> {
                     uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#ClaimsCards[" + i + "] #TeleportButton", EventData.of("Action", "Teleport").append("ChunkId", world + ":" + value.getCoordinates()), false);
                 }
                 if (this.requestingConfirmation.equals(world + ":" + value.getCoordinates())) {
-                    uiCommandBuilder.set("#ClaimsCards[" + i + "] #UnclaimButton.Text", "Are you sure?");
+                    uiCommandBuilder.set("#ClaimsCards[" + i + "] #UnclaimButton.Text", TranslationHelper.rawTextOrEnglish("ui.simpleclaims.common.areYouSure", this.playerRef));
                     uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#ClaimsCards[" + i + "] #UnclaimButton", EventData.of("RemoveButtonAction", "Delete").append("ChunkId", world + ":" + value.getCoordinates()), false);
                     uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited, "#ClaimsCards[" + i + "] #UnclaimButton", EventData.of("RemoveButtonAction", "Click").append("ChunkId", world + ":" + value.getCoordinates()), false);
                 } else {

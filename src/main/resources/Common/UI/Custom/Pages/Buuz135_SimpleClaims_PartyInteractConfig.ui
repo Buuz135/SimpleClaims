@@ -10,7 +10,7 @@ $C.@PageOverlay {
       TextButton #BackButton {
         Anchor: (Left: 12, Top: 4, Width: 64, Height: 24);
         Padding: (Left: 8, Top: 2);
-        Text: "< Back";
+        Text: %ui.simpleclaims.party.back;
         Style: TextButtonStyle(
           Default: (LabelStyle: (FontSize: 14, TextColor: #93844c, RenderBold: true)),
           Sounds: $C.@ButtonSounds,
@@ -20,7 +20,7 @@ $C.@PageOverlay {
 
       Group {
         $C.@Title #TitleText{
-          @Text = "INTERACTION SETTINGS";
+          @Text = %ui.simpleclaims.party.interactionSettings;
         }
 
       }
@@ -33,27 +33,27 @@ $C.@PageOverlay {
         LayoutMode: Top;
         Padding: (Left: 40);
           $C.@CheckBoxWithLabel #InteractBlocksSetting {
-            @Text = "Allow Block Interaction";
+            @Text = %ui.simpleclaims.party.allowBlockInteraction;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InteractChestSetting {
-            @Text = "Allow Chest Interaction";
+            @Text = %ui.simpleclaims.party.allowChestInteraction;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InteractDoorSetting {
-            @Text = "Allow Door Interaction";
+            @Text = %ui.simpleclaims.party.allowDoorInteraction;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InteractBenchSetting {
-            @Text = "Allow Bench Interaction";
+            @Text = %ui.simpleclaims.party.allowBenchInteraction;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InteractChairSetting {
-            @Text = "Allow Chair Interaction";
+            @Text = %ui.simpleclaims.party.allowChairInteraction;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InteractPortalSetting {
-            @Text = "Allow Portal Interaction";
+            @Text = %ui.simpleclaims.party.allowPortalInteraction;
             Padding: (Bottom: 4);
           }
       }

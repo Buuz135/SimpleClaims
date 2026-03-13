@@ -10,7 +10,7 @@ $C.@PageOverlay {
       TextButton #BackButton {
         Anchor: (Left: 12, Top: 4, Width: 64, Height: 24);
         Padding: (Left: 8, Top: 2);
-        Text: "< Back";
+        Text: %ui.simpleclaims.party.back;
         Style: TextButtonStyle(
           Default: (LabelStyle: (FontSize: 14, TextColor: #93844c, RenderBold: true)),
           Sounds: $C.@ButtonSounds,
@@ -20,7 +20,7 @@ $C.@PageOverlay {
 
       Group {
         $C.@Title #TitleText{
-          @Text = "PERMISSION SETTINGS";
+          @Text = %ui.simpleclaims.party.permissionSettings;
         }
 
       }
@@ -33,51 +33,51 @@ $C.@PageOverlay {
         LayoutMode: Top;
         Padding: (Left: 40);
           $C.@CheckBoxWithLabel #PlaceBlocks {
-            @Text = "Place Blocks";
+            @Text = %ui.simpleclaims.party.placeBlocks;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #BreakBlocks {
-            @Text = "Break Blocks";
+            @Text = %ui.simpleclaims.party.breakBlocks;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InteractBlocks {
-            @Text = "Interact Blocks";
+            @Text = %ui.simpleclaims.party.interactBlocks;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InteractChest {
-            @Text = "Interact Chests";
+            @Text = %ui.simpleclaims.party.interactChests;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InteractDoor {
-            @Text = "Interact Doors";
+            @Text = %ui.simpleclaims.party.interactDoors;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InteractBench {
-            @Text = "Interact Benches";
+            @Text = %ui.simpleclaims.party.interactBenches;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InteractChair {
-            @Text = "Interact Chairs";
+            @Text = %ui.simpleclaims.party.interactChairs;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InteractPortal {
-            @Text = "Interact Portals";
+            @Text = %ui.simpleclaims.party.interactPortals;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #ModifyInfo {
-            @Text = "Modify Party Info";
+            @Text = %ui.simpleclaims.party.modifyPartyInfo;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #ClaimUnclaim {
-            @Text = "Claim/Unclaim";
+            @Text = %ui.simpleclaims.party.claimUnclaim;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #InvitePlayers {
-            @Text = "Invite Players";
+            @Text = %ui.simpleclaims.party.invitePlayers;
             Padding: (Bottom: 4);
           }
           $C.@CheckBoxWithLabel #AddAllies {
-            @Text = "Add Allies";
+            @Text = %ui.simpleclaims.party.addAllies;
             Padding: (Bottom: 4);
           }
       }

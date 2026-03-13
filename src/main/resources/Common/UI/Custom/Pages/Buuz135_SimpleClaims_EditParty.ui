@@ -24,8 +24,8 @@ $C.@PageOverlay {
 
     #Title {
       Group {
-        $C.@Title {
-          @Text = "Party Information";
+        $C.@Title #TitleText {
+          @Text = %ui.simpleclaims.party.partyInformation;
         }
 
         
@@ -44,7 +44,7 @@ $C.@PageOverlay {
         // Party Name Field
 
         Label #PartyName {
-          Text: "Party Name";
+          Text: %ui.simpleclaims.party.partyName;
           Style: (
             RenderUppercase: true,
             RenderBold: true,
@@ -69,8 +69,8 @@ $C.@PageOverlay {
           Group #ClaimedChunksInfo {
             LayoutMode: Left;
             Anchor: (Top: 10, Left: 10);
-            Label  {
-              Text: "Claimed Chunks: ";
+            Label #ClaimedChunksLabel {
+              Text: %ui.simpleclaims.common.claimedChunks;
               Style: (
                 TextColor: #93844c(1)
               );
@@ -91,7 +91,7 @@ $C.@PageOverlay {
           $C.@TextButton #SeeClaimedChunksButton {
               Anchor: (Height: 22, Left: 10, Top: 9);
               Padding: ();
-              Text: "  VIEW  ";
+              Text: %ui.simpleclaims.party.view;
               Style: @CustomStyle;
             }
         }
@@ -101,7 +101,7 @@ $C.@PageOverlay {
         // Party Description Field
 
         Label #PartyDescription {
-          Text: "Party Description";
+          Text: %ui.simpleclaims.party.partyDescription;
           Style: (
             RenderUppercase: true,
             RenderBold: true,
@@ -125,8 +125,8 @@ $C.@PageOverlay {
         }
 
         // Party Settings
-        Label #MemberList {
-          Text: "Non-Members Protection Settings";
+        Label #ProtectionSettingsLabel {
+          Text: %ui.simpleclaims.party.nonMembersProtectionSettings;
           Style: (
             RenderUppercase: true,
             RenderBold: true,
@@ -140,34 +140,34 @@ $C.@PageOverlay {
           Anchor: (Bottom: 10);
 
           $C.@CheckBoxWithLabel #PlaceBlocksSetting {
-            @Text = "Allow Block Placement";
+            @Text = %ui.simpleclaims.party.allowBlockPlacement;
             Padding: (Bottom: 4);
           }
 
           $C.@CheckBoxWithLabel #BreakBlocksSetting {
-            @Text = "Allow Block Breaking";
+            @Text = %ui.simpleclaims.party.allowBlockBreaking;
             Padding: (Bottom: 4);
           }
 
           $C.@CheckBoxWithLabel #InteractBlocksSetting {
-            @Text = "Allow Block Interact";
+            @Text = %ui.simpleclaims.party.allowBlockInteract;
             Padding: (Bottom: 4);
           }
 
           $C.@TextButton #EditInteractButton {
             Anchor: (Height: 22, Left: -20, Top: 0, Right: 10);
             Padding: ();
-            Text: "  EDIT  ";
+            Text: %ui.simpleclaims.party.edit;
             Style: @CustomStyle;
           }
 
           $C.@CheckBoxWithLabel #PVPSetting {
-            @Text = "PVP";
+            @Text = %ui.simpleclaims.party.pvp;
             Padding: (Bottom: 4);
           }
 
           $C.@CheckBoxWithLabel #AllowEntrySetting {
-            @Text = "Allow Entry";
+            @Text = %ui.simpleclaims.party.allowEntry;
             Padding: (Bottom: 4);
           }
         }
@@ -176,7 +176,7 @@ $C.@PageOverlay {
           LayoutMode: Left;
           Anchor: (Bottom: 10);
           $C.@CheckBoxWithLabel #FriendlyFireSetting {
-            @Text = "Party PVP";
+            @Text = %ui.simpleclaims.party.partyPvp;
             Padding: (Bottom: 4);
           }
         }
@@ -196,8 +196,8 @@ $C.@PageOverlay {
             FlexWeight: 2;
             LayoutMode: Top;
 
-            Label #MemberList {
-              Text: "Members";
+            Label #MembersSectionTitle {
+              Text: %ui.simpleclaims.party.members;
               Style: (
               RenderUppercase: true,
               RenderBold: true,
@@ -209,8 +209,8 @@ $C.@PageOverlay {
             LayoutMode: Left;
             Anchor: (Bottom: 10);
             Padding: (Bottom: 2);
-            Label {
-              Text: "Invite:";
+            Label #InviteLabel {
+              Text: %ui.simpleclaims.party.inviteLabel;
               Style: (
                 FontSize: 15,
                 TextColor: #93844c,
@@ -241,8 +241,8 @@ $C.@PageOverlay {
               Style: @CustomStyle;
             }
             
-            Label {
-              Text: "Add Allies:";
+            Label #AlliesLabel {
+              Text: %ui.simpleclaims.party.addAlliesLabel;
               Style: (
                 FontSize: 15,
                 TextColor: #93844c,
@@ -290,7 +290,7 @@ $C.@PageOverlay {
             LayoutMode: Top;
 
             Label #ClaimColorLabel {
-              Text: "Claim Color";
+              Text: %ui.simpleclaims.party.claimColor;
               Style: (
                 RenderUppercase: true,
                 RenderBold: true,
@@ -319,14 +319,14 @@ $C.@PageOverlay {
           Anchor: (Bottom: 10);
 
           $C.@TextButton #SaveChangesButton {
-            Text: "Save Changes";
+            Text: %ui.simpleclaims.party.saveChanges;
             Padding: (Left: 12, Right: 12, Top: 6, Bottom: 6);
             Anchor: (Right: 10);
             Overscroll: false;
           }
 
           $C.@CancelTextButton #CancelButton {
-            Text: "Cancel";
+            Text: %ui.simpleclaims.party.cancel;
             Padding: (Left: 12, Right: 12, Top: 6, Bottom: 6);
             Anchor: (Right: 10);
             Overscroll: false;

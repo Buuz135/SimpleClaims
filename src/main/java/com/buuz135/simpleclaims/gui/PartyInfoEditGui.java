@@ -10,6 +10,7 @@ import com.buuz135.simpleclaims.commands.CommandMessages;
 import com.buuz135.simpleclaims.gui.subscreens.ChunkListGui;
 import com.buuz135.simpleclaims.gui.subscreens.InteractGui;
 import com.buuz135.simpleclaims.gui.subscreens.PermissionEditGui;
+import com.buuz135.simpleclaims.util.TranslationHelper;
 import com.hypixel.hytale.codec.Codec;
 import com.hypixel.hytale.codec.KeyedCodec;
 import com.hypixel.hytale.codec.builder.BuilderCodec;
@@ -245,7 +246,9 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
             uiCommandBuilder.append("#MemberEntries", "Pages/Buuz135_SimpleClaims_PartyMemberListEntry.ui");
             var isOwner = this.info.isOwner(this.info.getMembers()[i]);
             uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberName.Text", ClaimManager.getInstance().getPlayerNameTracker().getPlayerName(this.info.getMembers()[i]));
-            uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Text", isOwner ? "Owner" : "Member");
+            uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Text", isOwner
+                    ? TranslationHelper.rawTextOrEnglish("ui.simpleclaims.party.owner", this.playerRef)
+                    : TranslationHelper.rawTextOrEnglish("ui.simpleclaims.party.member", this.playerRef));
             if (!isOwner) {
                 uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Background.Color", "#1a8dec83");
                 uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.OutlineColor", "#1a8decde");
@@ -260,7 +263,7 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
             } else {
                 //uiEventBuilder.addEventBinding(CustomUIEventBindingType.SlotMouseExited, "#Members[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "Left:" + i), false);
                 if (this.requestingConfirmation == i) {
-                    uiCommandBuilder.set("#MemberEntries[" + i + "] #RemoveMemberButton.Text", "Are you sure?");
+                    uiCommandBuilder.set("#MemberEntries[" + i + "] #RemoveMemberButton.Text", TranslationHelper.rawTextOrEnglish("ui.simpleclaims.common.areYouSure", this.playerRef));
                     uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#MemberEntries[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "Delete:" + i), false);
                     uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited, "#MemberEntries[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "Click:-1"), false);
                 } else {
@@ -271,7 +274,7 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
         for (PartyInvite value : ClaimManager.getInstance().getPartyInvites().values()) {
             uiCommandBuilder.append("#MemberEntries", "Pages/Buuz135_SimpleClaims_PartyMemberListEntry.ui");
             uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberName.Text", ClaimManager.getInstance().getPlayerNameTracker().getPlayerName(value.recipient()));
-            uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Text", "Pending Invite");
+            uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Text", TranslationHelper.rawTextOrEnglish("ui.simpleclaims.party.pendingInvite", this.playerRef));
 
             uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Background.Color", "#cac85383");
             uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.OutlineColor", "#cac853de");
@@ -281,7 +284,7 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
             } else {
                 //uiEventBuilder.addEventBinding(CustomUIEventBindingType.SlotMouseExited, "#Members[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "Left:" + i), false);
                 if (this.requestingConfirmation == i) {
-                    uiCommandBuilder.set("#MemberEntries[" + i + "] #RemoveMemberButton.Text", "Are you sure?");
+                    uiCommandBuilder.set("#MemberEntries[" + i + "] #RemoveMemberButton.Text", TranslationHelper.rawTextOrEnglish("ui.simpleclaims.common.areYouSure", this.playerRef));
                     uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#MemberEntries[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "DeleteInvite:" + value.recipient().toString()), false);
                     uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited, "#MemberEntries[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "Click:-1"), false);
                 } else {
@@ -295,7 +298,7 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
         for (UUID uuid : this.info.getPlayerAllies()) {
             uiCommandBuilder.append("#MemberEntries", "Pages/Buuz135_SimpleClaims_PartyMemberListEntry.ui");
             uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberName.Text", ClaimManager.getInstance().getPlayerNameTracker().getPlayerName(uuid));
-            uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Text", "  Ally  ");
+            uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Text", "  " + TranslationHelper.rawTextOrEnglish("ui.simpleclaims.party.playerAlly", this.playerRef) + "  ");
 
             uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Background.Color", "#5ab44e83");
             uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.OutlineColor", "#5ab44ede");
@@ -310,7 +313,7 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
             } else {
                 //uiEventBuilder.addEventBinding(CustomUIEventBindingType.SlotMouseExited, "#Members[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "Left:" + i), false);
                 if (this.requestingConfirmation == i) {
-                    uiCommandBuilder.set("#MemberEntries[" + i + "] #RemoveMemberButton.Text", "Are you sure?");
+                    uiCommandBuilder.set("#MemberEntries[" + i + "] #RemoveMemberButton.Text", TranslationHelper.rawTextOrEnglish("ui.simpleclaims.common.areYouSure", this.playerRef));
                     uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#MemberEntries[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "DeleteAllyPlayer:" + uuid.toString()), false);
                     uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited, "#MemberEntries[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "Click:-1"), false);
                 } else {
@@ -323,12 +326,12 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
 
         for (UUID uuid : this.info.getPartyAllies()) {
             uiCommandBuilder.append("#MemberEntries", "Pages/Buuz135_SimpleClaims_PartyMemberListEntry.ui");
-            var name = "Unknown Party";
+            String name = TranslationHelper.rawTextOrEnglish("ui.simpleclaims.party.unknownParty", this.playerRef);
             if (ClaimManager.getInstance().getParties().containsKey(uuid.toString())) {
                 name = ClaimManager.getInstance().getParties().get(uuid.toString()).getName();
             }
             uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberName.Text", name);
-            uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Text", "Party Ally");
+            uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Text", TranslationHelper.rawTextOrEnglish("ui.simpleclaims.party.partyAlly", this.playerRef));
 
             uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.Background.Color", "#5ab44e83");
             uiCommandBuilder.set("#MemberEntries[" + i + "] #MemberRole.OutlineColor", "#5ab44ede");
@@ -343,7 +346,7 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
             } else {
                 //uiEventBuilder.addEventBinding(CustomUIEventBindingType.SlotMouseExited, "#Members[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "Left:" + i), false);
                 if (this.requestingConfirmation == i) {
-                    uiCommandBuilder.set("#MemberEntries[" + i + "] #RemoveMemberButton.Text", "Are you sure?");
+                    uiCommandBuilder.set("#MemberEntries[" + i + "] #RemoveMemberButton.Text", TranslationHelper.rawTextOrEnglish("ui.simpleclaims.common.areYouSure", this.playerRef));
                     uiEventBuilder.addEventBinding(CustomUIEventBindingType.Activating, "#MemberEntries[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "DeleteAllyParty:" + uuid.toString()), false);
                     uiEventBuilder.addEventBinding(CustomUIEventBindingType.MouseExited, "#MemberEntries[" + i + "] #RemoveMemberButton", EventData.of("RemoveButtonAction", "Click:-1"), false);
                 } else {
@@ -390,7 +393,7 @@ public class PartyInfoEditGui extends InteractiveCustomUIPage<PartyInfoEditGui.P
         uiCommandBuilder.set("#ClaimColorPickerGroup #ClaimColorPicker.Value", String.format("#%06X", (0xFFFFFF & this.info.getColor())));
         //uiCommandBuilder.set("#ClaimColorPickerGroup #ClaimColorPicker.IsReadOnly", !playerCanModify);
 
-        uiCommandBuilder.set("#ClaimedChunksInfo #ClaimedChunksCount.Text", ClaimManager.getInstance().getAmountOfClaims(this.info)+ "");
+        uiCommandBuilder.set("#ClaimedChunksInfo #ClaimedChunksCount.Text", " " + ClaimManager.getInstance().getAmountOfClaims(this.info) + "");
         uiCommandBuilder.set("#ClaimedChunksInfo #MaxChunksCount.Text",this.info.getMaxClaimAmount() + "");
 
         uiEventBuilder.addEventBinding(CustomUIEventBindingType.ValueChanged, "#ClaimColorPicker", EventData.of("@ClaimColor", "#ClaimColorPicker.Value"), false);

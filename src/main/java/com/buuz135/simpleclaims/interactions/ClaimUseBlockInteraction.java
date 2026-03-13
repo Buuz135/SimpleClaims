@@ -45,11 +45,17 @@ public class ClaimUseBlockInteraction extends UseBlockInteraction {
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
         Predicate<PartyInfo> defaultInteract = PartyInfo::isBlockInteractEnabled;
         String permission = PartyOverrides.PARTY_PROTECTION_INTERACT;
-        var blockName = world.getBlockType(targetBlock).getId().toLowerCase(Locale.ROOT);
+        var blockName = "";
+        if (world.getBlockType(targetBlock) != null) {
+            blockName = world.getBlockType(targetBlock).getId().toLowerCase(Locale.ROOT);
+        }
         var ignored = false;
 
         for (String blocksThatIgnoreInteractRestriction : Main.CONFIG.get().getBlocksThatIgnoreInteractRestrictions()) {
-            if (blockName.contains(blocksThatIgnoreInteractRestriction.toLowerCase(Locale.ROOT))) ignored = true;
+            if (blockName.contains(blocksThatIgnoreInteractRestriction.toLowerCase(Locale.ROOT))) {
+                ignored = true;
+                break;
+            }
         }
 
         if (blockName.contains("chest")) {

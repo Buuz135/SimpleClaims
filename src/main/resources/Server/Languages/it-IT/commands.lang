@@ -1,0 +1,40 @@
+errors.simpleclaims.playerNotInParty = Devi essere in un party per farlo
+errors.simpleclaims.playerInParty = Sei gia in un party
+
+errors.simpleclaims.alreadyClaimedByYou = Questo chunk e gia claimato dal tuo party
+errors.simpleclaims.alreadyClaimedByAnotherPlayer = Questo chunk e gia claimato da un altro party
+errors.simpleclaims.notClaimed = Questo chunk non e claimato
+errors.simpleclaims.notYourClaim = Questo chunk non appartiene al tuo party
+errors.simpleclaims.notEnoughChunks = Il tuo party non ha abbastanza chunk disponibili
+errors.simpleclaims.playerNotFound = Giocatore non trovato
+errors.simpleclaims.noPendingInvites = Non hai inviti in sospeso
+errors.simpleclaims.cantClaimInThisDimension = Non puoi claimare chunk in questa dimensione
+errors.simpleclaims.chunkNotAdjacent = Puoi claimare solo chunk adiacenti ai chunk gia claimati
+errors.simpleclaims.chunkReservedByOtherParty = Non puoi claimare chunk riservati ad altri party
+errors.simpleclaims.maxAddChunkReached = Non puoi aggiungere altri chunk a questo party, il limite e {limit}
+errors.simpleclaims.admin.partyNotSelected = Nessun party selezionato come admin
+errors.simpleclaims.admin.partyNotFound = Party non trovato
+errors.simpleclaims.partyMemberLimitReached = Limite membri del party raggiunto
+errors.simpleclaims.partyAllyLimitReached = Limite alleati del party raggiunto
+
+simpleclaims.partyCreated = Party creato
+info.simpleclaims.unclaimed = Chunk rimosso dal claim
+info.simpleclaims.claimed = Chunk claimato
+info.simpleclaims.entryDenied = Non puoi entrare in questo claim!
+simpleclaims.nowUsingParty = Ora stai usando il party:
+
+simpleclaims.partyInviteSent = Invito al party inviato a {username}
+simpleclaims.partyInviteReceived = Invito al party ricevuto da {username} per entrare in {party_name}. Usa '/scp invite-accept' per accettare.
+simpleclaims.partyInviteJoined = {username} e entrato nel party {party_name}
+simpleclaims.partyInviteSelf = Questo giocatore e gia membro del party
+simpleclaims.partyLeft = Hai lasciato il party
+simpleclaims.partyDisbanded = Hai lasciato il party, non essendoci altri membri il party e stato sciolto
+simpleclaims.partyOwnerTransferred = Hai lasciato il party, la proprieta e stata trasferita a {username}
+simpleclaims.modifiedMaxChunkAmount = Hai cambiato il limite massimo di chunk claimabili per {party_name} a {amount}
+simpleclaims.enabledOverride = Override admin attivato
+simpleclaims.disabledOverride = Override admin disattivato
+simpleclaims.activatedPartyChat = Chat del party attivata
+simpleclaims.deactivatedPartyChat = Chat del party disattivata
+simpleclaims.playerActivatedPartyChat = {player} ha attivato la chat del party
+simpleclaims.playerDeactivatedPartyChat = {player} ha disattivato la chat del party
+simpleclaims.partyTag = [PARTY]

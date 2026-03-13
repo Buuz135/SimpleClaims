@@ -6,8 +6,8 @@ $C.@PageOverlay {
 
     #Title {
       Group {
-        $C.@Title {
-          @Text = "All server parties";
+        $C.@Title #TitleText {
+          @Text = %ui.simpleclaims.party.allServerParties;
         }
 
         $C.@HeaderSearch {}

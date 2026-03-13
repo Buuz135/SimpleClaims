@@ -8,7 +8,7 @@ $C.@PageOverlay {
     #Title {
       Group {
         $C.@Title #TitleText{
-          @Text = "Nearby Claimed Chunks";
+          @Text = %ui.simpleclaims.chunk.title;
         }
 
         
@@ -27,8 +27,8 @@ $C.@PageOverlay {
           Group #ClaimedChunksInfo {
             LayoutMode: Left;
             Anchor: (Top: 0, Left: 10, Bottom: 10);
-            Label  {
-              Text: "Claimed Chunks: ";
+            Label #ClaimedChunksLabel {
+              Text: %ui.simpleclaims.common.claimedChunks;
               Style: (
                 TextColor: #93844c(1)
               );

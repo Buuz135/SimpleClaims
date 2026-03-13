@@ -7,6 +7,7 @@ errors.simpleclaims.notClaimed = This chunk is not claimed
 errors.simpleclaims.notYourClaim = This chunk doesn't belong to your party
 errors.simpleclaims.notEnoughChunks = Your party doesn't have enough chunks to claim this
 errors.simpleclaims.playerNotFound = Player not found
+errors.simpleclaims.noPendingInvites = You don't have any pending invites
 errors.simpleclaims.cantClaimInThisDimension = You can't claim chunks in this dimension
 errors.simpleclaims.chunkNotAdjacent = You can only claim chunks that are adjacent to your claimed chunks
 errors.simpleclaims.chunkReservedByOtherParty = You can't claim chunks that are adjacent to other parties
@@ -14,6 +15,7 @@ errors.simpleclaims.chunkReservedByOtherParty = You can't claim chunks that are 
 simpleclaims.partyCreated = Party Created
 info.simpleclaims.unclaimed = Chunk unclaimed
 info.simpleclaims.claimed = Chunk claimed
+info.simpleclaims.entryDenied = You are not allowed to enter this claim!
 simpleclaims.nowUsingParty = Now using party: 
 
 errors.simpleclaims.admin.partyNotSelected = Party not selected as an admin

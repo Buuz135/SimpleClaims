@@ -10,7 +10,7 @@ $C.@PageOverlay {
       TextButton #BackButton {
         Anchor: (Left: 12, Top: 4, Width: 64, Height: 24);
         Padding: (Left: 8, Top: 2);
-        Text: "< Back";
+        Text: %ui.simpleclaims.party.back;
         Style: TextButtonStyle(
           Default: (LabelStyle: (FontSize: 14, TextColor: #93844c, RenderBold: true)),
           Sounds: $C.@ButtonSounds,
@@ -20,7 +20,7 @@ $C.@PageOverlay {
 
       Group {
         $C.@Title #TitleText{
-          @Text = "PARTY CLAIMED CHUNKS";
+          @Text = %ui.simpleclaims.party.claimedChunksTitle;
         }
 
       }

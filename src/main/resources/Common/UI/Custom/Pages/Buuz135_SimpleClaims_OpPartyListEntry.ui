@@ -24,27 +24,27 @@ Group {
   $C.@SecondaryTextButton #ClaimButton {
     Anchor: (Right: 10, Vertical: 0);
     Padding: (Left: 8, Right: 8, Top: 4, Bottom: 4);
-    Text: "Claim";
+    Text: %ui.simpleclaims.party.claim;
     Overscroll: false;
   }
 
   $C.@SecondaryTextButton #UsePartyButton {
     Anchor: (Right: 10, Vertical: 0);
     Padding: (Left: 8, Right: 8, Top: 4, Bottom: 4);
-    Text: "Admin";
+    Text: %ui.simpleclaims.party.admin;
     Overscroll: false;
   }
 
   $C.@SecondaryTextButton #EditPartyButton {
     Anchor: (Width: 60, Right: 10, Vertical: 0);
     Padding: (Left: 8, Right: 8, Top: 4, Bottom: 4);
-    Text: "Edit";
+    Text: %ui.simpleclaims.party.edit;
     Overscroll: false;
   }
   $C.@CancelTextButton #RemovePartyButton {
       Anchor: (Right: 10, Vertical: 0);
       Padding: (Left: 8, Right: 8, Top: 4, Bottom: 4);
-      Text: "Delete";
+      Text: %ui.simpleclaims.party.delete;
       Overscroll: false;
     }
 }

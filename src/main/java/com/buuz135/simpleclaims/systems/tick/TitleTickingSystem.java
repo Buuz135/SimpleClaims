@@ -1,5 +1,6 @@
 package com.buuz135.simpleclaims.systems.tick;
 
+import com.buuz135.simpleclaims.Main;
 import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
@@ -16,6 +17,7 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,6 +41,10 @@ public class TitleTickingSystem extends EntityTickingSystem<EntityStore> {
         Ref<EntityStore> ref = archetypeChunk.getReferenceTo(index);
         PlayerRef playerRef = store.getComponent(ref, PlayerRef.getComponentType());
         Player player = store.getComponent(ref, Player.getComponentType());
+        if (playerRef == null || player == null) return;
+        if (player.getWorld() == null) return;
+        if (Arrays.stream(Main.CONFIG.get().getWorldNameBlacklistForClaiming()).anyMatch(s -> s.equals(player.getWorld().getName())))
+            return;
 
         Message titleMessage = this.wildernessMessage;
         String titleText = this.wildernessText;

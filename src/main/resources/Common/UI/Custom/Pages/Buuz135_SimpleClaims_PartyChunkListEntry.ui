@@ -6,7 +6,7 @@ Group {
   Background: $C.@InputBoxBackground;
   Padding: (Top: 4, Bottom: 4);
 
-  Label {
+  Label #WorldLabel {
     Style: (
       FontSize: 16,
       RenderBold: true,
@@ -14,7 +14,7 @@ Group {
     );
     Anchor: (Left: 10, Vertical: 0);
     Padding: (Right: 5);
-    Text: "World: ";
+    Text: %ui.simpleclaims.party.worldLabel;
   }
 
   Label #ChunkWorldName {
@@ -27,7 +27,7 @@ Group {
     Padding: (Right: 5);
   }
 
-  Label {
+  Label #CenterLabel {
     Style: (
       FontSize: 16,
       RenderBold: true,
@@ -35,7 +35,7 @@ Group {
     );
     Anchor: (Left: 10, Vertical: 0);
     Padding: (Right: 5);
-    Text: "Center: ";
+    Text: %ui.simpleclaims.party.centerLabel;
   }
 
   Label #ChunkPosName {
@@ -55,14 +55,14 @@ Group {
   $C.@SecondaryTextButton #TeleportButton {
     Anchor: (Width: 130, Right: 10, Vertical: 0);
     Padding: (Left: 8, Right: 8, Top: 4, Bottom: 4);
-    Text: "Teleport";
+    Text: %ui.simpleclaims.party.teleport;
     Overscroll: false;
     Visible: false;
   }
   $C.@CancelTextButton #UnclaimButton {
       Anchor: (Right: 10, Vertical: 0);
       Padding: (Left: 8, Right: 8, Top: 4, Bottom: 4);
-      Text: "Unclaim";
+      Text: %ui.simpleclaims.party.unclaim;
       Overscroll: false;
     }
 }

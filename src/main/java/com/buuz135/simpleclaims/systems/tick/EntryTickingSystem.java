@@ -2,6 +2,7 @@ package com.buuz135.simpleclaims.systems.tick;
 
 import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.buuz135.simpleclaims.claim.party.PartyInfo;
+import com.buuz135.simpleclaims.commands.CommandMessages;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
@@ -20,7 +21,6 @@ import com.hypixel.hytale.server.core.util.EventTitleUtil;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class EntryTickingSystem extends EntityTickingSystem<EntityStore> {
 
-    private static final Message TELEPORT_MESSAGE = Message.raw("You are not allowed to enter this claim!").color(Color.RED);
+    private static final Message TELEPORT_MESSAGE = CommandMessages.ENTRY_DENIED;
     private final Map<UUID, List<Transform>> playerLastSafePositions;
 
     public EntryTickingSystem() {

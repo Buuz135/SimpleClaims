@@ -246,5 +246,4 @@ public class SimpleClaimsConfig {
     public boolean isShowPerimeterReservationOnTheMap() {
         return ShowPerimeterReservationOnTheMap;
     }
-
 }
