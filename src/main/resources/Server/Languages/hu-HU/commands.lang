@@ -32,3 +32,4 @@ simpleclaims.activatedPartyChat = Party chat activated
 simpleclaims.deactivatedPartyChat = Party chat deactivated
 simpleclaims.playerActivatedPartyChat = {player} has activated the party chat
 simpleclaims.playerDeactivatedPartyChat = {player} has deactivated the party chat
+simpleclaims.waitingOpenWindow = Kerlek varj az ablak megnyitasara...

@@ -33,3 +33,4 @@ simpleclaims.deactivatedPartyChat = Gruppenchat ist deaktiviert
 simpleclaims.playerActivatedPartyChat = {player} hat den Gruppenchat aktiviert
 simpleclaims.playerDeactivatedPartyChat = {player} hat den Gruppenchat deaktiviert
 simpleclaims.partyTag = [PARTY]
+simpleclaims.waitingOpenWindow = Bitte warte, das Fenster wird geoffnet...

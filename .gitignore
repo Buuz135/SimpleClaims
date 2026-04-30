@@ -53,3 +53,6 @@ bin/
 .DS_Store
 
 run/
+
+# HytaleServer
+/libs/HytaleServer.jar

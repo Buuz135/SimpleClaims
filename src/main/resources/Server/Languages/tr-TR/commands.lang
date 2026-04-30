@@ -32,3 +32,4 @@ simpleclaims.activatedPartyChat = Parti sohbeti acildi
 simpleclaims.deactivatedPartyChat = Parti sohbeti kapatildi
 simpleclaims.playerActivatedPartyChat = {player} parti sohbetini acti
 simpleclaims.playerDeactivatedPartyChat = {player} parti sohbetini kapatti
+simpleclaims.waitingOpenWindow = Lutfen pencere acilirken bekleyin...

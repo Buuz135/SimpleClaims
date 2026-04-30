@@ -8,9 +8,12 @@ import com.buuz135.simpleclaims.commands.subcommand.chunk.op.OpChunkGuiCommand;
 import com.buuz135.simpleclaims.commands.subcommand.chunk.op.OpClaimChunkCommand;
 import com.buuz135.simpleclaims.commands.subcommand.chunk.op.OpUnclaimChunkCommand;
 import com.buuz135.simpleclaims.gui.ChunkInfoGui;
+import com.buuz135.simpleclaims.gui.ChunkInfoMapAsset;
+import com.buuz135.simpleclaims.util.TranslationHelper;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.math.util.ChunkUtil;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.CommandSender;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractAsyncCommand;
@@ -19,6 +22,8 @@ import com.hypixel.hytale.server.core.modules.entity.component.TransformComponen
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.server.core.util.NotificationUtil;
+import com.hypixel.hytale.protocol.packets.interface_.NotificationStyle;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 import java.util.concurrent.CompletableFuture;
@@ -62,7 +67,19 @@ public class SimpleClaimProtectCommand extends AbstractAsyncCommand {
                         player.sendMessage(CommandMessages.PARTY_CREATED);
                     }
                     var position = store.getComponent(ref, TransformComponent.getComponentType());
-                    player.getPageManager().openCustomPage(ref, store, new ChunkInfoGui(playerRef, player.getWorld().getName(), ChunkUtil.chunkCoordinate(position.getPosition().getX()), ChunkUtil.chunkCoordinate(position.getPosition().getZ()), false));
+                    int chunkX = ChunkUtil.chunkCoordinate(position.getPosition().getX());
+                    int chunkZ = ChunkUtil.chunkCoordinate(position.getPosition().getZ());
+                    if (Main.CONFIG.get().isRenderMapInClaimUI()) {
+                        NotificationUtil.sendNotification(playerRef.getPacketHandler(), Message.raw(TranslationHelper.rawTextOrEnglish("commands.simpleclaims.waitingOpenWindow", playerRef)), NotificationStyle.Default);
+                        var mapFuture = ChunkInfoMapAsset.generate(playerRef, chunkX - 8, chunkZ - 8, chunkX + 8, chunkZ + 8);
+                        if (mapFuture != null) {
+                            mapFuture.thenRunAsync(() ->
+                                player.getPageManager().openCustomPage(ref, store, new ChunkInfoGui(playerRef, player.getWorld().getName(), chunkX, chunkZ, false, mapFuture))
+                            , world);
+                            return;
+                        }
+                    }
+                    player.getPageManager().openCustomPage(ref, store, new ChunkInfoGui(playerRef, player.getWorld().getName(), chunkX, chunkZ, false));
                 }, world);
             } else {
                 commandContext.sendMessage(MESSAGE_COMMANDS_ERRORS_PLAYER_NOT_IN_WORLD);

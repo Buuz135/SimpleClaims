@@ -59,12 +59,19 @@ if (os.isWindows()) {
 
 hytaleServerJar = "$hytaleHome/install/$patchline/package/game/$game_build/Server/HytaleServer.jar"
 
-
+def localHytaleServerJar = file("$projectDir/libs/HytaleServer.jar")
+def hytaleServerJarFile = localHytaleServerJar.exists() ? localHytaleServerJar : file(hytaleServerJar)
+if (!hytaleServerJarFile.exists()) {
+    throw new GradleException(
+        "HytaleServer.jar not found. Add it to ${localHytaleServerJar.absolutePath} " +
+            "or install the Hytale launcher so the server JAR exists at ${file(hytaleServerJar).absolutePath}"
+    )
+}
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation files(hytaleServerJar)
+    implementation files(hytaleServerJarFile)
     //implementation(files(System.getProperty("user.home") + "/AppData/Roaming/Hytale/install/release/package/game/$game_build/Server/HytaleServer.jar"))
     //implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
     shadowBundle files('libs/codeclib-1.1.0.jar')

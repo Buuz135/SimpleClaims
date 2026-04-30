@@ -1,0 +1,41 @@
+errors.simpleclaims.playerNotInParty = Você precisa estar em uma party para fazer isso
+errors.simpleclaims.playerInParty = Você já está em uma party
+
+errors.simpleclaims.alreadyClaimedByYou = Este chunk já foi reivindicado pela sua party
+errors.simpleclaims.alreadyClaimedByAnotherPlayer = Este chunk já foi reivindicado por outra party
+errors.simpleclaims.notClaimed = Este chunk não está reivindicado
+errors.simpleclaims.notYourClaim = Este chunk não pertence à sua party
+errors.simpleclaims.notEnoughChunks = Sua party não tem chunks suficientes para reivindicar este
+errors.simpleclaims.playerNotFound = Jogador não encontrado
+errors.simpleclaims.noPendingInvites = Você não tem nenhum convite pendente
+errors.simpleclaims.cantClaimInThisDimension = Você não pode reivindicar chunks nesta dimensão
+errors.simpleclaims.chunkNotAdjacent = Você só pode reivindicar chunks que sejam adjacentes aos seus chunks reivindicados
+errors.simpleclaims.chunkReservedByOtherParty = Você não pode reivindicar chunks que sejam adjacentes a outras parties
+
+simpleclaims.partyCreated = Party Criada
+info.simpleclaims.unclaimed = Chunk desreivindicado
+info.simpleclaims.claimed = Chunk reivindicado
+info.simpleclaims.entryDenied = Você não tem permissão para entrar nesta área reivindicada!
+simpleclaims.nowUsingParty = Agora usando a party: 
+
+errors.simpleclaims.admin.partyNotSelected = Nenhuma party selecionada como admin
+errors.simpleclaims.admin.partyNotFound = Party não encontrada
+
+simpleclaims.partyInviteSent = Convite para party enviado para {username}
+simpleclaims.partyInviteReceived = Convite para party recebido de {username} para entrar em {party_name}, use o comando '/scp invite-accept' para entrar na party.
+simpleclaims.partyInviteJoined = {username} entrou na party {party_name}
+simpleclaims.partyInviteSelf = Este jogador já é membro da party
+simpleclaims.partyLeft = Você saiu da sua party
+simpleclaims.partyDisbanded = Você saiu da sua party. Como não há mais membros, a party foi desfeita
+simpleclaims.partyOwnerTransferred = Você saiu da sua party e a liderança foi transferida para {username}
+simpleclaims.modifiedMaxChunkAmount = Você alterou o limite máximo de chunks reivindicados para {party_name} para {amount} chunks
+errors.simpleclaims.maxAddChunkReached = Você não pode adicionar mais chunks a esta party, o limite é {limit}
+simpleclaims.enabledOverride = Sobrescrita de interação de admin ativada
+simpleclaims.disabledOverride = Sobrescrita de interação de admin desativada
+
+simpleclaims.activatedPartyChat = O chat da party está ativado
+simpleclaims.deactivatedPartyChat = O chat da party está desativado
+simpleclaims.playerActivatedPartyChat = {player} ativou o chat da party
+simpleclaims.playerDeactivatedPartyChat = {player} desativou o chat da party
+simpleclaims.partyTag = [PARTY]
+simpleclaims.waitingOpenWindow = Aguarde a abertura da janela...

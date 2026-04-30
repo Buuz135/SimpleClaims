@@ -63,9 +63,8 @@ public class ChunkInfoMapAsset extends CommonAsset {
         if (world == null) return null;
         var manager = world.getWorldMapManager();
         var basePartSize = MathUtil.fastFloor(32.0F * manager.getWorldMapSettings().getImageScale());
-        var resolutionScale = Math.max(0.1F, Math.min(1.0F, 1f));
+        var resolutionScale = Math.max(0.1F, Math.min(1.0F, Main.CONFIG.get().getClaimUIMapResolutionScale()));
         var partSize = Math.max(1, MathUtil.fastFloor(basePartSize * resolutionScale));
-
         var cacheTtlSeconds = Math.max(0, Main.CONFIG.get().getClaimUIMapCacheTtlSeconds());
         var cacheTtlMs = cacheTtlSeconds * 1000L;
         var cacheKey = worldId + ":" + minChunkX + ":" + minChunkZ + ":" + maxChunkX + ":" + maxChunkZ + ":" + partSize;
@@ -76,7 +75,6 @@ public class ChunkInfoMapAsset extends CommonAsset {
                 return cached.asset;
             }
         }
-
         var chunks = new LongArraySet();
         for (int x = minChunkX; x <= maxChunkX; x++) {
             for (int z = minChunkZ; z <= maxChunkZ; z++) {
@@ -85,11 +83,10 @@ public class ChunkInfoMapAsset extends CommonAsset {
         }
 
         var generated = ChunkWorldMap.INSTANCE.generate(world, partSize, partSize, chunks).thenApply(map -> {
-            var image = new BufferedImage(
-                    partSize * (maxChunkX - minChunkX + 1),
-                    partSize * (maxChunkZ - minChunkZ + 1),
-                    BufferedImage.TYPE_INT_ARGB
-            );
+            int imageWidth = partSize * (maxChunkX - minChunkX + 1);
+            int imageHeight = partSize * (maxChunkZ - minChunkZ + 1);
+            var image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
+            var finalPixels = new int[imageWidth * imageHeight];
 
             for (int x = minChunkX; x <= maxChunkX; x++) {
                 for (int z = minChunkZ; z <= maxChunkZ; z++) {
@@ -112,17 +109,18 @@ public class ChunkInfoMapAsset extends CommonAsset {
                         int imageX = (x - minChunkX) * partSize;
                         int imageZ = (z - minChunkZ) * partSize;
 
-                        for (var i = 0; i < pixels.length; i++) {
-                            var pixel = pixels[i];
-                            var abgrToArgb = pixel << 24 | (pixel >> 8 & 0x00FFFFFF);
-
-                            var pixelX = i % width;
-                            var pixelY = i / width;
-                            image.setRGB(imageX + pixelX, imageZ + pixelY, abgrToArgb);
+                        int srcIndex = 0;
+                        for (int pixelY = 0; pixelY < height; pixelY++) {
+                            int dstRowIndex = (imageZ + pixelY) * imageWidth + imageX;
+                            for (int pixelX = 0; pixelX < width; pixelX++) {
+                                var pixel = pixels[srcIndex++];
+                                finalPixels[dstRowIndex + pixelX] = pixel << 24 | (pixel >> 8 & 0x00FFFFFF);
+                            }
                         }
                     }
                 }
             }
+            image.setRGB(0, 0, imageWidth, imageHeight, finalPixels, 0, imageWidth);
 
             try {
                 var baos = new ByteArrayOutputStream();
@@ -142,11 +140,6 @@ public class ChunkInfoMapAsset extends CommonAsset {
             pruneExpiredEntries(now, cacheTtlMs);
         }
         return generated;
-    }
-
-    private static void pruneExpiredEntries(long now, long ttlMs) {
-        if (CACHE.size() < 128) return;
-        CACHE.entrySet().removeIf(entry -> (now - entry.getValue().createdAtMs) > ttlMs);
     }
 
     public static int[] getPixels(MapImage image) {
@@ -179,6 +172,10 @@ public class ChunkInfoMapAsset extends CommonAsset {
         handler.writeNoCache(new RequestCommonAssetsRebuild());
     }
 
+    private static void pruneExpiredEntries(long now, long ttlMs) {
+        if (CACHE.size() < 128) return;
+        CACHE.entrySet().removeIf(entry -> (now - entry.getValue().createdAtMs) > ttlMs);
+    }
     private record CachedMapAsset(long createdAtMs, CompletableFuture<ChunkInfoMapAsset> asset) {
     }
 }

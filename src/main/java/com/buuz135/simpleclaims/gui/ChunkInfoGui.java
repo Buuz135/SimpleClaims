@@ -40,6 +40,7 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
     private boolean isOp;
 
     private CompletableFuture<ChunkInfoMapAsset> mapAsset = null;
+    private boolean mapAssetListenerAttached = false;
 
     public ChunkInfoGui(@NonNullDecl PlayerRef playerRef, String dimension, int chunkX, int chunkZ, boolean isOp) {
         super(playerRef, CustomPageLifetime.CanDismiss, CodecFactory.createClassCodec(ChunkInfoData.class));
@@ -47,6 +48,11 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
         this.chunkZ = chunkZ;
         this.dimension = dimension;
         this.isOp = isOp;
+    }
+
+    public ChunkInfoGui(@NonNullDecl PlayerRef playerRef, String dimension, int chunkX, int chunkZ, boolean isOp, CompletableFuture<ChunkInfoMapAsset> preloadedMapAsset) {
+        this(playerRef, dimension, chunkX, chunkZ, isOp);
+        this.mapAsset = preloadedMapAsset;
     }
 
     @Override
@@ -171,12 +177,12 @@ public class ChunkInfoGui extends InteractiveCustomUIPage<ChunkInfoGui.ChunkInfo
         uiCommandBuilder.set("#ClaimedChunksInfo #ClaimedChunksCount.Text", " " + ClaimManager.getInstance().getAmountOfClaims(playerParty) + "");
         uiCommandBuilder.set("#ClaimedChunksInfo #MaxChunksCount.Text", playerParty.getMaxClaimAmount() + "");
 
-        if (this.mapAsset == null && Main.CONFIG.get().isRenderMapInClaimUI()) {
-            ChunkInfoMapAsset.sendToPlayer(this.playerRef.getPacketHandler(), ChunkInfoMapAsset.empty());
-
-            this.mapAsset = ChunkInfoMapAsset.generate(this.playerRef, chunkX - 8, chunkZ - 8, chunkX + 8, chunkZ + 8);
-
-            if (this.mapAsset != null) {
+        if (Main.CONFIG.get().isRenderMapInClaimUI()) {
+            if (this.mapAsset == null) {
+                this.mapAsset = ChunkInfoMapAsset.generate(this.playerRef, chunkX - 8, chunkZ - 8, chunkX + 8, chunkZ + 8);
+            }
+            if (!this.mapAssetListenerAttached && this.mapAsset != null) {
+                this.mapAssetListenerAttached = true;
                 this.mapAsset.thenAccept(asset -> {
                     if (asset == null) return;
 
