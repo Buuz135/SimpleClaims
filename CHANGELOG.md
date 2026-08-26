@@ -1,3 +1,7 @@
+# 1.0.39
+
+* Ported to version 0.6.0
+
 # 1.0.38
 
 * Ported to version 0.5.0

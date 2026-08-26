@@ -11,6 +11,7 @@ import com.hypixel.hytale.server.core.asset.type.blocktype.config.BlockType;
 import com.hypixel.hytale.server.core.asset.type.environment.config.Environment;
 import com.hypixel.hytale.server.core.asset.type.fluid.Fluid;
 import com.hypixel.hytale.server.core.universe.world.World;
+import com.hypixel.hytale.server.core.universe.world.chunk.BlockChunk;
 import com.hypixel.hytale.server.core.universe.world.chunk.ChunkColumn;
 import com.hypixel.hytale.server.core.universe.world.chunk.WorldChunk;
 import com.hypixel.hytale.server.core.universe.world.chunk.palette.BitFieldArr;
@@ -56,7 +57,7 @@ public class CustomImageBuilder {
     private final int[] fluidSamples;
     private final CustomImageBuilder.Color outColor = new CustomImageBuilder.Color();
     @Nullable
-    private WorldChunk worldChunk;
+    private BlockChunk blockChunk;
     private FluidSection[] fluidSections;
     private static final int QUANTIZE_STEP = 8;
     private static final int QUANTIZE_HALF = 4;
@@ -104,7 +105,7 @@ public class CustomImageBuilder {
     private CompletableFuture<CustomImageBuilder> fetchChunk() {
         return this.world.getChunkStore().getChunkReferenceAsync(this.index).thenApplyAsync((ref) -> {
             if (ref != null && ref.isValid()) {
-                this.worldChunk = (WorldChunk)ref.getStore().getComponent(ref, WorldChunk.getComponentType());
+                this.blockChunk = ref.getStore().getComponent(ref, BlockChunk.getComponentType());
                 ChunkColumn chunkColumn = (ChunkColumn)ref.getStore().getComponent(ref, ChunkColumn.getComponentType());
                 this.fluidSections = new FluidSection[10];
 
@@ -122,7 +123,7 @@ public class CustomImageBuilder {
 
     @Nonnull
     private CompletableFuture<CustomImageBuilder> sampleNeighborsSync() {
-        CompletableFuture<Void> north = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.worldChunk.getX(), this.worldChunk.getZ() - 1)).thenAcceptAsync((ref) -> {
+        CompletableFuture<Void> north = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.blockChunk.getX(), this.blockChunk.getZ() - 1)).thenAcceptAsync((ref) -> {
             if (ref != null && ref.isValid()) {
                 WorldChunk worldChunk = (WorldChunk)ref.getStore().getComponent(ref, WorldChunk.getComponentType());
                 int z = (this.sampleHeight - 1) * this.blockStepZ;
@@ -134,7 +135,7 @@ public class CustomImageBuilder {
 
             }
         }, this.world);
-        CompletableFuture<Void> south = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.worldChunk.getX(), this.worldChunk.getZ() + 1)).thenAcceptAsync((ref) -> {
+        CompletableFuture<Void> south = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.blockChunk.getX(), this.blockChunk.getZ() + 1)).thenAcceptAsync((ref) -> {
             if (ref != null && ref.isValid()) {
                 WorldChunk worldChunk = (WorldChunk)ref.getStore().getComponent(ref, WorldChunk.getComponentType());
                 int z = 0;
@@ -147,7 +148,7 @@ public class CustomImageBuilder {
 
             }
         }, this.world);
-        CompletableFuture<Void> west = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.worldChunk.getX() - 1, this.worldChunk.getZ())).thenAcceptAsync((ref) -> {
+        CompletableFuture<Void> west = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.blockChunk.getX() - 1, this.blockChunk.getZ())).thenAcceptAsync((ref) -> {
             if (ref != null && ref.isValid()) {
                 WorldChunk worldChunk = (WorldChunk)ref.getStore().getComponent(ref, WorldChunk.getComponentType());
                 int x = (this.sampleWidth - 1) * this.blockStepX;
@@ -159,7 +160,7 @@ public class CustomImageBuilder {
 
             }
         }, this.world);
-        CompletableFuture<Void> east = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.worldChunk.getX() + 1, this.worldChunk.getZ())).thenAcceptAsync((ref) -> {
+        CompletableFuture<Void> east = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.blockChunk.getX() + 1, this.blockChunk.getZ())).thenAcceptAsync((ref) -> {
             if (ref != null && ref.isValid()) {
                 WorldChunk worldChunk = (WorldChunk)ref.getStore().getComponent(ref, WorldChunk.getComponentType());
                 int x = 0;
@@ -171,7 +172,7 @@ public class CustomImageBuilder {
 
             }
         }, this.world);
-        CompletableFuture<Void> northeast = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.worldChunk.getX() + 1, this.worldChunk.getZ() - 1)).thenAcceptAsync((ref) -> {
+        CompletableFuture<Void> northeast = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.blockChunk.getX() + 1, this.blockChunk.getZ() - 1)).thenAcceptAsync((ref) -> {
             if (ref != null && ref.isValid()) {
                 WorldChunk worldChunk = (WorldChunk)ref.getStore().getComponent(ref, WorldChunk.getComponentType());
                 int x = 0;
@@ -179,7 +180,7 @@ public class CustomImageBuilder {
                 this.neighborHeightSamples[0] = worldChunk.getHeight(x, z);
             }
         }, this.world);
-        CompletableFuture<Void> northwest = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.worldChunk.getX() - 1, this.worldChunk.getZ() - 1)).thenAcceptAsync((ref) -> {
+        CompletableFuture<Void> northwest = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.blockChunk.getX() - 1, this.blockChunk.getZ() - 1)).thenAcceptAsync((ref) -> {
             if (ref != null && ref.isValid()) {
                 WorldChunk worldChunk = (WorldChunk)ref.getStore().getComponent(ref, WorldChunk.getComponentType());
                 int x = (this.sampleWidth - 1) * this.blockStepX;
@@ -187,7 +188,7 @@ public class CustomImageBuilder {
                 this.neighborHeightSamples[this.sampleWidth + 1] = worldChunk.getHeight(x, z);
             }
         }, this.world);
-        CompletableFuture<Void> southeast = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.worldChunk.getX() + 1, this.worldChunk.getZ() + 1)).thenAcceptAsync((ref) -> {
+        CompletableFuture<Void> southeast = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.blockChunk.getX() + 1, this.blockChunk.getZ() + 1)).thenAcceptAsync((ref) -> {
             if (ref != null && ref.isValid()) {
                 WorldChunk worldChunk = (WorldChunk)ref.getStore().getComponent(ref, WorldChunk.getComponentType());
                 int x = 0;
@@ -195,7 +196,7 @@ public class CustomImageBuilder {
                 this.neighborHeightSamples[(this.sampleHeight + 1) * (this.sampleWidth + 2) + this.sampleWidth + 1] = worldChunk.getHeight(x, z);
             }
         }, this.world);
-        CompletableFuture<Void> southwest = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.worldChunk.getX() - 1, this.worldChunk.getZ() + 1)).thenAcceptAsync((ref) -> {
+        CompletableFuture<Void> southwest = this.world.getChunkStore().getChunkReferenceAsync(ChunkUtil.indexChunk(this.blockChunk.getX() - 1, this.blockChunk.getZ() + 1)).thenAcceptAsync((ref) -> {
             if (ref != null && ref.isValid()) {
                 WorldChunk worldChunk = (WorldChunk)ref.getStore().getComponent(ref, WorldChunk.getComponentType());
                 int x = (this.sampleWidth - 1) * this.blockStepX;
@@ -212,11 +213,11 @@ public class CustomImageBuilder {
                 int sampleIndex = iz * this.sampleWidth + ix;
                 int x = ix * this.blockStepX;
                 int z = iz * this.blockStepZ;
-                short height = this.worldChunk.getHeight(x, z);
-                int tint = this.worldChunk.getTint(x, z);
+                short height = this.blockChunk.getHeight(x, z);
+                int tint = this.blockChunk.getTint(x, z);
                 this.heightSamples[sampleIndex] = height;
                 this.tintSamples[sampleIndex] = tint;
-                int blockId = this.worldChunk.getBlock(x, height, z);
+                int blockId = this.blockChunk.getBlock(x, height, z);
                 this.blockSamples[sampleIndex] = blockId;
                 int fluidId = 0;
                 int fluidTop = 320;
@@ -271,7 +272,7 @@ public class CustomImageBuilder {
                 }
 
                 short fluidDepth = fluidId != 0 ? (short)(fluidTop - fluidBottom + 1) : 0;
-                int environmentId = this.worldChunk.getBlockChunk().getEnvironment(x, fluidTop, z);
+                int environmentId = this.blockChunk.getEnvironment(x, fluidTop, z);
                 this.fluidDepthSamples[sampleIndex] = fluidDepth;
                 this.environmentSamples[sampleIndex] = environmentId;
                 this.fluidSamples[sampleIndex] = fluidId;
@@ -293,22 +294,22 @@ public class CustomImageBuilder {
         int minBlockZ = ChunkUtil.minBlock(chunkZ);
 
         // CUSTOM CODE
-        var claimedChunk = ClaimManager.getInstance().getChunk(this.worldChunk.getWorld().getName(), this.worldChunk.getX(), this.worldChunk.getZ());
+        var claimedChunk = ClaimManager.getInstance().getChunk(this.world.getName(), this.blockChunk.getX(), this.blockChunk.getZ());
         PartyInfo partyInfo = null;
         if (claimedChunk != null) {
             partyInfo = ClaimManager.getInstance().getPartyById(claimedChunk.getPartyOwner());
         }
         var reservedChunk = Main.CONFIG.get().isEnablePerimeterReservation() && Main.CONFIG.get().isShowPerimeterReservationOnTheMap() ?
-            ClaimManager.getInstance().getReservedChunk(this.worldChunk.getWorld().getName(), this.worldChunk.getX(), this.worldChunk.getZ()) : null;
+                ClaimManager.getInstance().getReservedChunk(this.world.getName(), this.blockChunk.getX(), this.blockChunk.getZ()) : null;
         PartyInfo reservedPartyInfo = null;
         if (reservedChunk != null) {
             reservedPartyInfo = ClaimManager.getInstance().getPartyById(reservedChunk.getReservedBy());
         }
         var nearbyChunks = new ChunkInfo[]{
-                ClaimManager.getInstance().getChunk(this.worldChunk.getWorld().getName(), this.worldChunk.getX(), this.worldChunk.getZ() + 1), //NORTH
-                ClaimManager.getInstance().getChunk(this.worldChunk.getWorld().getName(), this.worldChunk.getX(), this.worldChunk.getZ() - 1), //SOUTH
-                ClaimManager.getInstance().getChunk(this.worldChunk.getWorld().getName(), this.worldChunk.getX() + 1, this.worldChunk.getZ()), //EAST
-                ClaimManager.getInstance().getChunk(this.worldChunk.getWorld().getName(), this.worldChunk.getX() - 1, this.worldChunk.getZ()), //WEST
+                ClaimManager.getInstance().getChunk(this.world.getName(), this.blockChunk.getX(), this.blockChunk.getZ() + 1), //NORTH
+                ClaimManager.getInstance().getChunk(this.world.getName(), this.blockChunk.getX(), this.blockChunk.getZ() - 1), //SOUTH
+                ClaimManager.getInstance().getChunk(this.world.getName(), this.blockChunk.getX() + 1, this.blockChunk.getZ()), //EAST
+                ClaimManager.getInstance().getChunk(this.world.getName(), this.blockChunk.getX() - 1, this.blockChunk.getZ()), //WEST
         };
         //-
 

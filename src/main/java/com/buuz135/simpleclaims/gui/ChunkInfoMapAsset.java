@@ -30,20 +30,16 @@ import java.util.concurrent.ConcurrentHashMap;
 This will generate a map image for the chunks requested, combining them into a single PNG image.
 This can be then sent to the client to override the default map image used in the Chunk Info GUI.
 
-Note: The same hash is used for all generated images, as the client only uses this hash to cache it locally,
-so using the same hash means the client will only store one image and not keep them for the 30-day cache time.
  */
 public class ChunkInfoMapAsset extends CommonAsset {
 
-    // "Buuz135_SimpleClaims" in hex padded with 2 zeros at the start and then padded to 64 characters at the end
-    private static final String HASH = "004275757a3133355f53696d706c65436c61696d730000000000000000000000";
     private static final String PATH = "UI/Custom/SimpleClaims/Map.png";
     private static final ConcurrentHashMap<String, CachedMapAsset> CACHE = new ConcurrentHashMap<>();
 
     private final byte[] data;
 
     private ChunkInfoMapAsset(byte[] data) {
-        super(PATH, HASH, data);
+        super(PATH, data);
         this.data = data;
     }
 
