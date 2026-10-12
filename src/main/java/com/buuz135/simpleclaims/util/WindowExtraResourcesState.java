@@ -6,6 +6,7 @@ import com.hypixel.hytale.server.core.io.netty.NettyUtil;
 import io.netty.channel.Channel;
 import io.netty.util.AttributeKey;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Set;
@@ -44,7 +45,7 @@ public final class WindowExtraResourcesState {
 
     public static Map<Integer, ExtraResources> getOrCreateMap(ChannelConnection chConn) {
         Channel ch = getNettyChannel(chConn);
-        if (ch == null) return null;
+        if (ch == null) return new ConcurrentHashMap<>();
         Map<Integer, ExtraResources> m = ch.attr(EXTRA_BY_WINDOW_ID).get();
         if (m == null) {
             m = new ConcurrentHashMap<>();

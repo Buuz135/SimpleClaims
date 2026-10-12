@@ -7,6 +7,7 @@ import com.buuz135.simpleclaims.claim.party.PartyOverrides;
 import com.buuz135.simpleclaims.systems.tick.CraftingUiQuantitiesSystem;
 import com.buuz135.simpleclaims.util.BenchChestCache;
 import com.buuz135.simpleclaims.util.WindowExtraResourcesState;
+import com.buuz135.simpleclaims.util.WorldBlockUtil;
 import com.hypixel.hytale.builtin.crafting.component.BenchBlock;
 import com.hypixel.hytale.builtin.crafting.component.ProcessingBenchBlock;
 import com.hypixel.hytale.component.ArchetypeChunk;
@@ -103,13 +104,11 @@ public class InteractEventSystem extends EntityEventSystem<EntityStore, UseBlock
     private static ExtraResources buildExtraResourcesForBench(World world, PlayerRef playerRef, int bx, int by, int bz) {
         var chests = BenchChestCache.getAllowedChests(world, playerRef, bx, by, bz);
 
-        var holder = world.getBlockComponentHolder(bx, by, bz);
-        if (holder == null) return null;
-        var block = world.getBlockType(bx, by, bz);
+        var block = WorldBlockUtil.getBlockType(world, bx, by, bz);
         if (block == null) return null;
         var bench = block.getBench();
         if (bench == null) return null;
-        var benchBlock = holder.getComponent(BenchBlock.getComponentType());
+        var benchBlock = WorldBlockUtil.getBlockComponent(world, bx, by, bz, BenchBlock.getComponentType());
         if (benchBlock == null) return null;
 
         ItemQuantity[] counts = CraftingUiQuantitiesSystem.computeCounts(bench, benchBlock.getTierLevel(), chests);

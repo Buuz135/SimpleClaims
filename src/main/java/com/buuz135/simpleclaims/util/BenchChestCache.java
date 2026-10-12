@@ -3,8 +3,6 @@ package com.buuz135.simpleclaims.util;
 import com.buuz135.simpleclaims.claim.ClaimManager;
 import com.buuz135.simpleclaims.claim.party.PartyInfo;
 import com.buuz135.simpleclaims.claim.party.PartyOverrides;
-import com.hypixel.hytale.component.Holder;
-import com.hypixel.hytale.math.util.ChunkUtil;
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
 import com.hypixel.hytale.server.core.modules.block.components.ItemContainerBlock;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -81,13 +79,7 @@ public final class BenchChestCache {
                 if (!allowedCols[xi * size + zi]) continue;
 
                 for (int y = by - v; y <= by + v; y++) {
-                    var worldChunk = world.getChunk(ChunkUtil.indexChunkFromBlock(x, z));
-                    if (worldChunk == null) continue;
-                    var ref = worldChunk.getBlockComponentEntity(x, y, z);
-
-                    if (ref == null) continue;
-
-                    var component = ref.getStore().getComponent(ref, ItemContainerBlock.getComponentType());
+                    var component = WorldBlockUtil.getBlockComponent(world, x, y, z, ItemContainerBlock.getComponentType());
                     if (component == null) continue;
 
                     ItemContainer c = component.getItemContainer();

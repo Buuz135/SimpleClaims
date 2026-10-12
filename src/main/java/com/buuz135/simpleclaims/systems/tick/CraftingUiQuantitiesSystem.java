@@ -3,6 +3,7 @@ package com.buuz135.simpleclaims.systems.tick;
 import com.buuz135.simpleclaims.util.BenchChestCache;
 import com.buuz135.simpleclaims.util.WindowExtraResourcesState;
 import com.buuz135.simpleclaims.util.WindowReflection;
+import com.buuz135.simpleclaims.util.WorldBlockUtil;
 
 import com.hypixel.hytale.builtin.crafting.component.BenchBlock;
 import com.hypixel.hytale.builtin.crafting.component.ProcessingBenchBlock;
@@ -60,6 +61,7 @@ public class CraftingUiQuantitiesSystem extends EntityTickingSystem<EntityStore>
 
         var connection = playerRef.getPacketHandler().getChannel();
         var map = WindowExtraResourcesState.getOrCreateMap(connection);
+        if (map == null) return;
 
         for (Window w : windows) {
             if (!(w instanceof SimpleCraftingWindow scw)) continue;
@@ -77,7 +79,7 @@ public class CraftingUiQuantitiesSystem extends EntityTickingSystem<EntityStore>
             int by = scw.getY();
             int bz = scw.getZ();
 
-            var block = world.getBlockType(bx, by, bz);
+            var block = WorldBlockUtil.getBlockType(world, bx, by, bz);
             if (block == null) continue;
             var bench = block.getBench();
             if (bench == null) continue;
