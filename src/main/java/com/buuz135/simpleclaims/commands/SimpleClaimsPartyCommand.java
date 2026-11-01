@@ -42,6 +42,7 @@ public class SimpleClaimsPartyCommand extends AbstractAsyncCommand {
         this.addSubCommand(new OpAllModifyChunkAmountCommand());
         this.addSubCommand(new OpOverrideCommand());
         this.addSubCommand(new OpAddChunkAmountCommand());
+        this.addSubCommand(new OpRemoveChunkAmountCommand());
         this.addSubCommand(new ChatToggleCommand());
     }
 
