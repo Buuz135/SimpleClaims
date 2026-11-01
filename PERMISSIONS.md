@@ -3,29 +3,30 @@
 Here is a comprehensive list of all commands available in Simple Claims, along with their required permissions and
 descriptions.
 
-| Command                                                      | Permission                                              | Description                                                                             |
-|:-------------------------------------------------------------|:--------------------------------------------------------|:----------------------------------------------------------------------------------------|
-| `/simpleclaims`                                              | `simpleclaims.claim-gui`                                | Opens the chunk claim GUI.                                                              |
-| `/simpleclaims claim`                                        | `simpleclaims.claim`                                    | Claims the chunk where you are currently located.                                       |
-| `/simpleclaims unclaim`                                      | `simpleclaims.unclaim`                                  | Unclaims the chunk where you are currently located.                                     |
-| `/simpleclaims admin-chunk`                                  | `simpleclaims.admin.admin-chunk`                        | Opens the chunk claim GUI in OP mode to claim chunks using the selected admin party.    |
-| `/simpleclaims admin-claim`                                  | `simpleclaims.admin.admin-claim`                        | Claims the chunk for the selected admin party.                                          |
-| `/simpleclaims admin-unclaim`                                | `simpleclaims.admin.admin-unclaim`                      | Unclaims the chunk (admin override).                                                    |
-| `/simpleclaimsparty`                                         | `simpleclaims.edit-party`                               | Opens the party information and editing GUI.                                            |
-| `/simpleclaimsparty create`                                  | `simpleclaims.create-party`                             | Creates a new party.                                                                    |
-| `/simpleclaimsparty invite <player>`                         | `simpleclaims.create-invite`                            | Invites a player to your party.                                                         |
-| `/simpleclaimsparty invite-accept`                           | `simpleclaims.accept-invite`                            | Accepts your most recent party invite.                                                  |
-| `/simpleclaimsparty leave`                                   | `simpleclaims.party-leave`                              | Leaves your current party.                                                              |
-| `/simpleclaimsparty chat-toggle`                             | `simpleclaims.edit-party`                               | Toggles the party chat.                                                                 |
-| `/simpleclaimsparty admin-create <party-name>`               | `simpleclaims.admin.admin-create-party`                 | Creates a new party with a specific name (admin tool).                                  |
-| `/simpleclaimsparty admin-party-list`                        | `simpleclaims.admin.admin-party-list`                   | Shows all parties and allows an admin to edit them.                                     |
-| `/simpleclaimsparty admin-modify-chunk <amount>`             | `simpleclaims.admin.admin-modify-chunk`                 | Changes the chunk limit of the currently selected party.                                |
-| `/simpleclaimsparty admin-modify-chunk-all <amount>`         | `simpleclaims.admin.admin-modify-chunk-all`             | Changes the chunk limit for all existing parties.                                       |
-| `/simpleclaimsparty admin-override`                          | `simpleclaims.admin.admin-override`                     | Toggles ignoring all chunk restrictions for the admin.                                  |
-| `/simpleclaimsparty add-chunk-amount <player-name> <amount>` | `simpleclaims.admin.add-chunk-amount`                   | Adds a specific amount of chunks to the party of the specified player.                  |
-| N/A                                                          | `simpleclaims.party.claim_chunk_amount.<amount>`        | Sets the base amount of chunks a player's party can claim.                              |
-| N/A                                                          | `simpleclaims.admin.max_add_chunk_amount.<amount>`      | Sets the maximum amount of chunks a party can reach using the add-chunk-amount command. |
-| N/A                                                          | `simpleclaims.player.claim_chunk_gain_minutes.<amount>` | Sets how often (in minutes) a player will gain another claim chunk by play time.        |
+| Command                                                        | Permission                                               | Description                                                                             |
+|:---------------------------------------------------------------|:---------------------------------------------------------|:----------------------------------------------------------------------------------------|
+| `/simpleclaims`                                                | `simpleclaims.claim-gui`                                 | Opens the chunk claim GUI.                                                              |
+| `/simpleclaims claim`                                          | `simpleclaims.claim`                                     | Claims the chunk where you are currently located.                                       |
+| `/simpleclaims unclaim`                                        | `simpleclaims.unclaim`                                   | Unclaims the chunk where you are currently located.                                     |
+| `/simpleclaims admin-chunk`                                    | `simpleclaims.admin.admin-chunk`                         | Opens the chunk claim GUI in OP mode to claim chunks using the selected admin party.    |
+| `/simpleclaims admin-claim`                                    | `simpleclaims.admin.admin-claim`                         | Claims the chunk for the selected admin party.                                          |
+| `/simpleclaims admin-unclaim`                                  | `simpleclaims.admin.admin-unclaim`                       | Unclaims the chunk (admin override).                                                    |
+| `/simpleclaimsparty`                                           | `simpleclaims.edit-party`                                | Opens the party information and editing GUI.                                            |
+| `/simpleclaimsparty create`                                    | `simpleclaims.create-party`                              | Creates a new party.                                                                    |
+| `/simpleclaimsparty invite <player>`                           | `simpleclaims.create-invite`                             | Invites a player to your party.                                                         |
+| `/simpleclaimsparty invite-accept`                             | `simpleclaims.accept-invite`                             | Accepts your most recent party invite.                                                  |
+| `/simpleclaimsparty leave`                                     | `simpleclaims.party-leave`                               | Leaves your current party.                                                              |
+| `/simpleclaimsparty chat-toggle`                               | `simpleclaims.edit-party`                                | Toggles the party chat.                                                                 |
+| `/simpleclaimsparty admin-create <party-name>`                 | `simpleclaims.admin.admin-create-party`                  | Creates a new party with a specific name (admin tool).                                  |
+| `/simpleclaimsparty admin-party-list`                          | `simpleclaims.admin.admin-party-list`                    | Shows all parties and allows an admin to edit them.                                     |
+| `/simpleclaimsparty admin-modify-chunk <amount>`               | `simpleclaims.admin.admin-modify-chunk`                  | Changes the chunk limit of the currently selected party.                                |
+| `/simpleclaimsparty admin-modify-chunk-all <amount>`           | `simpleclaims.admin.admin-modify-chunk-all`              | Changes the chunk limit for all existing parties.                                       |
+| `/simpleclaimsparty admin-override`                            | `simpleclaims.admin.admin-override`                      | Toggles ignoring all chunk restrictions for the admin.                                  |
+| `/simpleclaimsparty add-chunk-amount <player-name> <amount>`   | `simpleclaims.admin.add-chunk-amount`                    | Adds a specific amount of chunks to the party of the specified player.                  |
+| `/simpleclaimsparty remove-chunk-amount <player-name> <amount>` | `simpleclaims.admin.remove-chunk-amount`                  | Remove a specific amount of bonus chunks to the party of the specified player.          |
+| N/A                                                            | `simpleclaims.party.claim_chunk_amount.<amount>`         | Sets the base amount of chunks a player's party can claim.                              |
+| N/A                                                            | `simpleclaims.admin.max_add_chunk_amount.<amount>`       | Sets the maximum amount of chunks a party can reach using the add-chunk-amount command. |
+| N/A                                                            | `simpleclaims.player.claim_chunk_gain_minutes.<amount>`  | Sets how often (in minutes) a player will gain another claim chunk by play time.        |
 
 #### Aliases
 
