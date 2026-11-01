@@ -42,22 +42,30 @@ repositories {
 def os = org.gradle.internal.os.OperatingSystem.current()
 def userHome = System.getProperty("user.home")
 
-def hytaleHome
-def hytaleServerJar
+// Possible Hytale data directories per OS (native launcher, then Flatpak on Linux)
+def hytaleHomeCandidates = []
 if (os.isWindows()) {
-    hytaleHome = "$userHome/AppData/Roaming/Hytale"
+    hytaleHomeCandidates << "$userHome/AppData/Roaming/Hytale"
 } else if (os.isMacOsX()) {
-    hytaleHome = "$userHome/Library/Application Support/Hytale"
+    hytaleHomeCandidates << "$userHome/Library/Application Support/Hytale"
 } else if (os.isLinux()) {
-    hytaleHome = "$userHome/.local/share/Hytale"
-    if (!file(hytaleHome).exists()) {
-        hytaleHome = "$userHome/.var/app/com.hypixel.HytaleLauncher/data/Hytale"
-    }
+    hytaleHomeCandidates << "$userHome/.local/share/Hytale"
+    hytaleHomeCandidates << "$userHome/.var/app/com.hypixel.HytaleLauncher/data/Hytale"
 } else {
     throw new GradleException("Unsupported OS for Hytale")
 }
 
-hytaleServerJar = "$hytaleHome/install/$patchline/package/game/$game_build/Server/HytaleServer.jar"
+def serverJarFor = { String home ->
+    "$home/install/$patchline/package/game/$game_build/Server/HytaleServer.jar"
+}
+
+// Use the first install that actually contains the server jar, otherwise fall back to the first candidate
+def hytaleHome = hytaleHomeCandidates.find { file(serverJarFor(it)).exists() } ?: hytaleHomeCandidates.first()
+def hytaleServerJar = serverJarFor(hytaleHome)
+
+if (!file(hytaleServerJar).exists()) {
+    logger.warn("HytaleServer.jar not found. Looked in: ${hytaleHomeCandidates.collect { serverJarFor(it) }}")
+}
 
 
 
